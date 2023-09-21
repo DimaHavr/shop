@@ -1,5 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://example.com', // FIXME: Change to the production URL
+  siteUrl: 'https://fix-lab-project.vercel.app', // FIXME: Change to the production URL
   generateRobotsTxt: true,
-};
+  output: 'export',
+}

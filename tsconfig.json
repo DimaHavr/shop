@@ -19,15 +19,15 @@
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
 
-    "target": "es2017",
+    "target": "es5",
     "outDir": "out",
     "declaration": true,
     "sourceMap": true,
+    "downlevelIteration": true,
 
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
@@ -38,7 +38,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./*"],
       "@/public/*": ["./public/*"]
     },
     "plugins": [
@@ -47,13 +47,6 @@
       }
     ]
   },
-  "exclude": ["./out/**/*", "./node_modules/**/*", "cypress/**/*.ts"],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".storybook/*.ts",
-    ".next/types/**/*.ts",
-    "src/libs/Env.mjs"
-  ]
+  "exclude": ["./out/**/*", "./node_modules/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }
