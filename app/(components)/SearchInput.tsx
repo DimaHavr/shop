@@ -39,7 +39,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
             type='text'
             name='query'
             placeholder='Знайти...'
-            className='h-[35px] w-[260px] bg-white-dis p-1 pl-2 font-exo_2 text-black-dis outline-none  focus:outline-none'
+            className='h-[35px] w-[250px] bg-white-dis p-1 pl-2 font-exo_2 text-black-dis outline-none  focus:outline-none'
           />
           <button type='submit' className='pr-2'>
             <FaSearch

@@ -102,42 +102,43 @@ export const Header: React.FC = () => {
           {screenSize.width > 767 ? (
             <SearchInput onSearch={handleSearch} />
           ) : (
-            <button type='button' onClick={toggleSearchBar}>
+            <button aria-label='Пошук' type='button' onClick={toggleSearchBar}>
               <FaSearch
-                name='Пошук'
                 color='#fff'
                 className=' transition-opacity   hover:opacity-80 focus:opacity-80'
                 size={25}
               />
             </button>
           )}
-          <button type='button' onClick={() => dispatch(setShowCart(true))}>
+          <button
+            aria-label='Улюблені'
+            type='button'
+            onClick={() => dispatch(setShowCart(true))}
+          >
             <FaHeart
-              name='Улюблені'
               color='#fff'
               className='transition-opacity hover:opacity-80  focus:opacity-80'
               size={30}
             />
           </button>
-          <button type='button' onClick={() => dispatch(setShowCart(true))}>
+          <button
+            aria-label='Кошик'
+            type='button'
+            onClick={() => dispatch(setShowCart(true))}
+          >
             <FaOpencart
-              name='Кошик'
               color='#fff'
               className='transition-opacity hover:opacity-80  focus:opacity-80'
               size={40}
             />
           </button>
           <button
+            aria-label='Меню'
             type='button'
             className='text-gray-700 -m-2.5 hidden cursor-pointer items-center justify-center rounded-md p-2.5 transition-opacity hover:opacity-80 focus:opacity-80  max-lg:block md:pl-8'
             onClick={toggleMobileMenu}
           >
-            <FaBars
-              name='Меню'
-              className='h-8 w-8'
-              aria-hidden='true'
-              color='#fff'
-            />
+            <FaBars className='h-8 w-8' aria-hidden='true' color='#fff' />
           </button>
         </div>
       </nav>

@@ -47,7 +47,7 @@ const Cart: React.FC = () => {
         initial={{ x: 500 }}
         animate={{ x: 0, transition: { duration: 0.3 } }}
         exit={{ x: 500, transition: { duration: 0.3 } }}
-        className='fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between  bg-[#09338F] px-4 pb-[10px] pt-[30px] sm:ring-1 md:max-w-[400px]'
+        className='fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between  bg-footer-gradient-linear-green px-4 pb-[10px] pt-[30px] sm:ring-1 md:max-w-[400px]'
       >
         <div className='flex flex-col overflow-auto'>
           <div className='flex items-center justify-between'>
@@ -76,44 +76,6 @@ const Cart: React.FC = () => {
               />
             </button>
           </div>
-          <ul className='mt-8 flex flex-col items-center gap-4 max-md:justify-center md:items-start'>
-            <li>
-              <Link
-                href='/repair'
-                onClick={() => dispatch(setShowCart(false))}
-                className='font-exo_2 text-xl font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
-              >
-                Ремонт
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/contacts'
-                onClick={() => dispatch(setShowCart(false))}
-                className='font-exo_2 text-xl font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
-              >
-                Контакти
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/blog'
-                onClick={() => dispatch(setShowCart(false))}
-                className='font-exo_2 text-xl font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
-              >
-                Блог
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/corporate'
-                onClick={() => dispatch(setShowCart(false))}
-                className='font-exo_2 text-xl font-semibold capitalize text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
-              >
-                Для бізнесу
-              </Link>
-            </li>
-          </ul>
         </div>
       </motion.div>
     </motion.div>
