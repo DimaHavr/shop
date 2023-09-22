@@ -71,12 +71,12 @@ module.exports = {
         'mscope-xl': '65%',
       },
       boxShadow: {
-        box: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;',
-        hero: 'rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;',
-        topSm: '0px 2px 4px rgba(0, 0, 0, 0.1);',
-        header: ' rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;',
+        box: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
+        hero: 'rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset',
+        topSm: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        header: ' rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset',
         button:
-          'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;',
+          'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px',
       },
       backgroundPosition: {
         'mscope-sm': 'top calc(50% - 8px) right calc(50% + 32px)',
@@ -116,7 +116,7 @@ module.exports = {
         width: 'width',
       },
       animation: {
-        heroText: 'text-shadow-drop-center 0.6s both;',
+        heroText: 'text-shadow-drop-center 0.6s both',
         hoverBtnIn: 'slide-out-top 0.2s ease-in-out both',
         hoverBtnOut: 'slide-out-bottom 0.2s ease-in-out both',
         hoverCard: 'all 0.3s ease-in-out',
