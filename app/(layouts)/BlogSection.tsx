@@ -35,14 +35,14 @@ const BlogSection = () => {
                 Bag Trends for Summer 2023
               </h3>
               <div className='flex gap-2'>
-                <p className="text-md text-mid-grey after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-['']">
+                <p className="text-md text-primary-green after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-[''] max-sm:text-sm max-sm:after:pl-1">
                   Fashion
                 </p>
 
-                <p className="text-md text-mid-grey after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-['']">
+                <p className="text-md text-primary-green after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-[''] max-sm:text-sm max-sm:after:pl-1">
                   August 8, 2023
                 </p>
-                <p className='flex gap-2 text-md text-mid-grey'>
+                <p className='flex gap-2 text-md text-primary-green max-sm:text-sm'>
                   <FaRegComments size={20} color='#17696A' />
                   <span>No comments</span>
                 </p>
@@ -66,15 +66,15 @@ const BlogSection = () => {
               <h3 className='max-w-[600px] overflow-hidden text-ellipsis text-lg font-bold'>
                 Bag Trends for Summer 2023
               </h3>
-              <div className='flex gap-2'>
-                <p className="text-md text-mid-grey after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-['']">
+              <div className='flex gap-2 max-sm:gap-1'>
+                <p className="text-md text-primary-green after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-[''] max-sm:text-sm max-sm:after:pl-1">
                   Fashion
                 </p>
 
-                <p className="text-md text-mid-grey after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-['']">
+                <p className="text-md text-primary-green after:h-[5px] after:border-r-[1px] after:pl-2 after:text-light-grey after:content-[''] max-sm:text-sm max-sm:after:pl-1">
                   August 8, 2023
                 </p>
-                <p className='flex gap-2 text-md text-mid-grey'>
+                <p className='flex gap-2 text-md text-primary-green max-sm:text-sm'>
                   <FaRegComments size={20} color='#17696A' />
                   <span>No comments</span>
                 </p>

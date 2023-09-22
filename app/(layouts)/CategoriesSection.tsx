@@ -46,6 +46,7 @@ const CategoriesSection = () => {
                     alt={item.alt}
                     width={item.width}
                     height={item.height}
+                    priority
                   />
                   <h2 className=' py-4 font-exo_2 text-xl font-semibold text-black-dis '>
                     {item.title}

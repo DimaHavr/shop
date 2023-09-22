@@ -38,6 +38,7 @@ const HeroBanner = () => {
           width='1920'
           height='800'
           className=' min-h-[550px] bg-no-repeat object-cover object-center'
+          priority
         />
         <div className=' absolute bottom-[210px] left-[133px] z-[1] flex flex-col max-lg:bottom-[125px] max-lg:left-[35px] max-md:bottom-[65px] max-sm:left-[10px]'>
           <h1 className=' mb-8 max-w-[650px] animate-heroText text-start font-gugi text-3xl text-white-dis max-md:text-2xl'>
@@ -58,6 +59,7 @@ const HeroBanner = () => {
           width='1920'
           height='800'
           className=' min-h-[550px] bg-no-repeat object-cover object-center'
+          priority
         />
         <div className=' absolute bottom-[210px] left-[133px] z-[1] flex flex-col max-lg:bottom-[125px] max-lg:left-[35px] max-md:bottom-[65px] max-sm:left-[10px]'>
           <h1 className=' mb-8 max-w-[650px] animate-heroText text-start font-gugi text-3xl text-white-dis max-md:text-2xl'>
@@ -78,6 +80,7 @@ const HeroBanner = () => {
           width='1920'
           height='800'
           className=' min-h-[550px] bg-no-repeat object-cover object-center'
+          priority
         />
         <div className=' absolute bottom-[210px] left-[133px] z-[1] flex flex-col max-lg:bottom-[125px] max-lg:left-[35px] max-md:bottom-[65px] max-sm:left-[10px]'>
           <h1 className=' mb-8 max-w-[650px] animate-heroText text-start font-gugi text-3xl text-white-dis max-md:text-2xl'>
