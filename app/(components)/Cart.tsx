@@ -53,13 +53,20 @@ const Cart: React.FC = () => {
           <div className='flex items-center justify-between'>
             <Link
               href='/'
-              onClick={() => dispatch(setShowCart(false))}
-              className=' flex gap-3'
+              className='flex items-center gap-1 transition-opacity hover:opacity-80 focus:opacity-80 max-md:m-0  xl:mr-9'
             >
               <Image
-                className='h-auto w-[65px]'
-                src='/logo.svg'
-                alt='FixLab logo'
+                className='h-auto w-[55px]'
+                src='/logoR.svg'
+                alt='logo'
+                width='0'
+                height='0'
+                priority
+              />
+              <Image
+                className=' h-auto w-[155px]'
+                src='/logoText.svg'
+                alt='logo'
                 width='0'
                 height='0'
                 priority
@@ -71,7 +78,7 @@ const Cart: React.FC = () => {
               onClick={() => dispatch(setShowCart(false))}
             >
               <MdOutlineClose
-                className='h-8 w-8 fill-white-dis  transition-opacity hover:opacity-80 focus:opacity-80'
+                className='h-10 w-10 fill-white-dis  transition-opacity hover:opacity-80 focus:opacity-80'
                 aria-hidden='true'
               />
             </button>

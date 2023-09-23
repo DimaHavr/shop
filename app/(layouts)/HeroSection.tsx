@@ -3,20 +3,22 @@
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+import 'swiper/css/effect-fade'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 const HeroBanner = () => {
   return (
     <Swiper
+      effect='fade'
       grabCursor
-      // autoplay={{
-      //   delay: 5000,
-      //   disableOnInteraction: false,
-      // }}
+      autoplay={{
+        delay: 5000,
+        disableOnInteraction: true,
+      }}
       breakpoints={{
         0: {
           pagination: false,
@@ -28,15 +30,15 @@ const HeroBanner = () => {
       spaceBetween={0}
       pagination={{ clickable: true }}
       loop
-      modules={[Pagination, Autoplay, Navigation]}
+      modules={[Pagination, Autoplay, Navigation, EffectFade]}
       className='hero-slider'
     >
       <SwiperSlide>
         <Image
-          src='/images/hero/hero_mens.webp'
+          src='/images/hero/hero_mens.jpg'
           alt='Mens hero'
           width='1920'
-          height='800'
+          height='850'
           className=' min-h-[550px] bg-no-repeat object-cover object-center'
           priority
         />
@@ -54,10 +56,10 @@ const HeroBanner = () => {
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          src='/images/hero/hero_mens.webp'
+          src='/images/hero/hero_women.jpg'
           alt='Mens hero'
           width='1920'
-          height='800'
+          height='850'
           className=' min-h-[550px] bg-no-repeat object-cover object-center'
           priority
         />
@@ -75,10 +77,10 @@ const HeroBanner = () => {
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          src='/images/hero/hero_mens.webp'
+          src='/images/hero/hero_kids.jpg'
           alt='Mens hero'
           width='1920'
-          height='800'
+          height='850'
           className=' min-h-[550px] bg-no-repeat object-cover object-center'
           priority
         />

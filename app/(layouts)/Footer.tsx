@@ -5,7 +5,7 @@ import { LiaViber } from 'react-icons/lia'
 export const Footer = () => {
   return (
     <footer className='border-t-[1px] bg-footer-gradient-linear-green'>
-      <div className='container relative flex flex-col items-start gap-[52px] py-14 md:flex-row md:justify-between md:px-0 xl:gap-[240px]'>
+      <div className='container relative flex flex-col items-start gap-[52px] py-14 md:flex-row md:justify-between md:px-0 xl:gap-[130px]'>
         <div className='z-1 absolute left-[261px] top-0 h-full md:flex'>
           <Image
             src='/background-flicker-footer-pc.svg'
@@ -22,13 +22,25 @@ export const Footer = () => {
             alt='flicker'
           />
         </div>
-        <div className='flex h-[61px] w-[95px] gap-3 transition-opacity hover:opacity-80 focus:opacity-80 md:h-[75px] md:w-[115px]'>
-          <Link href='/' aria-label='Логотип'>
+        <div className='flex gap-3 transition-opacity hover:opacity-80 focus:opacity-80 '>
+          <Link
+            href='/'
+            className='flex items-center gap-1 transition-opacity hover:opacity-80 focus:opacity-80 max-lg:flex-col max-md:m-0 max-md:flex-row  '
+          >
             <Image
-              src='/vercel.svg'
-              alt='Logo'
-              width={115}
-              height={75}
+              className='h-auto w-[65px]'
+              src='/logoR.svg'
+              alt='logo'
+              width='0'
+              height='0'
+              priority
+            />
+            <Image
+              className=' h-auto w-[215px] max-lg:w-[160px]'
+              src='/logoText.svg'
+              alt='logo'
+              width='0'
+              height='0'
               priority
             />
           </Link>
@@ -37,50 +49,42 @@ export const Footer = () => {
           <ul className='flex flex-col items-start gap-[10px]'>
             <li>
               <Link
-                className='text-center text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
                 href='/#'
               >
-                Ремонт iphone
+                Правила
               </Link>
             </li>
             <li>
               <Link
-                className='text-center text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
                 href='/#'
               >
-                Ремонт xiaomi
+                Таблиці розмірів
               </Link>
             </li>
             <li>
               <Link
-                className='text-center text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
                 href='/#'
               >
-                Ремонт huawei
+                Способи оплати
               </Link>
             </li>
             <li>
               <Link
-                className='text-center text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
                 href='/#'
               >
-                Ремонт samsung
+                Час і способи доставки
               </Link>
             </li>
             <li>
               <Link
-                className='text-center text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
                 href='/#'
               >
-                Ремонт ноутбуків
-              </Link>
-            </li>
-            <li>
-              <Link
-                className='text-center text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
-                href='/#'
-              >
-                Ремонт dualsense
+                Політика конфіденційності
               </Link>
             </li>
           </ul>
@@ -123,65 +127,52 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className='z-10 flex gap-24 md:flex-row-reverse lg:flex-row lg:gap-[235px]'>
+        <div className='z-10 flex gap-24  lg:flex-row lg:gap-[130px]'>
           <ul className='flex flex-col gap-2'>
             <li>
               <Link
-                href='/repair'
-                className='text-base font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                href='/mens'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
               >
-                Ремонт
+                Чоловіки
               </Link>
             </li>
             <li>
               <Link
-                href='/contacts'
-                className='text-base font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                href='/women'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
               >
-                Контакти
+                Жінки
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/kids'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+              >
+                Діти
               </Link>
             </li>
             <li>
               <Link
                 href='/blog'
-                className='text-base font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
+                className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
               >
                 Блог
               </Link>
             </li>
-            <li>
-              <Link
-                href='/corporate'
-                className='text-base font-semibold capitalize text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
-              >
-                Для бізнесу
-              </Link>
-            </li>
           </ul>
-          <div className='flex flex-col items-end gap-4 md:flex-col md:items-start md:gap-[30px] lg:flex lg:items-end lg:gap-[25px]'>
-            <ul className='flex flex-col gap-1'>
-              <li>
-                <a
-                  href='tel:380632272730'
-                  className='text-base font-medium leading-7 tracking-wide text-mid-green transition-colors hover:text-white-dis  focus:text-white-dis'
-                >
-                  +38 050 227 27 28
-                </a>
-              </li>
-              <li>
-                <a
-                  href='tel:380632272728'
-                  className='text-base font-medium leading-7 tracking-wide text-mid-green transition-colors hover:text-white-dis  focus:text-white-dis'
-                >
-                  +38 063 227 27 28
-                </a>
-              </li>
-            </ul>
-            <div className='flex flex-col items-start gap-1 '>
-              <span className='text-base  text-white-dis'>10:00 - 19:30</span>
+          <div className='flex flex-col items-end gap-4 md:flex-col md:items-start md:gap-[20px] lg:flex lg:items-end lg:gap-[15px]'>
+            <p className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  '>
+              Звʼязатися з нами
+            </p>
+            <a
+              href='tel:380631111111'
+              className='text-base font-medium leading-7 tracking-wide text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
+            >
+              +38 050 111 11 11
+            </a>
 
-              <span className='text-base  text-white-dis '>нд - вихідний</span>
-            </div>
             <ul className='flex  max-md:hidden md:flex md:gap-3'>
               <li>
                 <Link

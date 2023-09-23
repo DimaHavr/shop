@@ -49,11 +49,22 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ toggleMobileMenu }) => {
       >
         <div className='flex h-[100vh] flex-col justify-between gap-[50px] overflow-auto'>
           <div className='flex items-center justify-between'>
-            <Link href='/' onClick={toggleMobileMenu} className=' flex gap-3'>
+            <Link
+              href='/'
+              className='flex items-center gap-1 transition-opacity hover:opacity-80 focus:opacity-80 max-md:m-0  xl:mr-9'
+            >
               <Image
-                className='h-auto w-[85px]'
-                src='/vercel.svg'
-                alt='Logo'
+                className='h-auto w-[55px]'
+                src='/logoR.svg'
+                alt='logo'
+                width='0'
+                height='0'
+                priority
+              />
+              <Image
+                className=' h-auto w-[155px] '
+                src='/logoText.svg'
+                alt='logo'
                 width='0'
                 height='0'
                 priority
@@ -65,7 +76,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ toggleMobileMenu }) => {
               onClick={toggleMobileMenu}
             >
               <MdOutlineClose
-                className='h-8 w-8 fill-white-dis  transition-opacity hover:opacity-80 focus:opacity-80'
+                className='h-10 w-10 fill-white-dis  transition-opacity hover:opacity-80 focus:opacity-80'
                 aria-hidden='true'
               />
             </button>

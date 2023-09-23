@@ -52,11 +52,19 @@ export const Header: React.FC = () => {
       >
         <Link
           href='/'
-          className='flex gap-1 transition-opacity hover:opacity-80 focus:opacity-80 max-md:m-0  xl:mr-9'
+          className='flex items-center gap-1 transition-opacity hover:opacity-80 focus:opacity-80 max-md:m-0  xl:mr-9'
         >
           <Image
-            className='h-auto w-[85px]'
-            src='/vercel.svg'
+            className='h-auto w-[55px]'
+            src='/logoR.svg'
+            alt='logo'
+            width='0'
+            height='0'
+            priority
+          />
+          <Image
+            className='flex h-auto w-[155px] max-md:hidden'
+            src='/logoText.svg'
             alt='logo'
             width='0'
             height='0'
@@ -68,7 +76,7 @@ export const Header: React.FC = () => {
           <li>
             <Link
               href='/mens'
-              className='font-exo_2 text-base font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
+              className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Чоловіки
             </Link>
@@ -76,7 +84,7 @@ export const Header: React.FC = () => {
           <li>
             <Link
               href='/women'
-              className='font-exo_2 text-base font-semibold  text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
+              className='font-exo_2 text-lg font-semibold  text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Жінки
             </Link>
@@ -84,7 +92,7 @@ export const Header: React.FC = () => {
           <li>
             <Link
               href='/kids'
-              className='font-exo_2 text-base font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
+              className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Діти
             </Link>
@@ -92,13 +100,13 @@ export const Header: React.FC = () => {
           <li>
             <Link
               href='/blog'
-              className='font-exo_2 text-base font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
+              className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Блог
             </Link>
           </li>
         </ul>
-        <div className='flex gap-8 max-md:gap-6 max-sm:gap-3'>
+        <div className='flex items-center gap-8 max-md:gap-6 max-sm:gap-3'>
           {screenSize.width > 767 ? (
             <SearchInput onSearch={handleSearch} />
           ) : (
@@ -110,17 +118,13 @@ export const Header: React.FC = () => {
               />
             </button>
           )}
-          <button
-            aria-label='Улюблені'
-            type='button'
-            onClick={() => dispatch(setShowCart(true))}
-          >
+          <Link href='/favorites'>
             <FaHeart
               color='#fff'
               className='transition-opacity hover:opacity-80  focus:opacity-80'
               size={30}
             />
-          </button>
+          </Link>
           <button
             aria-label='Кошик'
             type='button'
