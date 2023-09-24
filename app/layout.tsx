@@ -2,6 +2,8 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { Exo_2, Gugi, Inter, Manrope } from 'next/font/google'
+import React from 'react'
+import { Toaster } from 'react-hot-toast'
 
 import { Footer } from './(layouts)/Footer'
 import { Header } from './(layouts)/Header'
@@ -49,6 +51,7 @@ export default function RootLayout({
     >
       <body className='h-full'>
         <ReduxProvider>
+          <Toaster />
           <div className='flex min-h-full flex-col'>
             <Header />
             {children}

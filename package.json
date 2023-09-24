@@ -20,12 +20,13 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.1.13",
     "@reduxjs/toolkit": "^1.9.5",
     "@tinymce/tinymce-react": "^4.3.0",
     "axios": "^1.4.0",
     "formik": "^2.4.2",
     "formik-persist-values": "^1.4.1",
-    "framer-motion": "^10.15.1",
+    "framer-motion": "^10.16.4",
     "keen-slider": "^6.8.6",
     "markdown-it": "^13.0.1",
     "nanoid": "^4.0.2",

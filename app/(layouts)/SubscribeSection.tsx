@@ -1,6 +1,8 @@
 'use client'
 
+import axios from 'axios'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { GiCheckMark } from 'react-icons/gi'
 
 interface CheckboxProps {
@@ -9,6 +11,7 @@ interface CheckboxProps {
   checked: boolean
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
+
 const Checkbox: React.FC<CheckboxProps> = ({ value, checked, onChange }) => {
   return (
     <div
@@ -37,36 +40,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, checked, onChange }) => {
   )
 }
 
-const ConfirmCheckbox: React.FC<CheckboxProps> = ({
-  value,
-  checked,
-  onChange,
-}) => (
-  <div className='flex items-center gap-2'>
-    <input
-      className={`${checked && ' bg-primary-green'} hidden `}
-      type='checkbox'
-      name='confirm'
-      required
-      value={value}
-      id={value}
-      checked={checked}
-      onChange={onChange}
-    />
-    <label
-      className=' h-7 w-7 cursor-pointer rounded-[4px] border-[1px] text-mid-grey  max-sm:w-10'
-      htmlFor={value}
-    >
-      {checked && <GiCheckMark size={25} color='#17696A' />}
-    </label>
-    <span className='text-sm font-medium'>
-      Я погоджуюсь отримувати повідомлення від Createx Store.
-    </span>
-  </div>
-)
-
 const SubscribeSection: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const [email, setEmail] = useState<string>('')
+  const [confirm, setConfirm] = useState<boolean>(false) // Додано стан для confirm
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
@@ -77,14 +54,49 @@ const SubscribeSection: React.FC = () => {
     }
   }
 
-  const handleCheckboxChangeConfirm = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { value } = event.target
-    if (selectedItems.includes(value)) {
-      setSelectedItems(selectedItems.filter(item => item !== value))
-    } else {
-      setSelectedItems([...selectedItems, value])
+  const handleCheckboxChangeConfirm = () => {
+    setConfirm(!confirm)
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    if (selectedItems.length === 0) {
+      toast.error('Нічого не вибрано...')
+      return
+    }
+    if (!email) {
+      toast.error('Заповніть електронну пошту...')
+      return
+    }
+    if (!confirm) {
+      toast.error('Підтвердіть погодження...')
+      return
+    }
+    try {
+      const TOKEN = '5560792411:AAErGG70RTKBdZklSlOT_TdJTMUROf_8rYU'
+      const CHAT_ID = '-1001952047976'
+      const URL_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`
+
+      let message = `<b>Оформлення підписки</b>\n`
+
+      message += `<b>Вибір категорії:</b>\n${selectedItems.join(', ')}\n`
+      message += `<b>Пошта:</b>\n${email}\n`
+
+      const res = await axios.post(URL_API, {
+        chat_id: CHAT_ID,
+        parse_mode: 'html',
+        text: message,
+      })
+      if (res.status === 200) {
+        toast.success('Підписка успішно надіслана')
+        setEmail('')
+        setSelectedItems([])
+        setConfirm(false)
+      } else {
+        toast.error('Виникла помилка під час надсилання')
+      }
+    } catch (error) {
+      toast.error('Виникла помилка під час обробки запиту')
     }
   }
 
@@ -93,13 +105,15 @@ const SubscribeSection: React.FC = () => {
       <div className='container flex flex-col items-center justify-center'>
         <div className='flex flex-col gap-8'>
           <div className='flex flex-col gap-4'>
-            <p className='font-exo_2 text-md'>Підпишіться на оновлення</p>
-            <p className=' max-w-[650px] font-exo_2 text-2xl font-semibold'>
+            <p className='text-center font-exo_2 text-md'>
+              Підпишіться на оновлення
+            </p>
+            <p className='max-w-[550px] text-center font-exo_2 text-2xl font-semibold'>
               Підпишіться на ексклюзивний доступ до раннього розпродажу та нових
               надходжень.
             </p>
           </div>
-          <form className='flex flex-col gap-4'>
+          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
             <div className='flex gap-3'>
               <Checkbox
                 label='Чоловіки'
@@ -122,22 +136,39 @@ const SubscribeSection: React.FC = () => {
               />
             </div>
             <div className='flex flex-col gap-4'>
-              <ConfirmCheckbox
-                label='Підтверджую'
-                value='confirm'
-                checked={selectedItems.includes('confirm')}
-                onChange={handleCheckboxChangeConfirm}
-              />
+              <div className='flex items-center gap-2'>
+                <input
+                  className={`${confirm && ' bg-primary-green'} hidden `}
+                  type='checkbox'
+                  name='confirm'
+                  required
+                  value='confirm'
+                  id='confirm'
+                  checked={confirm}
+                  onChange={handleCheckboxChangeConfirm}
+                />
+                <label
+                  className=' h-7 w-7 cursor-pointer rounded-[4px] border-[1px] text-mid-grey  max-sm:w-10'
+                  htmlFor='confirm'
+                >
+                  {confirm && <GiCheckMark size={25} color='#17696A' />}
+                </label>
+                <span className='text-sm font-medium'>
+                  Я погоджуюсь отримувати повідомлення від Createx Store.
+                </span>
+              </div>
               <div className='max-md:flex max-md:flex-col max-md:gap-4 '>
                 <input
                   type='email'
+                  value={email}
+                  onChange={event => setEmail(event.target.value)}
                   required
                   placeholder='Електронна пошта'
                   className='h-[50px] w-[350px] rounded-l-[4px] border-[1px] border-r-0 indent-3 text-black-dis max-md:w-full max-md:rounded-[4px] max-md:border-[1px]'
                 />
 
                 <button
-                  type='button'
+                  type='submit'
                   className='border-l-none h-[50px] rounded-r-[4px] border-[1px] bg-primary-green px-6 text-primary-green transition-opacity hover:opacity-80 focus:opacity-80 max-md:w-full  max-md:rounded-[4px]'
                 >
                   <span className='text-md font-semibold text-white-dis'>
@@ -148,7 +179,6 @@ const SubscribeSection: React.FC = () => {
             </div>
           </form>
         </div>
-        {/* <Img src='../../images/subscribeBox/image1.png' /> */}
       </div>
     </section>
   )

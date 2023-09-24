@@ -15,10 +15,10 @@ const HeroBanner = () => {
     <Swiper
       effect='fade'
       grabCursor
-      autoplay={{
-        delay: 5000,
-        disableOnInteraction: true,
-      }}
+      // autoplay={{
+      //   delay: 5000,
+      //   disableOnInteraction: true,
+      // }}
       breakpoints={{
         0: {
           pagination: false,

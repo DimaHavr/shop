@@ -8,7 +8,7 @@ import SubscribeSection from './(layouts)/SubscribeSection'
 
 export default async function Home() {
   return (
-    <main className='mt-[74px] flex-auto'>
+    <main className='mt-[89px] flex-auto'>
       <HeroBanner />
       <CategoriesSection />
       <NewArrivalsSection />

@@ -45,7 +45,7 @@ export const Footer = () => {
             />
           </Link>
         </div>
-        <div className='z-10 flex gap-[133px]'>
+        <div className='z-10 flex max-md:w-full max-md:justify-between max-md:gap-0 md:gap-[133px]'>
           <ul className='flex flex-col items-start gap-[10px]'>
             <li>
               <Link
@@ -127,7 +127,7 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className='z-10 flex gap-24  lg:flex-row lg:gap-[130px]'>
+        <div className='z-10 flex gap-24 max-md:w-full max-md:justify-between max-md:gap-0 lg:flex-row lg:gap-[130px]'>
           <ul className='flex flex-col gap-2'>
             <li>
               <Link
@@ -162,7 +162,7 @@ export const Footer = () => {
               </Link>
             </li>
           </ul>
-          <div className='flex flex-col items-end gap-4 md:flex-col md:items-start md:gap-[20px] lg:flex lg:items-end lg:gap-[15px]'>
+          <div className='flex flex-col items-end gap-4  md:flex-col md:items-start md:gap-[20px] lg:flex lg:items-end lg:gap-[15px]'>
             <p className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  '>
               Звʼязатися з нами
             </p>
