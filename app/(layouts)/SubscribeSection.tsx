@@ -16,8 +16,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, checked, onChange }) => {
   return (
     <div
       className={`${
-        checked ? ' bg-primary-green' : ' bg-none'
-      } cursor-pointer rounded-[4px] border-[1px] px-[16px] py-[6px] text-mid-grey`}
+        checked
+          ? ' bg-primary-green transition-all hover:scale-[1.05] hover:opacity-80'
+          : ' bg-none transition-all hover:scale-[1.05] hover:opacity-80'
+      } cursor-pointer rounded-[4px] border-[1px] px-[16px] py-[6px] font-exo_2 text-mid-grey`}
     >
       <input
         className={`${checked && ' bg-primary-green'} hidden `}

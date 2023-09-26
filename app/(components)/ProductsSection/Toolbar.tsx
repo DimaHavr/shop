@@ -64,6 +64,9 @@ const Toolbar = () => {
         showShadow
         classNames={{
           wrapper: 'gap-2',
+          item: 'w-8 h-8 text-primary-green  font-exo_2 text-md font-bold  bg-transparent',
+          cursor:
+            'bg-primary-green shadow-box text-white-dis font-exo_2 text-lg font-bold transition-color',
         }}
         total={10}
         initialPage={1}
