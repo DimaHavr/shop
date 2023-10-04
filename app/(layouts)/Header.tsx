@@ -72,7 +72,7 @@ export const Header: React.FC = () => {
           />
         </Link>
 
-        <ul className=' hidden gap-12  lg:flex'>
+        <ul className=' hidden gap-12 max-xl:gap-6 lg:flex'>
           <li>
             <Link
               href='/mens'

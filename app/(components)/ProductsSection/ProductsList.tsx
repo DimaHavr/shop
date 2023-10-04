@@ -1,13 +1,22 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa'
 
 import type { ProductsSectionProps } from '@/app/(pages)/women/page'
 
+import Rating from '../Rating'
+
 const ProductsList: React.FC<ProductsSectionProps> = ({ productsData }) => {
   return (
     <ul className='flex flex-wrap items-center justify-center gap-8'>
       {productsData.map(item => {
+        let discountPercentage: number = NaN
+        if (item.discount) {
+          discountPercentage = item.discount * 0.01
+        }
+        const oldPrice = item.price + item.price * discountPercentage
         const slug = `/${item.page}/${item.category}/${item.subcategory}/${item.id}`
         return (
           <li
@@ -29,10 +38,17 @@ const ProductsList: React.FC<ProductsSectionProps> = ({ productsData }) => {
                 <h3 className='w-[280px] overflow-hidden whitespace-nowrap text-left font-exo_2 text-md font-semibold text-black-dis '>
                   {item.name}
                 </h3>
-                <p className=' text-left font-exo_2 text-md font-semibold text-black-dis '>
-                  {item.price}
+                <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
+                  {item.discount && (
+                    <span className='text-base text-[red] line-through'>
+                      {oldPrice.toFixed(2)}
+                    </span>
+                  )}
+                  {item.price} uah
                 </p>
-                <div className='absolute right-2 top-2'>rating</div>
+                <div className='absolute right-2 top-2'>
+                  <Rating className='flex' size={20} count={5} value={5} />
+                </div>
 
                 {item.discount && (
                   <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>

@@ -6,76 +6,16 @@ import 'swiper/css/navigation'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { FaRegHeart } from 'react-icons/fa'
 import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-const imagesData = [
-  {
-    id: '1',
-    title: 'Жінки',
-    href: '/women',
-    src: '/images/category/women.webp',
-    alt: 'women',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '2',
-    title: 'Чоловіки',
-    href: '/mens',
-    src: '/images/category/mens.webp',
-    alt: 'mens',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '3',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '4',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '4',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '4',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '2',
-    title: 'Чоловіки',
-    href: '/mens',
-    src: '/images/category/mens.webp',
-    alt: 'mens',
-    width: 390,
-    height: 390,
-  },
-]
+import Rating from '../(components)/Rating'
+import type { ProductsSectionProps } from '../page'
 
-const NewArrivalsSection = () => {
+const NewArrivalsSection: React.FC<ProductsSectionProps> = ({
+  productsData,
+}) => {
   return (
     <section className='py-14'>
       <div className='container flex flex-col items-center justify-center gap-4 text-center'>
@@ -117,28 +57,75 @@ const NewArrivalsSection = () => {
           modules={[Navigation, EffectCoverflow, Pagination]}
           className='new-arrivals-slider'
         >
-          {imagesData.map(item => {
+          {productsData.map(item => {
+            let discountPercentage: number = NaN
+            if (item.discount) {
+              discountPercentage = item.discount * 0.01
+            }
+            const oldPrice = item.price + item.price * discountPercentage
+            const slug = `/${item.page}/${item.category}/${item.subcategory}/${item.id}`
             return (
               <SwiperSlide key={item.id}>
-                <div className=' my-6 mb-10 flex justify-center'>
+                <div className='relative mb-12 mt-4 transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
                   <Link
-                    href={item.href}
-                    className='flex  flex-col items-center justify-center rounded-2xl shadow-box transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'
+                    className=' flex flex-col items-center justify-center rounded-2xl shadow-box '
+                    href={slug}
                   >
                     <Image
-                      className='h-auto min-w-[300px]'
-                      src={item.src}
-                      alt={item.alt}
-                      width={item.width}
-                      height={item.height}
+                      className='h-auto min-w-[200px] '
+                      src={`${item.images[0]}`}
+                      width={230}
+                      height={340}
+                      alt='as'
                     />
                     <div className='flex w-full flex-col justify-start gap-2 rounded-b-2xl bg-white-dis p-2'>
-                      <h2 className=' text-left font-exo_2 text-md font-semibold text-black-dis '>
-                        {item.title}
-                      </h2>
-                      <p className='text-left'>100 грн</p>
+                      <h3 className='w-[280px] overflow-hidden whitespace-nowrap text-left font-exo_2 text-md font-semibold text-black-dis '>
+                        {item.name}
+                      </h3>
+                      <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
+                        {item.discount && (
+                          <span className='text-base text-[red] line-through'>
+                            {oldPrice.toFixed(2)}
+                          </span>
+                        )}
+                        {item.price} uah
+                      </p>
+                      <div className='absolute right-2 top-2'>
+                        <Rating
+                          className='flex'
+                          size={20}
+                          count={5}
+                          value={5}
+                        />
+                      </div>
+
+                      {item.discount && (
+                        <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
+                          {`-${item.discount}%`}
+                        </span>
+                      )}
+                      {item.is_new && (
+                        <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
+                          new
+                        </span>
+                      )}
                     </div>
                   </Link>
+                  <button
+                    className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box'
+                    type='button'
+                  >
+                    {/* <FaHeart
+                    color='#17696A'
+                    className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                    size={30}
+                  /> */}
+                    <FaRegHeart
+                      color='#17696A'
+                      className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                      size={30}
+                    />
+                  </button>
                 </div>
               </SwiperSlide>
             )

@@ -43,7 +43,7 @@ const HeroBanner = () => {
           priority
         />
         <div className=' absolute bottom-[210px] left-[133px] z-[1] flex flex-col max-lg:bottom-[125px] max-lg:left-[35px] max-md:bottom-[65px] max-sm:left-[10px]'>
-          <h1 className=' mb-8 max-w-[650px] animate-heroText text-start font-gugi text-3xl text-white-dis max-md:text-2xl'>
+          <h1 className='decoration-transparent mb-8 max-w-[650px] animate-heroText bg-mid-grey bg-clip-text text-start font-exo_2 text-[56px] drop-shadow-hero max-md:text-2xl'>
             Нова чоловіча колекція вже в магазині
           </h1>
           <Link
@@ -64,7 +64,7 @@ const HeroBanner = () => {
           priority
         />
         <div className=' absolute bottom-[210px] left-[133px] z-[1] flex flex-col max-lg:bottom-[125px] max-lg:left-[35px] max-md:bottom-[65px] max-sm:left-[10px]'>
-          <h1 className=' mb-8 max-w-[650px] animate-heroText text-start font-gugi text-3xl text-white-dis max-md:text-2xl'>
+          <h1 className='decoration-transparent mb-8 max-w-[650px] animate-heroText bg-mid-grey bg-clip-text text-start font-exo_2 text-[56px] drop-shadow-hero max-md:text-2xl'>
             Нова жіноча колекція вже в магазині
           </h1>
           <Link
@@ -85,7 +85,7 @@ const HeroBanner = () => {
           priority
         />
         <div className=' absolute bottom-[210px] left-[133px] z-[1] flex flex-col max-lg:bottom-[125px] max-lg:left-[35px] max-md:bottom-[65px] max-sm:left-[10px]'>
-          <h1 className=' mb-8 max-w-[650px] animate-heroText text-start font-gugi text-3xl text-white-dis max-md:text-2xl'>
+          <h1 className='decoration-transparent mb-8 max-w-[650px] animate-heroText bg-mid-grey bg-clip-text text-start font-exo_2 text-[56px] drop-shadow-hero max-md:text-2xl'>
             Нова дитяча колекція вже в магазині
           </h1>
           <Link

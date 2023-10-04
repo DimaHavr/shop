@@ -30,7 +30,7 @@ const imagesData = [
 
 const CategoriesSection = () => {
   return (
-    <section className=' flex  max-md:py-14 md:h-[300px] lg:h-[400px] xl:h-[450px]'>
+    <section className=' flex  max-md:py-14 md:h-[300px] lg:h-[400px] xl:h-[400px]'>
       <div className='container relative flex justify-center'>
         <ul className='flex items-center justify-center gap-10 max-lg:gap-5 max-md:flex-wrap md:absolute md:top-[-80px] md:z-10'>
           {imagesData.map(item => {
@@ -38,7 +38,7 @@ const CategoriesSection = () => {
               <li key={item.alt}>
                 <Link
                   href={item.href}
-                  className='flex flex-col items-center justify-center rounded-2xl shadow-box transition-all duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80 '
+                  className='flex flex-col items-center justify-center rounded-2xl shadow-box transition-transform duration-300 hover:scale-[1.03]  focus:scale-[1.03]  '
                 >
                   <Image
                     className='h-auto max-[800px]:w-[220px] max-md:w-[300px]'

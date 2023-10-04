@@ -53,6 +53,7 @@ export const theme = {
     dropShadow: {
       pros: '0px 4px 24px 0px rgba(0, 0, 0, 0.10)',
       banner: '0px 0px 2px #FFFFFF',
+      hero: '0px 3px 3px rgba(255,255,255,0.5)',
     },
     fontFamily: {
       inter: ['var(--font-inter)'],

@@ -6,7 +6,7 @@ export interface IProduct {
   id: string
   name: string
   brand: string
-  page: 'Women' | 'Men' | 'Kids'
+  page: 'women' | 'Men' | 'Kids'
   category: string
   subcategory: string
   price: number
@@ -19,7 +19,7 @@ export interface IProduct {
     average_rating: number
     num_ratings: number
   }
-  discount?: number
+  discount?: number | undefined
   is_new?: boolean
   images: string[]
   features: string[]
@@ -32,9 +32,9 @@ const womenData: IProduct[] = [
     id: '1',
     name: "Men's Hooded Sweatshirt",
     brand: 'XYZ Apparel',
-    page: 'Women',
-    category: 'Clothes',
-    subcategory: 'Jackets',
+    page: 'women',
+    category: 'clothes',
+    subcategory: 'jackets',
     price: 29.99,
     color: 'Black',
     size: 'Large',
@@ -51,6 +51,7 @@ const womenData: IProduct[] = [
       '/images/category/kids.webp',
       '/images/category/mens.webp',
     ],
+    discount: 30,
     features: [
       'Hooded design',
       'Front kangaroo pocket',
@@ -123,7 +124,7 @@ const womenData: IProduct[] = [
     id: '4',
     name: "Men's Hooded  Hooded HoodedSweatshirt",
     brand: 'XYZ Apparel',
-    page: 'Women',
+    page: 'women',
     category: 'Clothes',
     subcategory: 'Jackets',
     price: 29.99,
