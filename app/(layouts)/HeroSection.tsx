@@ -7,7 +7,7 @@ import 'swiper/css/effect-fade'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, EffectFade, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 const HeroBanner = () => {
@@ -28,9 +28,8 @@ const HeroBanner = () => {
         },
       }}
       spaceBetween={0}
-      pagination={{ clickable: true }}
       loop
-      modules={[Pagination, Autoplay, Navigation, EffectFade]}
+      modules={[Autoplay, Navigation, EffectFade]}
       className='hero-slider'
     >
       <SwiperSlide>

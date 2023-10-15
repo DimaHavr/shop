@@ -1,3 +1,4 @@
+import CategoriesLayout from '@/app/(components)/CategoriesLayout'
 import Breadcrumb from '@/app/(components)/ProductsSection/Breadcrumb'
 import ProductsSection from '@/app/(components)/ProductsSection/ProductsSection'
 import SubscribeSection from '@/app/(layouts)/SubscribeSection'
@@ -276,6 +277,7 @@ export default async function IndexPage() {
   return (
     <main className='mt-[89px] flex-auto'>
       <Breadcrumb />
+      <CategoriesLayout />
       <ProductsSection productsData={womenData} />
       <SubscribeSection />
     </main>

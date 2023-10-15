@@ -47,7 +47,7 @@ const Cart: React.FC = () => {
         initial={{ x: 500 }}
         animate={{ x: 0, transition: { duration: 0.3 } }}
         exit={{ x: 500, transition: { duration: 0.3 } }}
-        className='fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between  bg-footer-gradient-linear-green px-4 pb-[10px] pt-[30px] sm:ring-1 md:max-w-[400px]'
+        className='fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between  bg-footer-gradient-linear-green px-4 pb-[10px] pt-[30px]  md:max-w-[400px]'
       >
         <div className='flex flex-col overflow-auto'>
           <div className='flex items-center justify-between'>
