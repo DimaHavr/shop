@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { IProduct } from '@/app/(pages)/women/page'
+import type { IProduct } from '@/app/(pages)/zhinky/page'
 
 import GeneralInfo from './GeneralInfo'
 import ProductDetails from './ProductDetails'
@@ -19,11 +19,7 @@ const SingleProductSection: React.FC<SingleProductSectionProps> = ({
   return (
     <section className='mb-14 mt-8'>
       <div className='container flex flex-col'>
-        <h2 className='font-exo_2 text-2xl font-semibold'>
-          {productData.name}
-        </h2>
-
-        <div className="after:content-[' '] relative mt-4 flex w-full gap-3 pb-3 after:absolute after:top-[70px] after:w-full after:border-b-1 after:border-[#E5E8ED] after:max-md:top-[90]">
+        <div className="after:content-[' '] relative flex w-full gap-3 pb-3 after:absolute after:top-[70px] after:w-full after:border-b-1 after:border-[#E5E8ED] after:max-md:top-[90]">
           <button
             className={`${
               activeTab === 'GeneralInfo' &&

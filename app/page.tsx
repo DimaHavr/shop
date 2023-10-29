@@ -5,284 +5,57 @@ import NewArrivalsSection from './(layouts)/NewArrivalsSection'
 import PopularCategories from './(layouts)/PopularCategories'
 import ServicesSection from './(layouts)/ServicesSection'
 import SubscribeSection from './(layouts)/SubscribeSection'
+import { fetchData } from './(server)/api/service/strapi/fetchData'
 
 export interface IProduct {
-  id: string
-  name: string
-  brand: string
-  page: 'Women' | 'Men' | 'Kids'
-  category: string
-  subcategory: string
-  price: number
-  color: string
-  size: string
-  material: string
-  description: string
-  stock_quantity: number
-  ratings: {
-    average_rating: number
-    num_ratings: number
-  }
-  discount?: number | undefined
-  is_new?: boolean
-  images: string[]
-  features: string[]
+  newProductsData: [
+    data: [
+      {
+        id: string
+        attributes: {
+          name: string
+          brand: string
+          page: 'Women' | 'Men' | 'Kids'
+          category: string
+          subcategory: string
+          price: number
+          color: string
+          size: string
+          material: string
+          description: string
+          stock_quantity: number
+          ratings: {
+            average_rating: number
+            num_ratings: number
+          }
+          discount?: number | undefined
+          is_new?: boolean
+          images: string[]
+          features: string[]
+        }
+      },
+    ],
+  ]
 }
 export interface ProductsSectionProps {
-  productsData: IProduct[]
+  newProductsData: IProduct
 }
-const womenData: IProduct[] = [
-  {
-    id: '1',
-    name: "Men's Hooded Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Women',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    discount: 30,
-    images: [
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '2',
-    name: "Men's Hooded Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Men',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    images: [
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '3',
-    name: "Men's Hooded Sweatshirt Sweatshirt Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Kids',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    is_new: true,
-    images: [
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '4',
-    name: "Men's Hooded  Hooded HoodedSweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Women',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    images: [
-      '/images/category/mens.webp',
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '5',
-    name: "Men's Hooded Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Men',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    discount: 50,
-    images: [
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '6',
-    name: "Men's Hooded Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Kids',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    images: [
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '7',
-    name: "Men's Hooded Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Kids',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    images: [
-      '/images/category/women.webp',
-      '/images/category/kids.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-  {
-    id: '8',
-    name: "Men's Hooded Sweatshirt",
-    brand: 'XYZ Apparel',
-    page: 'Kids',
-    category: 'Clothes',
-    subcategory: 'Jackets',
-    price: 29.99,
-    color: 'Black',
-    size: 'Large',
-    material: 'Cotton',
-    description:
-      'A comfortable and stylish hooded sweatshirt for men, made from high-quality cotton. It features a classic black color and is available in various sizes.',
-    stock_quantity: 100,
-    ratings: {
-      average_rating: 4.5,
-      num_ratings: 250,
-    },
-    images: [
-      '/images/category/kids.webp',
-      '/images/category/women.webp',
-      '/images/category/mens.webp',
-    ],
-    features: [
-      'Hooded design',
-      'Front kangaroo pocket',
-      'Ribbed cuffs and hem',
-      'Machine washable',
-    ],
-  },
-]
-const Home = () => {
+
+const Home = async () => {
+  // const trendingWomenProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Жіноче&[filters][type][$eq]=trending&pagination[limit]=5`
+  // const trendingMensProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Чоловіче&[filters][type][$eq]=trending&pagination[limit]=5`
+  // const trendingChildrenProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Дитяче&[filters][type][$eq]=trending&pagination[limit]=5`
+  const popularCategoriesUrl = `/subcategories?populate=*&pagination[limit]=9`
+  const newProductsUrl = `/products?populate=*&pagination[limit]=7`
+
+  const newProductsData = await fetchData(newProductsUrl)
+  const popularCategoriesData = await fetchData(popularCategoriesUrl)
   return (
     <main className='mt-[89px] flex-auto'>
       <HeroBanner />
       <CategoriesSection />
-      <NewArrivalsSection productsData={womenData} />
-      <PopularCategories />
+      <NewArrivalsSection newProductsData={newProductsData} />
+      <PopularCategories popularCategoriesData={popularCategoriesData} />
       <ServicesSection />
       <BlogSection />
       <SubscribeSection />

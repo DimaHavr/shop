@@ -12,7 +12,7 @@ import PhotoSwipe from 'photoswipe'
 import React, { useState } from 'react'
 import { HiMinus, HiPlus } from 'react-icons/hi'
 
-import type { IProduct } from '@/app/(pages)/women/page'
+import type { IProduct } from '@/app/(pages)/zhinky/page'
 
 import Rating from '../Rating'
 
@@ -102,7 +102,7 @@ export const animals = [
 
 const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(
-    `${productItem.images[0]}`,
+    `${productItem.attributes.img.data[0].attributes.url}`,
   )
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
   const [value, setValue] = React.useState<Selection>(new Set([]))
@@ -119,10 +119,10 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
   }
 
   const options: Partial<PhotoSwipe.Options> & { index?: number } = {
-    dataSource: productItem.images.map(item => ({
-      src: item,
-      width: 500,
-      height: 600,
+    dataSource: productItem.attributes.img.data.map(item => ({
+      src: item.attributes.url,
+      width: item.attributes.width,
+      height: item.attributes.height,
       alt: 'photo',
     })),
     showHideAnimationType: 'zoom',
@@ -140,16 +140,18 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
     setSelectedImage(image)
   }
   let discountPercentage: number = NaN
-  if (productItem.discount) {
-    discountPercentage = productItem.discount * 0.01
+  if (productItem.attributes.discount) {
+    discountPercentage = productItem.attributes.discount * 0.01
   }
-  const oldPrice = productItem.price + productItem.price * discountPercentage
+  const oldPrice =
+    productItem.attributes.price +
+    productItem.attributes.price * discountPercentage
   return (
     <div className='mt-12 flex justify-between gap-8 max-lg:flex-col max-lg:justify-center'>
       <div className='flex flex-col gap-4'>
         {selectedImage && (
           <Image
-            className='h-auto min-w-[600px] cursor-pointer max-xl:max-w-[600px] max-lg:min-w-full max-lg:max-w-full'
+            className='h-auto min-w-[600px] cursor-pointer object-contain max-xl:max-w-[450px] max-lg:min-w-full max-lg:max-w-full'
             src={selectedImage}
             width={500}
             height={600}
@@ -159,17 +161,17 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
         )}
 
         <ul className='flex w-[600px] gap-4 overflow-auto max-xl:max-w-[600px] max-lg:w-full max-lg:max-w-full max-lg:justify-center'>
-          {productItem.images.map((image, index) => (
+          {productItem.attributes.img.data.map((item, index) => (
             <li
-              key={image}
+              key={item.attributes.url}
               onClick={() => {
-                handleImageClick(image)
+                handleImageClick(item.attributes.url)
                 setCurrentSlideIndex(index)
               }}
             >
               <Image
                 className='h-auto min-w-[120px] cursor-pointer'
-                src={image}
+                src={item.attributes.url}
                 width={230}
                 height={340}
                 alt='thumbnail'
@@ -178,15 +180,18 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
           ))}
         </ul>
       </div>
-      <div className=' flex w-[500px] flex-col gap-[30px] max-xl:max-w-[380px] max-lg:w-full max-lg:max-w-full max-md:items-center'>
+      <div className=' flex w-[600px] flex-col gap-[30px] max-xl:max-w-[380px] max-lg:w-full max-lg:max-w-full max-md:items-center'>
+        <h2 className='font-exo_2 text-2xl font-semibold max-md:text-md'>
+          {productItem.attributes.title}
+        </h2>
         <div className='flex items-start justify-between'>
           <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
-            {productItem.discount && (
+            {productItem.attributes.discount && (
               <span className='text-base text-[red] line-through'>
                 {oldPrice.toFixed(2)}
               </span>
             )}
-            {productItem.price} uah
+            {productItem.attributes.price} uah
           </p>
           <Rating className='flex' count={5} value={5} />
         </div>

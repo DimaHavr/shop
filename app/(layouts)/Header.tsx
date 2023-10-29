@@ -83,7 +83,7 @@ export const Header: React.FC = () => {
           </li>
           <li>
             <Link
-              href='/women'
+              href='/zhinky'
               className='font-exo_2 text-lg font-semibold  text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Жінки
@@ -91,7 +91,7 @@ export const Header: React.FC = () => {
           </li>
           <li>
             <Link
-              href='/kids'
+              href='/dity'
               className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Діти
@@ -99,7 +99,7 @@ export const Header: React.FC = () => {
           </li>
           <li>
             <Link
-              href='/blog'
+              href='/choloviky'
               className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Блог

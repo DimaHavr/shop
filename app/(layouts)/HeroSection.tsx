@@ -46,7 +46,7 @@ const HeroBanner = () => {
             Нова чоловіча колекція вже в магазині
           </h1>
           <Link
-            href='/mens'
+            href='/choloviky'
             className='w-[300px] rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300  hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-sm:w-[250px] max-sm:text-md'
           >
             Чоловіча колекція
@@ -67,7 +67,7 @@ const HeroBanner = () => {
             Нова жіноча колекція вже в магазині
           </h1>
           <Link
-            href='/women'
+            href='/zhinky'
             className='w-[300px] rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300  hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-sm:w-[250px] max-sm:text-md'
           >
             Жіноча колекція
@@ -88,7 +88,7 @@ const HeroBanner = () => {
             Нова дитяча колекція вже в магазині
           </h1>
           <Link
-            href='/kids'
+            href='/dity'
             className='w-[300px] rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300  hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-sm:w-[250px] max-sm:text-md'
           >
             Дитяча колекція

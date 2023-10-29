@@ -9,73 +9,47 @@ import Link from 'next/link'
 import { Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-const imagesData = [
-  {
-    id: '1',
-    title: 'Жінки',
-    href: '/women',
-    src: '/images/category/women.webp',
-    alt: 'women',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '2',
-    title: 'Чоловіки',
-    href: '/mens',
-    src: '/images/category/mens.webp',
-    alt: 'mens',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '3',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '4',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '4',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '4',
-    title: 'Діти',
-    href: '/kids',
-    src: '/images/category/kids.webp',
-    alt: 'kids',
-    width: 390,
-    height: 390,
-  },
-  {
-    id: '2',
-    title: 'Чоловіки',
-    href: '/mens',
-    src: '/images/category/mens.webp',
-    alt: 'mens',
-    width: 390,
-    height: 390,
-  },
-]
+interface PopularCategory {
+  id: number
+  attributes: {
+    title: string
+    img: {
+      data: {
+        attributes: {
+          url: string
+          alt: string
+          width: number
+          height: number
+        }
+      }
+    }
+    page: {
+      data: {
+        attributes: {
+          slug: string
+        }
+      }
+    }
+    category: {
+      data: {
+        attributes: {
+          slug: string
+        }
+      }
+    }
+    slug: string
+  }
+}
 
-const PopularCategories = () => {
+interface PopularCategoriesProps {
+  popularCategoriesData: {
+    data: PopularCategory[]
+  }
+}
+
+const PopularCategories: React.FC<PopularCategoriesProps> = ({
+  popularCategoriesData,
+}) => {
   return (
     <section className='bg-light-grey py-14'>
       <div className='container flex flex-col items-center justify-center gap-4 text-center'>
@@ -110,23 +84,25 @@ const PopularCategories = () => {
           modules={[Navigation, Pagination]}
           className='new-arrivals-slider bg-light-grey'
         >
-          {imagesData.map(item => {
+          {popularCategoriesData.data.map(item => {
+            const imageUrl: string =
+              item.attributes.img?.data?.attributes?.url || 'fallback-url'
             return (
               <SwiperSlide key={item.id} style={{ backgroundColor: '#E5E8ED' }}>
                 <div className=' my-6 mb-10 flex justify-center '>
                   <Link
-                    href={item.href}
+                    href={`/${item.attributes.page.data.attributes.slug}/${item.attributes.category.data.attributes.slug}/${item.attributes.slug}`}
                     className='flex h-auto  w-[150px] flex-col items-center justify-center gap-2 rounded-[100%]  transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'
                   >
                     <Image
-                      className=' h-auto min-w-[200px] rounded-[100%] shadow-box'
-                      src={item.src}
-                      alt={item.alt}
-                      width={item.width}
-                      height={item.height}
+                      className=' h-[200px] min-w-[200px] rounded-[100%] object-cover shadow-box'
+                      src={imageUrl}
+                      alt={item.attributes.img.data.attributes.alt}
+                      width={item.attributes.img.data.attributes.width}
+                      height={item.attributes.img.data.attributes.height}
                     />
                     <h2 className=' w-full font-exo_2 text-md font-semibold text-black-dis '>
-                      {item.title}
+                      {item.attributes.title}
                     </h2>
                   </Link>
                 </div>

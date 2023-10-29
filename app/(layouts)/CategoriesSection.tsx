@@ -4,7 +4,7 @@ import Link from 'next/link'
 const imagesData = [
   {
     title: 'Жінки',
-    href: '/women',
+    href: '/zhinky',
     src: '/images/category/women.webp',
     alt: 'women',
     width: 390,
@@ -12,7 +12,7 @@ const imagesData = [
   },
   {
     title: 'Чоловіки',
-    href: '/mens',
+    href: '/choloviky',
     src: '/images/category/mens.webp',
     alt: 'mens',
     width: 390,
@@ -20,7 +20,7 @@ const imagesData = [
   },
   {
     title: 'Діти',
-    href: '/kids',
+    href: '/dity',
     src: '/images/category/kids.webp',
     alt: 'kids',
     width: 390,

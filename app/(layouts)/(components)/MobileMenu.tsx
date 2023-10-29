@@ -84,7 +84,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ toggleMobileMenu }) => {
           <ul className='flex flex-col items-center gap-4 max-md:justify-center md:items-start'>
             <li className='w-full  text-center  text-white-dis'>
               <Link
-                href='/mens'
+                href='/choloviky'
                 onClick={toggleMobileMenu}
                 className='w-full  font-exo_2 text-xl font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
               >
@@ -93,7 +93,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ toggleMobileMenu }) => {
             </li>
             <li className='w-full  text-center  text-white-dis'>
               <Link
-                href='/women'
+                href='/zhinky'
                 onClick={toggleMobileMenu}
                 className='font-exo_2 text-xl font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
               >
@@ -102,7 +102,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ toggleMobileMenu }) => {
             </li>
             <li className='w-full  text-center  text-white-dis'>
               <Link
-                href='/kids'
+                href='/dity'
                 onClick={toggleMobileMenu}
                 className='font-exo_2 text-xl font-semibold text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
               >

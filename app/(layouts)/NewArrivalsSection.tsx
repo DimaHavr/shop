@@ -10,11 +10,16 @@ import { FaRegHeart } from 'react-icons/fa'
 import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import type { ProductItem } from '../(components)/ProductsSection/ProductsList'
 import Rating from '../(components)/Rating'
-import type { ProductsSectionProps } from '../page'
 
-const NewArrivalsSection: React.FC<ProductsSectionProps> = ({
-  productsData,
+interface NewArrivalsSectionProps {
+  newProductsData: {
+    data: ProductItem[]
+  }
+}
+const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
+  newProductsData,
 }) => {
   return (
     <section className='py-14'>
@@ -57,39 +62,43 @@ const NewArrivalsSection: React.FC<ProductsSectionProps> = ({
           modules={[Navigation, EffectCoverflow, Pagination]}
           className='new-arrivals-slider'
         >
-          {productsData.map(item => {
+          {newProductsData.data.map(item => {
             let discountPercentage: number = NaN
-            if (item.discount) {
-              discountPercentage = item.discount * 0.01
+            if (item.attributes.discount) {
+              discountPercentage = item.attributes.discount * 0.01
             }
-            const oldPrice = item.price + item.price * discountPercentage
-            const slug = `/${item.page}/${item.category}/${item.subcategory}/${item.id}`
+            const oldPrice =
+              item.attributes.price + item.attributes.price * discountPercentage
+            const slug = `/${item.attributes.page.data.attributes.slug}/${item.attributes.category.data.attributes.slug}/${item.attributes.subcategory.data.attributes.slug}/${item.id}`
+            const imageUrl =
+              item.attributes.img?.data[0]?.attributes?.url || 'fallback-url'
             return (
               <SwiperSlide key={item.id}>
                 <div className='relative mb-12 mt-4 transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
                   <Link
-                    className=' flex flex-col items-center justify-center rounded-2xl shadow-box '
+                    className='flex w-[300px] flex-col items-center justify-center rounded-2xl shadow-box '
                     href={slug}
                   >
                     <Image
-                      className='h-auto min-w-[200px] '
-                      src={`${item.images[0]}`}
-                      width={230}
-                      height={340}
+                      className='h-[300px] min-w-[200px] object-cover'
+                      src={imageUrl}
+                      width={item.attributes.img.data[0]?.attributes.width}
+                      height={item.attributes.img.data[0]?.attributes.height}
                       alt='as'
                     />
-                    <div className='flex w-full flex-col justify-start gap-2 rounded-b-2xl bg-white-dis p-2'>
-                      <h3 className='w-[280px] overflow-hidden whitespace-nowrap text-left font-exo_2 text-md font-semibold text-black-dis '>
-                        {item.name}
-                      </h3>
-                      <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
-                        {item.discount && (
+                    <div className='flex w-full flex-col justify-start gap-1 rounded-b-2xl bg-white-dis p-3'>
+                      <p className='flex items-baseline gap-1 text-center font-exo_2 text-lg uppercase '>
+                        {item.attributes.discount && (
                           <span className='text-base text-[red] line-through'>
                             {oldPrice.toFixed(2)}
                           </span>
                         )}
-                        {item.price} uah
+                        {item.attributes.price} uah
                       </p>
+                      <h3 className='line-clamp-2 text-left font-exo_2 text-md font-semibold text-black-dis '>
+                        {item.attributes.title}
+                      </h3>
+
                       <div className='absolute right-2 top-2'>
                         <Rating
                           className='flex'
@@ -99,12 +108,12 @@ const NewArrivalsSection: React.FC<ProductsSectionProps> = ({
                         />
                       </div>
 
-                      {item.discount && (
+                      {item.attributes.discount && (
                         <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
-                          {`-${item.discount}%`}
+                          {`-${item.attributes.discount}%`}
                         </span>
                       )}
-                      {item.is_new && (
+                      {item.attributes.isNewProduct && (
                         <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
                           new
                         </span>

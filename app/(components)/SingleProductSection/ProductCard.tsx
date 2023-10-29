@@ -12,32 +12,34 @@ import { animals, type ProductItemProps } from './GeneralInfo'
 const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
   const [value, setValue] = useState<Selection>(new Set([]))
   let discountPercentage: number = NaN
-  if (productItem.discount) {
-    discountPercentage = productItem.discount * 0.01
+  if (productItem.attributes.discount) {
+    discountPercentage = productItem.attributes.discount * 0.01
   }
-  const oldPrice = productItem.price + productItem.price * discountPercentage
+  const oldPrice =
+    productItem.attributes.price +
+    productItem.attributes.price * discountPercentage
 
   return (
     <div className='relative'>
       <div className=' flex flex-col items-center justify-center gap-2 rounded-2xl shadow-box '>
         <Image
-          className='h-auto min-w-[350px] '
-          src={`${productItem.images[0]}`}
-          width={230}
-          height={340}
+          className='h-[300px] w-full object-cover '
+          src={productItem.attributes.img.data[0].attributes.url}
+          width={productItem.attributes.img.data[0].attributes.width}
+          height={productItem.attributes.img.data[0].attributes.height}
           alt='as'
         />
         <div className='flex w-full flex-col justify-start gap-2 rounded-b-2xl bg-white-dis p-2'>
-          <h3 className='w-[280px] overflow-hidden whitespace-nowrap text-left font-exo_2 text-md font-semibold text-black-dis '>
-            {productItem.name}
+          <h3 className='line-clamp-2 text-left font-exo_2 text-md font-semibold text-black-dis '>
+            {productItem.attributes.title}
           </h3>
           <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
-            {productItem.discount && (
+            {productItem.attributes.discount && (
               <span className='text-base text-[red] line-through'>
                 {oldPrice.toFixed(2)}
               </span>
             )}
-            {productItem.price} uah
+            {productItem.attributes.price} uah
           </p>
           <div className='flex items-center justify-between gap-4'>
             <div className='flex w-[150px] max-w-xs flex-col gap-2'>
@@ -81,12 +83,12 @@ const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
             <Rating className='flex' size={25} count={5} value={4} />
           </div>
 
-          {productItem.discount && (
+          {productItem.attributes.discount && (
             <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
-              {`-${productItem.discount}%`}
+              {`-${productItem.attributes.discount}%`}
             </span>
           )}
-          {productItem.is_new && (
+          {productItem.attributes.isNewProduct && (
             <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
               new
             </span>
