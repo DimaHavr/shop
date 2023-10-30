@@ -1,21 +1,38 @@
 /* eslint-disable no-console */
 /* eslint-disable consistent-return */
-import axios from 'axios'
 
 import getHeaders from '@/app/(utils)/getHeaders'
 
 // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-export const fetchData = async (url: string) => {
+// export const fetchData = async (url: string) => {
+//   try {
+//     const res = await axios.get(`https://shop-strapi.onrender.com/api${url}`, {
+//       headers: getHeaders(),
+//     })
+//     return res.data
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+export default async function fetchData(url: string) {
   try {
-    const res = await axios.get(`https://shop-strapi.onrender.com/api${url}`, {
+    const res = await fetch(`https://shop-strapi.onrender.com/api${url}`, {
+      next: { revalidate: 60 },
       headers: getHeaders(),
     })
-    return res.data
+
+    if (!res.ok) {
+      throw new Error(res.status.toString() + res.statusText)
+    }
+
+    return await res.json()
   } catch (error) {
-    console.log(error)
+    console.error('Error fetching data:', error)
+    throw error
   }
 }
+
 // export const postData = async (url, post, token) => {
 //   const res = await fetch(`${baseUrl}/api/${url}`, {
 //     method: "POST",

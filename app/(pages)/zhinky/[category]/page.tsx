@@ -2,7 +2,7 @@ import CategoriesLayout from '@/app/(components)/CategoriesLayout'
 import Breadcrumb from '@/app/(components)/ProductsSection/Breadcrumb'
 import ProductsSection from '@/app/(components)/ProductsSection/ProductsSection'
 import SubscribeSection from '@/app/(layouts)/SubscribeSection'
-import { fetchData } from '@/app/(server)/api/service/strapi/fetchData'
+import fetchData from '@/app/(server)/api/service/strapi/fetchData'
 
 interface IndexPageProps {
   params: {

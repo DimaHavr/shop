@@ -5,41 +5,7 @@ import NewArrivalsSection from './(layouts)/NewArrivalsSection'
 import PopularCategories from './(layouts)/PopularCategories'
 import ServicesSection from './(layouts)/ServicesSection'
 import SubscribeSection from './(layouts)/SubscribeSection'
-import { fetchData } from './(server)/api/service/strapi/fetchData'
-
-export interface IProduct {
-  newProductsData: [
-    data: [
-      {
-        id: string
-        attributes: {
-          name: string
-          brand: string
-          page: 'Women' | 'Men' | 'Kids'
-          category: string
-          subcategory: string
-          price: number
-          color: string
-          size: string
-          material: string
-          description: string
-          stock_quantity: number
-          ratings: {
-            average_rating: number
-            num_ratings: number
-          }
-          discount?: number | undefined
-          is_new?: boolean
-          images: string[]
-          features: string[]
-        }
-      },
-    ],
-  ]
-}
-export interface ProductsSectionProps {
-  newProductsData: IProduct
-}
+import fetchData from './(server)/api/service/strapi/fetchData'
 
 const Home = async () => {
   // const trendingWomenProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Жіноче&[filters][type][$eq]=trending&pagination[limit]=5`

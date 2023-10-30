@@ -12,12 +12,11 @@ import PhotoSwipe from 'photoswipe'
 import React, { useState } from 'react'
 import { HiMinus, HiPlus } from 'react-icons/hi'
 
-import type { IProduct } from '@/app/(pages)/zhinky/page'
-
+import type { ProductItem } from '../ProductsSection/ProductsList'
 import Rating from '../Rating'
 
 export interface ProductItemProps {
-  productItem: IProduct
+  productItem: ProductItem
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -102,7 +101,7 @@ export const animals = [
 
 const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(
-    `${productItem.attributes.img.data[0].attributes.url}`,
+    `${productItem.attributes.img.data[0]?.attributes.url}`,
   )
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
   const [value, setValue] = React.useState<Selection>(new Set([]))

@@ -11,6 +11,7 @@ export interface ProductItem {
   attributes: {
     discount?: number
     price: number
+    description: string
     img: {
       data: {
         attributes: {

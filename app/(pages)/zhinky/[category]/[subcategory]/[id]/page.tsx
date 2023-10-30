@@ -1,7 +1,7 @@
 import Breadcrumb from '@/app/(components)/ProductsSection/Breadcrumb'
 import SingleProductSection from '@/app/(components)/SingleProductSection/SingleProductSection'
 import SubscribeSection from '@/app/(layouts)/SubscribeSection'
-import { fetchData } from '@/app/(server)/api/service/strapi/fetchData'
+import fetchData from '@/app/(server)/api/service/strapi/fetchData'
 
 export interface IProduct {
   id: number

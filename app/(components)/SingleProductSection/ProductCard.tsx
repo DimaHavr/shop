@@ -24,9 +24,11 @@ const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
       <div className=' flex flex-col items-center justify-center gap-2 rounded-2xl shadow-box '>
         <Image
           className='h-[300px] w-full object-cover '
-          src={productItem.attributes.img.data[0].attributes.url}
-          width={productItem.attributes.img.data[0].attributes.width}
-          height={productItem.attributes.img.data[0].attributes.height}
+          src={
+            productItem.attributes.img.data[0]?.attributes.url || 'fallback-url'
+          }
+          width={productItem.attributes.img.data[0]?.attributes.width}
+          height={productItem.attributes.img.data[0]?.attributes.height}
           alt='as'
         />
         <div className='flex w-full flex-col justify-start gap-2 rounded-b-2xl bg-white-dis p-2'>

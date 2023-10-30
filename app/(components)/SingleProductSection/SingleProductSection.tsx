@@ -2,14 +2,13 @@
 
 import { useState } from 'react'
 
-import type { IProduct } from '@/app/(pages)/zhinky/page'
-
+import type { ProductItem } from '../ProductsSection/ProductsList'
 import GeneralInfo from './GeneralInfo'
 import ProductDetails from './ProductDetails'
 import ProductReviews from './ProductReviews'
 
 export interface SingleProductSectionProps {
-  productData: IProduct
+  productData: ProductItem
 }
 const SingleProductSection: React.FC<SingleProductSectionProps> = ({
   productData,
