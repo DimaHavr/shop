@@ -1,10 +1,9 @@
 'use client'
 
+import { Rating } from '@smastrom/react-rating'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa'
-
-import Rating from '../Rating'
 
 export interface ProductItem {
   id: number
@@ -22,6 +21,33 @@ export interface ProductItem {
       }[]
     }
     title: string
+    sizes: {
+      data: {
+        id: number
+        attributes: {
+          size: string
+        }
+      }[]
+    }
+    colors: {
+      data: {
+        id: number
+        attributes: {
+          name: string
+        }
+      }[]
+    }
+    reviews: {
+      data: {
+        id: number
+        attributes: {
+          comment: string
+          rating: number
+          name: string
+          createdAt: string
+        }
+      }[]
+    }
     page: {
       data: {
         attributes: {
@@ -65,7 +91,12 @@ const ProductsList: React.FC<ProductsListProps> = ({ productsData }) => {
         const slug = `/${item.attributes.page.data.attributes.slug}/${item.attributes.category.data.attributes.slug}/${item.attributes.subcategory.data.attributes.slug}/${item.id}`
         const imageUrl =
           item.attributes.img?.data[0]?.attributes?.url || 'fallback-url'
-
+        const reviewQty = item.attributes.reviews.data.length
+        const totalRating = item.attributes.reviews.data.reduce(
+          (acc, rating) => acc + rating.attributes.rating,
+          0,
+        )
+        const averageRating = totalRating / reviewQty
         return (
           <li
             className='relative transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'
@@ -95,7 +126,11 @@ const ProductsList: React.FC<ProductsListProps> = ({ productsData }) => {
                   {item.attributes.price} uah
                 </p>
                 <div className='absolute right-2 top-2'>
-                  <Rating className='flex' size={20} count={5} value={5} />
+                  <Rating
+                    style={{ maxWidth: 90 }}
+                    value={averageRating}
+                    readOnly
+                  />
                 </div>
 
                 {item.attributes.discount && (

@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import './globals.css'
+import '@smastrom/react-rating/style.css'
 
 import type { Metadata } from 'next'
 import { Exo_2, Gugi, Inter, Manrope } from 'next/font/google'

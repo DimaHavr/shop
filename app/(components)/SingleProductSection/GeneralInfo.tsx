@@ -5,8 +5,13 @@
 
 import 'photoswipe/style.css'
 
-import type { Selection } from '@nextui-org/react'
-import { Accordion, AccordionItem, Select, SelectItem } from '@nextui-org/react'
+import {
+  Accordion,
+  AccordionItem,
+  Autocomplete,
+  AutocompleteItem,
+} from '@nextui-org/react'
+import { Rating } from '@smastrom/react-rating'
 import Image from 'next/image'
 import PhotoSwipe from 'photoswipe'
 import React, { useState } from 'react'
@@ -17,10 +22,10 @@ import { onAdd } from '@/app/(redux)/cart/cartSlice'
 import { useAppDispatch } from '@/app/(redux)/hooks'
 
 import type { ProductItem } from '../ProductsSection/ProductsList'
-import Rating from '../Rating'
 
 export interface ProductItemProps {
   productItem: ProductItem
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -42,98 +47,41 @@ declare namespace PhotoSwipe {
   }
 }
 
-export const animals = [
-  {
-    label: 'Cat',
-    value: 'cat',
-    description: 'The second most popular pet in the world',
-  },
-  {
-    label: 'Dog',
-    value: 'dog',
-    description: 'The most popular pet in the world',
-  },
-  {
-    label: 'Elephant',
-    value: 'elephant',
-    description: 'The largest land animal',
-  },
-  { label: 'Lion', value: 'lion', description: 'The king of the jungle' },
-  { label: 'Tiger', value: 'tiger', description: 'The largest cat species' },
-  {
-    label: 'Giraffe',
-    value: 'giraffe',
-    description: 'The tallest land animal',
-  },
-  {
-    label: 'Dolphin',
-    value: 'dolphin',
-    description: 'A widely distributed and diverse group of aquatic mammals',
-  },
-  {
-    label: 'Penguin',
-    value: 'penguin',
-    description: 'A group of aquatic flightless birds',
-  },
-  {
-    label: 'Zebra',
-    value: 'zebra',
-    description: 'A several species of African equids',
-  },
-  {
-    label: 'Shark',
-    value: 'shark',
-    description:
-      'A group of elasmobranch fish characterized by a cartilaginous skeleton',
-  },
-  {
-    label: 'Whale',
-    value: 'whale',
-    description: 'Diverse group of fully aquatic placental marine mammals',
-  },
-  {
-    label: 'Otter',
-    value: 'otter',
-    description: 'A carnivorous mammal in the subfamily Lutrinae',
-  },
-  {
-    label: 'Crocodile',
-    value: 'crocodile',
-    description: 'A large semiaquatic reptile',
-  },
-]
-
-const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
+const GeneralInfo: React.FC<ProductItemProps> = ({
+  productItem,
+  setActiveTab,
+}) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(
     `${productItem.attributes.img.data[0]?.attributes.url}`,
   )
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
-  const [value, setValue] = React.useState<Selection>(new Set([]))
+  const [color, setColor] = React.useState<React.Key>('')
+  const [size, setSize] = React.useState<React.Key>('')
+
   const [quantity, setQuantity] = useState(1)
   const dispatch = useAppDispatch()
-
   const handleAddToCart = () => {
-    //  if (!color) {
-    //    toast.error('Оберіть колір...', {
-    //      style: {
-    //        borderRadius: '10px',
-    //        background: '#fff',
-    //        color: '#333',
-    //      },
-    //    })
-    //    return
-    //  }
+    if (!color) {
+      toast.error('Оберіть колір...', {
+        style: {
+          borderRadius: '10px',
+          background: '#fff',
+          color: '#333',
+        },
+      })
+      return
+    }
 
-    //  if (!size) {
-    //    toast.error('Оберіть розмір...', {
-    //      style: {
-    //        borderRadius: '10px',
-    //        background: '#fff',
-    //        color: '#333',
-    //      },
-    //    })
-    //    return
-    //  }
+    if (!size) {
+      toast.error('Оберіть розмір...', {
+        style: {
+          borderRadius: '10px',
+          background: '#fff',
+          color: '#333',
+        },
+      })
+      return
+    }
 
     toast.success(`${productItem.attributes.title} додано до кошика!`, {
       style: {
@@ -146,13 +94,13 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
       onAdd({
         product: productItem,
         quantity,
-        color: 'green',
-        size: 'xl',
+        color: color.toString(),
+        size: size.toString(),
       }),
     )
     setQuantity(1)
-    //  dispatch(setSize(''))
-    //  dispatch(setColor(''))
+    setColor('')
+    setSize('')
   }
 
   const incQty = () => {
@@ -193,6 +141,12 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
   const oldPrice =
     productItem.attributes.price +
     productItem.attributes.price * discountPercentage
+  const reviewQty = productItem.attributes.reviews.data.length
+  const totalRating = productItem.attributes.reviews.data.reduce(
+    (acc, rating) => acc + rating.attributes.rating,
+    0,
+  )
+  const averageRating = totalRating / reviewQty
   return (
     <div className='mt-12 flex justify-between gap-8 max-lg:flex-col max-lg:justify-center'>
       <div className='flex flex-col gap-4'>
@@ -240,37 +194,46 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
             )}
             {productItem.attributes.price} uah
           </p>
-          <Rating className='flex' count={5} value={5} />
+          <button
+            type='button'
+            className='flex items-center justify-center'
+            onClick={() => setActiveTab('ProductReviews')}
+          >
+            <Rating style={{ maxWidth: 130 }} value={averageRating} readOnly />
+            <span className='font-exo_2 text-lg'>({reviewQty})</span>
+          </button>
         </div>
         <div className='flex w-full max-w-xs flex-col gap-2'>
-          <Select
+          <Autocomplete
             label='Виберіть колір'
             variant='underlined'
-            selectedKeys={value}
+            placeholder='Виберіть колір'
             className='max-w-xs'
-            onSelectionChange={setValue}
+            selectedKey={color}
+            onSelectionChange={setColor}
           >
-            {animals.map(animal => (
-              <SelectItem key={animal.value} value={animal.value}>
-                {animal.label}
-              </SelectItem>
+            {productItem.attributes.colors.data.map(item => (
+              <AutocompleteItem key={item.attributes.name}>
+                {item.attributes.name}
+              </AutocompleteItem>
             ))}
-          </Select>
+          </Autocomplete>
         </div>
         <div className='flex w-full max-w-xs flex-col gap-2'>
-          <Select
+          <Autocomplete
             label='Виберіть розмір'
             variant='underlined'
-            selectedKeys={value}
+            placeholder='Виберіть розмір'
             className='max-w-xs'
-            onSelectionChange={setValue}
+            selectedKey={size}
+            onSelectionChange={setSize}
           >
-            {animals.map(animal => (
-              <SelectItem key={animal.value} value={animal.value}>
-                {animal.label}
-              </SelectItem>
+            {productItem.attributes.sizes.data.map(item => (
+              <AutocompleteItem key={item.attributes.size}>
+                {item.attributes.size}
+              </AutocompleteItem>
             ))}
-          </Select>
+          </Autocomplete>
         </div>
         <div className='flex w-[130px]  justify-center gap-2 rounded border-[1px] border-b-primary-green py-[10px] text-center text-lg font-bold text-primary-green shadow-box'>
           <button

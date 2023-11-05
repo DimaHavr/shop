@@ -4,6 +4,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
+import { Rating } from '@smastrom/react-rating'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa'
@@ -11,7 +12,6 @@ import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import type { ProductItem } from '../(components)/ProductsSection/ProductsList'
-import Rating from '../(components)/Rating'
 
 interface NewArrivalsSectionProps {
   newProductsData: {
@@ -72,6 +72,12 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
             const slug = `/${item.attributes.page.data.attributes.slug}/${item.attributes.category.data.attributes.slug}/${item.attributes.subcategory.data.attributes.slug}/${item.id}`
             const imageUrl =
               item.attributes.img?.data[0]?.attributes?.url || 'fallback-url'
+            const reviewQty = item.attributes.reviews.data.length
+            const totalRating = item.attributes.reviews.data.reduce(
+              (acc, rating) => acc + rating.attributes.rating,
+              0,
+            )
+            const averageRating = totalRating / reviewQty
             return (
               <SwiperSlide key={item.id}>
                 <div className='relative mb-12 mt-4 transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
@@ -101,10 +107,9 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
 
                       <div className='absolute right-2 top-2'>
                         <Rating
-                          className='flex'
-                          size={20}
-                          count={5}
-                          value={5}
+                          style={{ maxWidth: 90 }}
+                          value={averageRating}
+                          readOnly
                         />
                       </div>
 

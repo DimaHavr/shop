@@ -36,7 +36,7 @@ const CartItems: React.FC<CartItemProps> = ({ cartItems }) => {
   const dispatch = useAppDispatch()
 
   return (
-    <ul className=' flex h-[73vh] flex-col gap-4 overflow-y-auto'>
+    <ul className=' flex h-[69vh] flex-col gap-4 overflow-y-auto'>
       {cartItems.map(item => {
         const slug = `/${item.product.attributes.page.data.attributes.slug}/${item.product.attributes.category.data.attributes.slug}/${item.product.attributes.subcategory.data.attributes.slug}/${item.product.id}`
         return (
@@ -64,10 +64,10 @@ const CartItems: React.FC<CartItemProps> = ({ cartItems }) => {
                   {item.product.attributes.title}
                 </Link>
                 <p className=' font-exo_2 text-md  text-white-dis'>
-                  Розмір: {item.size}
+                  Колір: {item.color}
                 </p>
                 <p className=' font-exo_2 text-md  text-white-dis'>
-                  Колір: {item.color}
+                  Розмір: {item.size}
                 </p>
                 <div className='flex items-center gap-6'>
                   <div className='flex w-[100px]  justify-center gap-2 rounded   py-[5px] text-center text-lg font-bold text-white-dis shadow-box'>

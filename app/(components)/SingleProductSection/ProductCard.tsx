@@ -1,16 +1,23 @@
 'use client'
 
-import type { Selection } from '@nextui-org/react'
-import { Select, SelectItem } from '@nextui-org/react'
+import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+import { Rating } from '@smastrom/react-rating'
 import Image from 'next/image'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { FaRegHeart } from 'react-icons/fa'
 
-import Rating from '../Rating'
-import { animals, type ProductItemProps } from './GeneralInfo'
+import { onAdd } from '@/app/(redux)/cart/cartSlice'
+import { useAppDispatch } from '@/app/(redux)/hooks'
 
-const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
-  const [value, setValue] = useState<Selection>(new Set([]))
+import { type ProductItemProps } from './GeneralInfo'
+
+const ProductCard: React.FC<ProductItemProps> = ({
+  productItem,
+  setActiveTab,
+}) => {
+  const [color, setColor] = useState<React.Key>('')
+  const [size, setSize] = useState<React.Key>('')
   let discountPercentage: number = NaN
   if (productItem.attributes.discount) {
     discountPercentage = productItem.attributes.discount * 0.01
@@ -18,10 +25,58 @@ const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
   const oldPrice =
     productItem.attributes.price +
     productItem.attributes.price * discountPercentage
+  const reviewQty = productItem.attributes.reviews.data.length
+  const totalRating = productItem.attributes.reviews.data.reduce(
+    (acc, rating) => acc + rating.attributes.rating,
+    0,
+  )
+  const averageRating = totalRating / reviewQty
+  const dispatch = useAppDispatch()
+  const handleAddToCart = () => {
+    if (!color) {
+      toast.error('Оберіть колір...', {
+        style: {
+          borderRadius: '10px',
+          background: '#fff',
+          color: '#333',
+        },
+      })
+      return
+    }
+
+    if (!size) {
+      toast.error('Оберіть розмір...', {
+        style: {
+          borderRadius: '10px',
+          background: '#fff',
+          color: '#333',
+        },
+      })
+      return
+    }
+
+    toast.success(`${productItem.attributes.title} додано до кошика!`, {
+      style: {
+        borderRadius: '10px',
+        background: '#fff',
+        color: '#333',
+      },
+    })
+    dispatch(
+      onAdd({
+        product: productItem,
+        quantity: 1,
+        color: color.toString(),
+        size: size.toString(),
+      }),
+    )
+    setColor('')
+    setSize('')
+  }
 
   return (
     <div className='relative'>
-      <div className=' flex flex-col items-center justify-center gap-2 rounded-2xl shadow-box '>
+      <div className=' flex w-[360px] flex-col items-center justify-center gap-2 rounded-2xl shadow-box '>
         <Image
           className='h-[300px] w-full object-cover '
           src={
@@ -45,44 +100,56 @@ const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
           </p>
           <div className='flex items-center justify-between gap-4'>
             <div className='flex w-[150px] max-w-xs flex-col gap-2'>
-              <Select
+              <Autocomplete
                 label='Виберіть розмір'
-                variant='bordered'
-                selectedKeys={value}
+                variant='underlined'
+                placeholder='Виберіть розмір'
                 className='max-w-xs'
-                onSelectionChange={setValue}
+                selectedKey={size}
+                onSelectionChange={setSize}
               >
-                {animals.map(animal => (
-                  <SelectItem key={animal.value} value={animal.value}>
-                    {animal.label}
-                  </SelectItem>
+                {productItem.attributes.sizes.data.map(item => (
+                  <AutocompleteItem key={item.attributes.size}>
+                    {item.attributes.size}
+                  </AutocompleteItem>
                 ))}
-              </Select>
+              </Autocomplete>
             </div>
             <div className='flex w-[150px] max-w-xs flex-col gap-2'>
-              <Select
+              <Autocomplete
                 label='Виберіть колір'
-                variant='bordered'
-                selectedKeys={value}
+                variant='underlined'
+                placeholder='Виберіть колір'
                 className='max-w-xs'
-                onSelectionChange={setValue}
+                selectedKey={color}
+                onSelectionChange={setColor}
               >
-                {animals.map(animal => (
-                  <SelectItem key={animal.value} value={animal.value}>
-                    {animal.label}
-                  </SelectItem>
+                {productItem.attributes.colors.data.map(item => (
+                  <AutocompleteItem key={item.attributes.name}>
+                    {item.attributes.name}
+                  </AutocompleteItem>
                 ))}
-              </Select>
+              </Autocomplete>
             </div>
           </div>
           <button
+            onClick={handleAddToCart}
             type='button'
             className='my-[10px] w-full rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300  hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-sm:w-[250px] max-sm:text-md'
           >
             Купити
           </button>
           <div className='absolute right-2 top-2'>
-            <Rating className='flex' size={25} count={5} value={4} />
+            <button
+              type='button'
+              onClick={() => setActiveTab('ProductReviews')}
+            >
+              <Rating
+                style={{ maxWidth: 100 }}
+                value={averageRating}
+                readOnly
+              />
+            </button>
           </div>
 
           {productItem.attributes.discount && (
@@ -98,7 +165,7 @@ const ProductCard: React.FC<ProductItemProps> = ({ productItem }) => {
         </div>
       </div>
       <button
-        className='absolute right-4 top-[280px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box'
+        className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box'
         type='button'
       >
         {/* <FaHeart

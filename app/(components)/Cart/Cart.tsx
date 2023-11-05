@@ -76,7 +76,7 @@ const Cart: React.FC = () => {
                   />
                 </button>
               </div>
-              <div className='border-b-1 border-white-dis/80 px-0 pt-4' />
+              <div className='border-b-1 border-white-dis/80 px-0 pt-[28px]' />
             </div>
             {totalQuantities > 0 ? (
               <CartItems cartItems={cartItems} />

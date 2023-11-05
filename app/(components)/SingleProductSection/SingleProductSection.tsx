@@ -14,7 +14,7 @@ const SingleProductSection: React.FC<SingleProductSectionProps> = ({
   productData,
 }) => {
   const [activeTab, setActiveTab] = useState<string>('GeneralInfo')
-
+  const reviewQty = productData.attributes.reviews.data.length
   return (
     <section className='mb-14 mt-8'>
       <div className='container flex flex-col'>
@@ -50,20 +50,26 @@ const SingleProductSection: React.FC<SingleProductSectionProps> = ({
             <span className='relative'>
               Відгуки
               <span className=' absolute right-[-13px] top-[-11px] font-manrope text-sm '>
-                12
+                {reviewQty}
               </span>
             </span>
           </button>
         </div>
 
         {activeTab === 'GeneralInfo' && (
-          <GeneralInfo productItem={productData} />
+          <GeneralInfo productItem={productData} setActiveTab={setActiveTab} />
         )}
         {activeTab === 'ProductDetails' && (
-          <ProductDetails productItem={productData} />
+          <ProductDetails
+            productItem={productData}
+            setActiveTab={setActiveTab}
+          />
         )}
         {activeTab === 'ProductReviews' && (
-          <ProductReviews productItem={productData} />
+          <ProductReviews
+            productItem={productData}
+            setActiveTab={setActiveTab}
+          />
         )}
       </div>
     </section>
