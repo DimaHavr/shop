@@ -10,7 +10,11 @@ import { Accordion, AccordionItem, Select, SelectItem } from '@nextui-org/react'
 import Image from 'next/image'
 import PhotoSwipe from 'photoswipe'
 import React, { useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { HiMinus, HiPlus } from 'react-icons/hi'
+
+import { onAdd } from '@/app/(redux)/cart/cartSlice'
+import { useAppDispatch } from '@/app/(redux)/hooks'
 
 import type { ProductItem } from '../ProductsSection/ProductsList'
 import Rating from '../Rating'
@@ -106,6 +110,50 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
   const [value, setValue] = React.useState<Selection>(new Set([]))
   const [quantity, setQuantity] = useState(1)
+  const dispatch = useAppDispatch()
+
+  const handleAddToCart = () => {
+    //  if (!color) {
+    //    toast.error('Оберіть колір...', {
+    //      style: {
+    //        borderRadius: '10px',
+    //        background: '#fff',
+    //        color: '#333',
+    //      },
+    //    })
+    //    return
+    //  }
+
+    //  if (!size) {
+    //    toast.error('Оберіть розмір...', {
+    //      style: {
+    //        borderRadius: '10px',
+    //        background: '#fff',
+    //        color: '#333',
+    //      },
+    //    })
+    //    return
+    //  }
+
+    toast.success(`${productItem.attributes.title} додано до кошика!`, {
+      style: {
+        borderRadius: '10px',
+        background: '#fff',
+        color: '#333',
+      },
+    })
+    dispatch(
+      onAdd({
+        product: productItem,
+        quantity,
+        color: 'green',
+        size: 'xl',
+      }),
+    )
+    setQuantity(1)
+    //  dispatch(setSize(''))
+    //  dispatch(setColor(''))
+  }
 
   const incQty = () => {
     setQuantity(quantity + 1)
@@ -241,6 +289,7 @@ const GeneralInfo: React.FC<ProductItemProps> = ({ productItem }) => {
         </div>
         <div className=' flex justify-between gap-8 max-md:w-full max-md:flex-col'>
           <button
+            onClick={handleAddToCart}
             type='button'
             className='w-[300px] rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300 hover:scale-[1.03]  hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-md:w-full'
           >

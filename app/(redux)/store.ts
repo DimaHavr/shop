@@ -15,7 +15,7 @@ const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
 
 export const store = configureStore({
   reducer: {
-    cartReducer: persistedCartSlice,
+    cart: persistedCartSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

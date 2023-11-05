@@ -7,7 +7,7 @@ import { FaRegHeart } from 'react-icons/fa'
 import Rating from '../Rating'
 
 export interface ProductItem {
-  id: string
+  id: number
   attributes: {
     discount?: number
     price: number

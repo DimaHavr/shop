@@ -6,32 +6,23 @@ import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { FaBars, FaHeart, FaOpencart, FaSearch } from 'react-icons/fa'
 
-import Cart from '../(components)/Cart'
+import Cart from '../(components)/Cart/Cart'
 import SearchBar from '../(components)/SearchBar'
 import SearchInput from '../(components)/SearchInput'
 import { useWindowSize } from '../(hooks)/useWindowResize'
 import { setShowCart } from '../(redux)/cart/cartSlice'
+import { selectShowCart } from '../(redux)/cart/selectors'
 import { useAppDispatch, useAppSelector } from '../(redux)/hooks'
-import CourierModal from './(components)/CourierModal'
 import MobileMenu from './(components)/MobileMenu'
-import SuccessSubmitBanner from './(components)/SuccessSubmitBanner'
 
 export const Header: React.FC = () => {
-  const showCart = useAppSelector(state => state.cartReducer.showCart)
+  const showCart = useAppSelector(selectShowCart)
   const dispatch = useAppDispatch()
-  const [showModal, setShowModal] = useState<boolean>(false)
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false)
-  const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
-  const toggleSuccessSubmitModal = useCallback(() => {
-    setSubmitSuccess(prev => !prev)
-  }, [])
 
   const toggleMobileMenu = useCallback(() => {
     setMobileMenuOpen(prev => !prev)
-  }, [])
-  const toggleCourierModal = useCallback(() => {
-    setShowModal(prev => !prev)
   }, [])
 
   const toggleSearchBar = useCallback(() => {
@@ -45,7 +36,7 @@ export const Header: React.FC = () => {
   }
   const screenSize = useWindowSize()
   return (
-    <header className='padding-lock max-md fixed left-0 top-0 z-50 flex w-full items-center border-b-[1px] bg-footer-gradient-linear-green '>
+    <header className='padding-lock max-md fixed left-0 top-0 z-50 flex w-full items-center  bg-footer-gradient-linear-green '>
       <nav
         className='container mx-auto flex w-full items-center  justify-between py-4 max-md:justify-between lg:px-0'
         aria-label='Global'
@@ -146,23 +137,9 @@ export const Header: React.FC = () => {
           </button>
         </div>
       </nav>
-      <AnimatePresence>
-        {showModal && (
-          <CourierModal
-            toggleCourierModal={toggleCourierModal}
-            setSubmitSuccess={setSubmitSuccess}
-          />
-        )}
-      </AnimatePresence>
+
       <AnimatePresence>
         {mobileMenuOpen && <MobileMenu toggleMobileMenu={toggleMobileMenu} />}
-      </AnimatePresence>
-      <AnimatePresence>
-        {submitSuccess && (
-          <SuccessSubmitBanner
-            toggleSuccessSubmitModal={toggleSuccessSubmitModal}
-          />
-        )}
       </AnimatePresence>
       <AnimatePresence>{showCart && <Cart />}</AnimatePresence>
       <AnimatePresence>

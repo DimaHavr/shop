@@ -1,195 +1,179 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/es/storage'
 
-interface CartItem {
-  id: number
-  name: string
-  price: number
-  quantity: number
+import type { ProductItem } from '@/app/(components)/ProductsSection/ProductsList'
+
+export interface CartItem {
+  product: ProductItem
+  quantity?: number
   size: string
   color: string
 }
 
 export interface CartState {
-  items: CartItem[]
+  cartItems: CartItem[]
   showCart: boolean
   totalPrice: number
   totalQuantities: number
-}
-
-const initialState: CartState = {
-  items: [],
-  showCart: false,
-  totalPrice: 0,
-  totalQuantities: 0,
-}
-
-const calculateTotalPriceAndQuantities = (items: CartItem[]) => {
-  let totalPrice = 0
-  let totalQuantities = 0
-
-  for (const item of items) {
-    totalPrice += item.price * item.quantity
-    totalQuantities += item.quantity
-  }
-
-  return { totalPrice, totalQuantities }
+  qty: number
+  color: string
+  size: string
 }
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState,
+  initialState: {
+    showCart: false,
+    cartItems: [] as CartItem[],
+    totalPrice: 0,
+    totalQuantities: 0,
+    color: '',
+    size: '',
+  } as CartState,
   reducers: {
     setShowCart: (state, action: PayloadAction<boolean>) => {
       state.showCart = action.payload
     },
-    addItem: (state, action: PayloadAction<CartItem>) => {
-      const existingItem = state.items.find(
-        item => item.id === action.payload.id,
-      )
-
-      if (existingItem) {
-        // If the item already exists in the cart, create a new array with updated quantity
-        state.items = state.items.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: item.quantity + action.payload.quantity }
-            : item,
-        )
-      } else {
-        // Otherwise, add it to the cart
-        state.items.push(action.payload)
-      }
-
-      state.showCart = true // Set showCart to true when an item is added
-
-      // Update totalPrice and totalQuantities
-      const { totalPrice, totalQuantities } = calculateTotalPriceAndQuantities(
-        state.items,
-      )
-      state.totalPrice = totalPrice
-      state.totalQuantities = totalQuantities
-    },
-    removeItem: (state, action: PayloadAction<number>) => {
-      // Remove an item from the cart by its ID
-      const index = state.items.findIndex(item => item.id === action.payload)
-      if (index !== -1) {
-        state.items.splice(index, 1)
-      }
-
-      // Check if the cart is empty after removing an item and hide the cart
-      state.showCart = state.items.length > 0
-
-      // Update totalPrice and totalQuantities
-      const { totalPrice, totalQuantities } = calculateTotalPriceAndQuantities(
-        state.items,
-      )
-      state.totalPrice = totalPrice
-      state.totalQuantities = totalQuantities
-    },
-    clearCart: state => {
-      // Clear the entire cart
-      state.items = []
-      state.showCart = false
-
-      // Update totalPrice and totalQuantities
-      state.totalPrice = 0
-      state.totalQuantities = 0
-    },
-    toggleCartItemQuantity: (state, action: PayloadAction<number>) => {
-      // Toggle the quantity of an item in the cart by its ID
-      const itemToToggle = state.items.find(item => item.id === action.payload)
-      if (itemToToggle) {
-        itemToToggle.quantity = itemToToggle.quantity === 1 ? 0 : 1
-      }
-      const { totalPrice, totalQuantities } = calculateTotalPriceAndQuantities(
-        state.items,
-      )
-      state.totalPrice = totalPrice
-      state.totalQuantities = totalQuantities
-    },
-    decQty: (state, action: PayloadAction<number>) => {
-      // Decrease the quantity of an item in the cart by its ID
-      const itemToDecrement = state.items.find(
-        item => item.id === action.payload,
-      )
-      if (itemToDecrement && itemToDecrement.quantity > 0) {
-        itemToDecrement.quantity = -1
-      }
-    },
-    incQty: (state, action: PayloadAction<number>) => {
-      // Increase the quantity of an item in the cart by its ID
-      const itemToIncrement = state.items.find(
-        item => item.id === action.payload,
-      )
-      if (itemToIncrement) {
-        itemToIncrement.quantity = +1
-      }
-    },
-    setQty: (
-      state,
-      action: PayloadAction<{ itemId: number; quantity: number }>,
-    ) => {
-      // Set the quantity of an item in the cart by its ID
-      const { itemId, quantity } = action.payload
-      const itemToSetQty = state.items.find(item => item.id === itemId)
-      if (itemToSetQty) {
-        itemToSetQty.quantity = quantity
-      }
-    },
-    setColor: (
-      state,
-      action: PayloadAction<{ itemId: number; color: string }>,
-    ) => {
-      // Set the color of an item in the cart by its ID
-      const { itemId, color } = action.payload
-      const itemToSetColor = state.items.find(item => item.id === itemId)
-      if (itemToSetColor) {
-        itemToSetColor.color = color
-      }
-    },
-    setSize: (
-      state,
-      action: PayloadAction<{ itemId: number; size: string }>,
-    ) => {
-      // Set the size of an item in the cart by its ID
-      const { itemId, size } = action.payload
-      const itemToSetSize = state.items.find(item => item.id === itemId)
-      if (itemToSetSize) {
-        itemToSetSize.size = size
-      }
+    setCartItems: (state, action: PayloadAction<CartItem[]>) => {
+      state.cartItems = action.payload
     },
     setTotalPrice: (state, action: PayloadAction<number>) => {
       state.totalPrice = action.payload
     },
-    setTotalQuantities: (state, action: PayloadAction<number>) => {
-      state.totalQuantities = action.payload
+    setTotalQuantities: state => {
+      state.totalQuantities = state.cartItems.reduce(
+        (total, item) => total + (item.quantity || 0),
+        0,
+      )
+    },
+
+    setColor: (state, action: PayloadAction<string>) => {
+      state.color = action.payload
+    },
+    setSize: (state, action: PayloadAction<string>) => {
+      state.size = action.payload
+    },
+
+    toggleCartItemQuantity: (
+      state,
+      action: PayloadAction<{ id: number; value: 'inc' | 'dec' }>,
+    ) => {
+      const { id, value } = action.payload
+      const index = state.cartItems.findIndex(item => item.product.id === id)
+      const itemToUpdate = state.cartItems[index]
+
+      if (value === 'inc') {
+        state.cartItems[index] = {
+          ...itemToUpdate,
+          quantity: (itemToUpdate?.quantity || 0) + 1,
+        } as CartItem
+        state.totalPrice += itemToUpdate?.product.attributes.price || 0
+      } else if (value === 'dec') {
+        if ((itemToUpdate?.quantity || 0) > 1) {
+          state.cartItems[index] = {
+            ...itemToUpdate,
+            quantity: (itemToUpdate?.quantity || 0) - 1,
+          } as CartItem
+          state.totalPrice -= itemToUpdate?.product.attributes.price || 0
+        }
+      }
+    },
+    onAdd: (
+      state,
+      action: PayloadAction<{
+        product: ProductItem
+        quantity: number
+        color: string
+        size: string
+      }>,
+    ) => {
+      const { product, quantity, color, size } = action.payload
+      const existingItemIndex = state.cartItems.findIndex(
+        item =>
+          item.product.id === product.id &&
+          item.color === color &&
+          item.size === size,
+      )
+
+      if (existingItemIndex !== -1) {
+        const existingItem = state.cartItems[existingItemIndex]
+
+        if (existingItem && existingItem.quantity !== undefined) {
+          existingItem.quantity += quantity
+        }
+        state.totalPrice += (product.attributes.price || 0) * quantity
+      } else {
+        const newCartItem = {
+          product,
+          quantity,
+          color,
+          size,
+        } as CartItem
+        state.totalPrice += (product.attributes.price || 0) * quantity
+        state.totalQuantities += 1
+        state.cartItems.push(newCartItem)
+      }
+
+      state.showCart = true
+    },
+
+    onRemove: (
+      state,
+      action: PayloadAction<{
+        cartItem: {
+          product: {
+            id: number
+            attributes: {
+              price: number
+            }
+          }
+          quantity: number
+          color: string
+          size: string
+        }
+      }>,
+    ) => {
+      const { cartItem } = action.payload
+      const foundProduct = state.cartItems.find(
+        item => item.product.id === cartItem.product.id,
+      )
+      const newCartItems = state.cartItems.filter(
+        item => item.product.id !== cartItem.product.id,
+      )
+
+      if (foundProduct) {
+        const quantityToRemove = cartItem.quantity || 0
+        state.totalPrice -=
+          (foundProduct.product.attributes.price || 0) * quantityToRemove
+        state.totalQuantities -= 1 || 0
+      }
+
+      state.cartItems = newCartItems
     },
   },
 })
 
-const persistConfig = {
-  key: 'cart',
-  storage,
-  blacklist: ['showCart'],
-}
-
 export const {
-  addItem,
-  removeItem,
-  clearCart,
-  setShowCart,
-  toggleCartItemQuantity,
-  decQty,
-  incQty,
-  setQty,
-  setColor,
   setSize,
+  setColor,
+  setShowCart,
+  onAdd,
+  toggleCartItemQuantity,
+  onRemove,
+  setCartItems,
   setTotalPrice,
   setTotalQuantities,
 } = cartSlice.actions
+
+const persistConfig = {
+  key: 'cart',
+  storage,
+  whitelist: ['cartItems', 'totalPrice', 'totalQuantities', 'qty'],
+}
 
 export const persistedCartSlice = persistReducer(
   persistConfig,
