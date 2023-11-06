@@ -66,7 +66,7 @@ export const Header: React.FC = () => {
         <ul className=' hidden gap-12 max-xl:gap-6 lg:flex'>
           <li>
             <Link
-              href='/mens'
+              href='/choloviky'
               className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Чоловіки

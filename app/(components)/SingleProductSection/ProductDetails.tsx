@@ -7,8 +7,8 @@ const ProductDetails: React.FC<ProductItemProps> = ({
   setActiveTab,
 }) => {
   return (
-    <div className='mt-12 flex justify-between gap-8'>
-      <div className='flex w-full flex-col gap-6'>
+    <div className='mt-8 flex justify-between gap-[100px] max-md:flex-wrap max-md:items-center max-md:justify-center max-md:gap-8 '>
+      <div className='max-md-px-2 flex w-full flex-col'>
         <RenderMarkdown markdown={productItem.attributes.description} />
       </div>
       <ProductCard productItem={productItem} setActiveTab={setActiveTab} />

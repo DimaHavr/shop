@@ -126,7 +126,7 @@ const ProductsList: React.FC<ProductsListProps> = ({
   }, [currentPage, productsUrl])
   return (
     <div ref={listRef}>
-      {productsData.meta.pagination.total > 8 && (
+      {productsData.meta.pagination.total > 12 && (
         <Toolbar
           productsData={productsData}
           handlePageChange={handlePageChange}
@@ -186,16 +186,18 @@ const ProductsList: React.FC<ProductsListProps> = ({
                     />
                   </div>
 
-                  {item.attributes.discount && (
-                    <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
-                      {`-${item.attributes.discount}%`}
-                    </span>
-                  )}
-                  {item.attributes.isNewProduct === true && (
-                    <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
-                      new
-                    </span>
-                  )}
+                  <div className='absolute left-[-12px] top-0 z-[1] flex flex-col gap-1'>
+                    {item.attributes.isNewProduct === true && (
+                      <span className='  flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
+                        new
+                      </span>
+                    )}
+                    {item.attributes.discount && (
+                      <span className='  flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
+                        {`-${item.attributes.discount}%`}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </Link>
               <button
@@ -217,7 +219,7 @@ const ProductsList: React.FC<ProductsListProps> = ({
           )
         })}
       </ul>
-      {productsData.meta.pagination.total > 8 && (
+      {productsData.meta.pagination.total > 12 && (
         <Toolbar
           productsData={productsData}
           handlePageChange={handlePageChange}

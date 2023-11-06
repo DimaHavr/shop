@@ -40,8 +40,8 @@ const ProductReviews: React.FC<ProductItemProps> = ({
   }
 
   return (
-    <div className='mt-12 flex justify-between gap-[100px] '>
-      <div className='flex w-full gap-12'>
+    <div className='mt-8 flex items-center justify-between gap-[100px] max-md:flex-wrap max-md:justify-center max-md:gap-8 '>
+      <div className='flex w-full gap-12 '>
         <div className='flex w-full flex-col justify-start gap-8 '>
           <div className='flex w-full flex-col  gap-4'>
             {reviewQty > 0 ? (

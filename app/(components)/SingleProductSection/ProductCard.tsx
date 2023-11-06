@@ -76,7 +76,7 @@ const ProductCard: React.FC<ProductItemProps> = ({
 
   return (
     <div className='relative'>
-      <div className=' flex w-[360px] flex-col items-center justify-center gap-2 rounded-2xl shadow-box '>
+      <div className=' flex w-[360px] flex-col items-center justify-center gap-2 rounded-2xl shadow-box max-[420px]:w-[320px] max-[350px]:w-[300px] '>
         <Image
           className='h-[300px] w-full object-cover '
           src={
@@ -86,7 +86,7 @@ const ProductCard: React.FC<ProductItemProps> = ({
           height={productItem.attributes.img.data[0]?.attributes.height}
           alt='as'
         />
-        <div className='flex w-full flex-col justify-start gap-2 rounded-b-2xl bg-white-dis p-2'>
+        <div className='flex w-full flex-col justify-start gap-2 rounded-b-2xl bg-white-dis p-2 max-md:items-center max-md:justify-center'>
           <h3 className='line-clamp-2 text-left font-exo_2 text-md font-semibold text-black-dis '>
             {productItem.attributes.title}
           </h3>
@@ -99,7 +99,7 @@ const ProductCard: React.FC<ProductItemProps> = ({
             {productItem.attributes.price} uah
           </p>
           <div className='flex items-center justify-between gap-4'>
-            <div className='flex w-[150px] max-w-xs flex-col gap-2'>
+            <div className='flex w-[150px] max-w-xs flex-col gap-2 max-md:w-[130px]'>
               <Autocomplete
                 label='Виберіть розмір'
                 variant='underlined'
@@ -114,7 +114,7 @@ const ProductCard: React.FC<ProductItemProps> = ({
                 ))}
               </Autocomplete>
             </div>
-            <div className='flex w-[150px] max-w-xs flex-col gap-2'>
+            <div className='flex w-[150px] max-w-xs flex-col gap-2 max-md:w-[130px]'>
               <Autocomplete
                 label='Виберіть колір'
                 variant='underlined'

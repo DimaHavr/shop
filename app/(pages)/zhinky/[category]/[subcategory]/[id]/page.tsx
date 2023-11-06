@@ -16,9 +16,28 @@ interface IndexPageProps {
 export default async function IndexPage({ params }: IndexPageProps) {
   const productUrl = `/products/${params.id}?populate=*`
   const productData = await fetchData(productUrl)
+  const attributesData = productData.data
+  const breadCrumbArr = [
+    {
+      slug: `/${attributesData.attributes.page.data.attributes.slug}`,
+      title: attributesData.attributes.page.data.attributes.name,
+    },
+    {
+      slug: `/${attributesData.attributes.page.data.attributes.slug}/${attributesData.attributes.category.data.attributes.slug}`,
+      title: attributesData.attributes.category.data.attributes.title,
+    },
+    {
+      slug: `/${attributesData.attributes.page.data.attributes.slug}/${attributesData.attributes.category.data.attributes.slug}/${attributesData.attributes.subcategory.data.attributes.slug}`,
+      title: attributesData.attributes.subcategory.data.attributes.title,
+    },
+    {
+      slug: `${attributesData.id}`,
+      title: attributesData.attributes.title,
+    },
+  ]
   return (
     <main className='mt-[89px] flex-auto'>
-      <Breadcrumb />
+      <Breadcrumb breadCrumbArr={breadCrumbArr} />
       <SingleProductSection productData={productData.data} />
       <SubscribeSection />
     </main>

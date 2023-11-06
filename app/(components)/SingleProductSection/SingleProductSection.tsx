@@ -43,7 +43,7 @@ const SingleProductSection: React.FC<SingleProductSectionProps> = ({
             className={`${
               activeTab === 'ProductReviews' &&
               'rounded border-[1px]  border-b-primary-green text-lg font-bold text-primary-green shadow-box max-md:text-sm'
-            }  px-[25px] py-[10px] text-center font-exo_2 text-md font-semibold transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03] max-md:px-[10px] max-md:text-sm`}
+            }  px-[25px] py-[10px] text-center font-exo_2 text-md font-semibold transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03] max-md:px-[20px] max-md:text-sm`}
             type='button'
             onClick={() => setActiveTab('ProductReviews')}
           >

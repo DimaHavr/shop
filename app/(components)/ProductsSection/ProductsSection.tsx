@@ -19,9 +19,7 @@ const ProductsSection: React.FC<ProductsSectionProps> = ({
 }) => {
   return (
     <section className='pb-14'>
-      <div className='mt-8'>
-        <ProductsList productsData={productsData} productsUrl={productsUrl} />
-      </div>
+      <ProductsList productsData={productsData} productsUrl={productsUrl} />
     </section>
   )
 }

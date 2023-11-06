@@ -148,7 +148,7 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
   )
   const averageRating = totalRating / reviewQty
   return (
-    <div className='mt-12 flex justify-between gap-8 max-lg:flex-col max-lg:justify-center'>
+    <div className='mt-8 flex justify-between gap-8 max-lg:flex-col max-lg:justify-center'>
       <div className='flex flex-col gap-4'>
         {selectedImage && (
           <Image
@@ -181,19 +181,11 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
           ))}
         </ul>
       </div>
-      <div className=' flex w-[600px] flex-col gap-[30px] max-xl:max-w-[380px] max-lg:w-full max-lg:max-w-full max-md:items-center'>
+      <div className=' flex w-[600px] flex-col gap-[30px] max-xl:max-w-[380px] max-lg:w-full max-lg:max-w-full max-md:items-center max-md:gap-4'>
         <h2 className='font-exo_2 text-2xl font-semibold max-md:text-md'>
           {productItem.attributes.title}
         </h2>
-        <div className='flex items-start justify-between'>
-          <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
-            {productItem.attributes.discount && (
-              <span className='text-base text-[red] line-through'>
-                {oldPrice.toFixed(2)}
-              </span>
-            )}
-            {productItem.attributes.price} uah
-          </p>
+        <div className='flex w-full items-start justify-between gap-4 max-md:flex-col max-md:justify-start'>
           <button
             type='button'
             className='flex items-center justify-center'
@@ -202,6 +194,14 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
             <Rating style={{ maxWidth: 130 }} value={averageRating} readOnly />
             <span className='font-exo_2 text-lg'>({reviewQty})</span>
           </button>
+          <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
+            {productItem.attributes.discount && (
+              <span className='text-base text-[red] line-through'>
+                {oldPrice.toFixed(2)}
+              </span>
+            )}
+            {productItem.attributes.price} uah
+          </p>
         </div>
         <div className='flex w-full max-w-xs flex-col gap-2'>
           <Autocomplete
