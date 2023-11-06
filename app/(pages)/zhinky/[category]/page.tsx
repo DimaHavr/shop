@@ -18,7 +18,6 @@ export default async function IndexPage({ params }: IndexPageProps) {
   const currentCategoryData = await fetchData(currentCategoryUrl)
   const womenPageProductsData = await fetchData(womenPageProductsUrl)
   const attributesData = currentCategoryData.data[0].attributes
-
   const breadCrumbArr = [
     {
       slug: `/${attributesData.page.data.attributes.slug}`,
@@ -39,5 +38,18 @@ export default async function IndexPage({ params }: IndexPageProps) {
       />
       <SubscribeSection />
     </main>
+  )
+}
+export async function generateStaticParams() {
+  const url = `/categories?populate=*`
+  const category = await fetchData(url)
+  return category.data.map(
+    (item: {
+      attributes: {
+        slug: string
+      }
+    }) => ({
+      category: item.attributes.slug,
+    }),
   )
 }
