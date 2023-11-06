@@ -103,7 +103,6 @@ const ProductCard: React.FC<ProductItemProps> = ({
               <Autocomplete
                 label='Виберіть розмір'
                 variant='underlined'
-                placeholder='Виберіть розмір'
                 className='max-w-xs'
                 selectedKey={size}
                 onSelectionChange={setSize}
@@ -119,7 +118,6 @@ const ProductCard: React.FC<ProductItemProps> = ({
               <Autocomplete
                 label='Виберіть колір'
                 variant='underlined'
-                placeholder='Виберіть колір'
                 className='max-w-xs'
                 selectedKey={color}
                 onSelectionChange={setColor}

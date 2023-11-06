@@ -86,7 +86,7 @@ const ProductReviews: React.FC<ProductItemProps> = ({
             </button>
           </div>
           <ul className='flex flex-col gap-4'>
-            {productItem.attributes.reviews.data.map(item => {
+            {productItem.attributes.reviews.data.slice(0, 5).map(item => {
               const inputDate = new Date(item.attributes.createdAt)
 
               const formattedDate: string = inputDate.toLocaleDateString(

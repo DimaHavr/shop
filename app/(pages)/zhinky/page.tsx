@@ -5,7 +5,7 @@ import SubscribeSection from '@/app/(layouts)/SubscribeSection'
 import fetchData from '@/app/(server)/api/service/strapi/fetchData'
 
 export default async function IndexPage() {
-  const womenPageProductsUrl = `/products?populate=*&[filters][page][slug][$eq]=zhinky&pagination[limit]=8`
+  const womenPageProductsUrl = `/products?populate=*&[filters][page][slug][$eq]=zhinky&pagination[pageSize]=8`
   const womenPageCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
   const womenPageCategoriesData = await fetchData(womenPageCategoriesUrl)
   const womenPageProductsData = await fetchData(womenPageProductsUrl)
@@ -13,7 +13,10 @@ export default async function IndexPage() {
     <main className='mt-[89px] flex-auto'>
       <Breadcrumb />
       <CategoriesLayout categoriesData={womenPageCategoriesData} />
-      <ProductsSection productsData={womenPageProductsData} />
+      <ProductsSection
+        productsData={womenPageProductsData}
+        productsUrl={womenPageProductsUrl}
+      />
       <SubscribeSection />
     </main>
   )

@@ -11,7 +11,7 @@ interface IndexPageProps {
 }
 
 export default async function IndexPage({ params }: IndexPageProps) {
-  const womenPageProductsUrl = `/products?populate=*&[filters][category][slug][$eq]=${params.category}&pagination[limit]=8`
+  const womenPageProductsUrl = `/products?populate=*&[filters][category][slug][$eq]=${params.category}&pagination[pageSize]=8`
   const womenPageCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
   const womenPageCategoriesData = await fetchData(womenPageCategoriesUrl)
   const womenPageProductsData = await fetchData(womenPageProductsUrl)
@@ -19,7 +19,10 @@ export default async function IndexPage({ params }: IndexPageProps) {
     <main className='mt-[89px] flex-auto'>
       <Breadcrumb />
       <CategoriesLayout categoriesData={womenPageCategoriesData} />
-      <ProductsSection productsData={womenPageProductsData} />
+      <ProductsSection
+        productsData={womenPageProductsData}
+        productsUrl={womenPageProductsUrl}
+      />
       <SubscribeSection />
     </main>
   )

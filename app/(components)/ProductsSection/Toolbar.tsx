@@ -1,16 +1,17 @@
 'use client'
 
-import type { Selection } from '@nextui-org/react'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Pagination, Select, SelectItem } from '@nextui-org/react'
-import React from 'react'
+import { Autocomplete, AutocompleteItem, Pagination } from '@nextui-org/react'
+import React, { useState } from 'react'
 import { ImEqualizer } from 'react-icons/im'
 
-interface IAnimal {
+import type { ProductItem } from './ProductsList'
+
+interface ISortValue {
   label: string
   value: string
 }
-export const sortValues: IAnimal[] = [
+export const sortValues: ISortValue[] = [
   {
     label: 'За замовчуванням',
     value: 'default',
@@ -29,8 +30,26 @@ export const sortValues: IAnimal[] = [
   },
 ]
 
-const Toolbar = () => {
-  const [value, setValue] = React.useState<Selection>(new Set([]))
+interface ToolbarProps {
+  productsData: {
+    data: ProductItem[]
+    meta: {
+      pagination: {
+        total: number
+      }
+    }
+  }
+  currentPage: number
+  handlePageChange: (page: number) => void
+}
+
+const Toolbar: React.FC<ToolbarProps> = ({
+  productsData,
+  currentPage,
+  handlePageChange,
+}) => {
+  const [sortValue, setSortValue] = useState<React.Key>('default')
+
   return (
     <div className='container flex flex-wrap items-center justify-center  gap-6 py-7 lg:justify-between'>
       <button
@@ -41,35 +60,29 @@ const Toolbar = () => {
         <span className='ml-3'> Фільтер</span>
       </button>
       <div className='flex w-[200px] flex-col gap-2'>
-        <Select
-          defaultSelectedKeys={['default']}
-          label='Сортувати:'
+        <Autocomplete
+          label='Сортувати'
           variant='bordered'
-          selectedKeys={value}
-          classNames={{
-            mainWrapper: 'h-[60px] py-0',
-            label: 'text-md font-exo_2 text-primary-green font-semibold',
-          }}
-          className='max-w-xs  text-primary-green'
-          onSelectionChange={setValue}
+          className='max-w-xs'
+          selectedKey={sortValue}
+          onSelectionChange={setSortValue}
         >
           {sortValues.map(item => (
-            <SelectItem key={item.value} value={item.value}>
-              {item.label}
-            </SelectItem>
+            <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
           ))}
-        </Select>
+        </Autocomplete>
       </div>
       <Pagination
         showShadow
         classNames={{
           wrapper: 'gap-2',
-          item: 'w-8 h-8 text-primary-green  font-exo_2 text-md font-bold  bg-transparent',
+          item: 'w-8 h-8 text-primary-green font-exo_2 text-md font-bold bg-transparent',
           cursor:
             'bg-primary-green shadow-box text-white-dis font-exo_2 text-lg font-bold transition-color',
         }}
-        total={10}
-        initialPage={1}
+        total={Math.ceil(productsData.meta.pagination.total / 8)}
+        page={currentPage}
+        onChange={handlePageChange}
       />
     </div>
   )

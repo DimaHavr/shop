@@ -1,8 +1,8 @@
 import type { ProductItem } from './ProductsList'
 import ProductsList from './ProductsList'
-import Toolbar from './Toolbar'
 
 interface ProductsSectionProps {
+  productsUrl: string
   productsData: {
     meta: {
       pagination: {
@@ -13,20 +13,15 @@ interface ProductsSectionProps {
   }
 }
 
-const ProductsSection: React.FC<ProductsSectionProps> = ({ productsData }) => {
+const ProductsSection: React.FC<ProductsSectionProps> = ({
+  productsData,
+  productsUrl,
+}) => {
   return (
     <section className='pb-14'>
-      {productsData.meta.pagination.total > 8 ? (
-        <>
-          <Toolbar />
-          <ProductsList productsData={productsData} />
-          <Toolbar />
-        </>
-      ) : (
-        <div className='mt-8'>
-          <ProductsList productsData={productsData} />
-        </div>
-      )}
+      <div className='mt-8'>
+        <ProductsList productsData={productsData} productsUrl={productsUrl} />
+      </div>
     </section>
   )
 }
