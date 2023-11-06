@@ -125,7 +125,10 @@ const ProductsList: React.FC<ProductsListProps> = ({
     fetchData()
   }, [currentPage, productsUrl])
   return (
-    <div ref={listRef}>
+    <div
+      ref={listRef}
+      className={`${productsData.meta.pagination.total < 12 && 'mt-8'}`}
+    >
       {productsData.meta.pagination.total > 12 && (
         <Toolbar
           productsData={productsData}

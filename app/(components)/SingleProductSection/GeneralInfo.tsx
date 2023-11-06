@@ -185,7 +185,15 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
         <h2 className='font-exo_2 text-2xl font-semibold max-md:text-md'>
           {productItem.attributes.title}
         </h2>
-        <div className='flex w-full items-start justify-between gap-4 max-md:flex-col max-md:justify-start'>
+        <div className='flex w-full items-start justify-between gap-4 max-md:flex-col-reverse max-md:justify-start'>
+          <p className='flex items-baseline gap-1  font-exo_2 text-lg uppercase'>
+            {productItem.attributes.discount && (
+              <span className='text-base text-[red] line-through'>
+                {oldPrice.toFixed(2)}
+              </span>
+            )}
+            {productItem.attributes.price} uah
+          </p>
           <button
             type='button'
             className='flex items-center justify-center'
@@ -194,14 +202,6 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
             <Rating style={{ maxWidth: 130 }} value={averageRating} readOnly />
             <span className='font-exo_2 text-lg'>({reviewQty})</span>
           </button>
-          <p className='flex items-baseline gap-1 font-exo_2 text-lg uppercase'>
-            {productItem.attributes.discount && (
-              <span className='text-base text-[red] line-through'>
-                {oldPrice.toFixed(2)}
-              </span>
-            )}
-            {productItem.attributes.price} uah
-          </p>
         </div>
         <div className='flex w-full max-w-xs flex-col gap-2'>
           <Autocomplete
