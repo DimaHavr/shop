@@ -41,7 +41,7 @@ const CategoriesSection = () => {
                   className='flex flex-col items-center justify-center rounded-2xl shadow-box transition-transform duration-300 hover:scale-[1.03]  focus:scale-[1.03]  '
                 >
                   <Image
-                    className='h-auto max-[800px]:w-[220px] max-md:w-[300px]'
+                    className='h-[320px] object-cover max-[800px]:w-[220px] max-md:w-[300px]'
                     src={item.src}
                     alt={item.alt}
                     width={item.width}
