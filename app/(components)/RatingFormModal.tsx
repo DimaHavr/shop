@@ -38,8 +38,28 @@ export default function RatingFormModal({
     setIsLoading(true)
 
     try {
+      if (!name) {
+        toast.error(`Введіть імя...`, {
+          style: {
+            borderRadius: '10px',
+            background: '#fff',
+            color: '#333',
+          },
+        })
+        return
+      }
+      if (!email) {
+        toast.error(`Введіть електронну пошту...`, {
+          style: {
+            borderRadius: '10px',
+            background: '#fff',
+            color: '#333',
+          },
+        })
+        return
+      }
       if (!rating) {
-        toast.error(`Оберіть оцінку`, {
+        toast.error(`Оберіть оцінку...`, {
           style: {
             borderRadius: '10px',
             background: '#fff',

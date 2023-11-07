@@ -17,7 +17,7 @@ export default async function IndexPage() {
     },
   ]
   return (
-    <main className='mt-[89px] flex-auto'>
+    <main className='mt-[89px] flex-auto '>
       <Breadcrumb breadCrumbArr={breadCrumbArr} />
       <CategoriesLayout categoriesData={womenPageCategoriesData} />
       <ProductsSection

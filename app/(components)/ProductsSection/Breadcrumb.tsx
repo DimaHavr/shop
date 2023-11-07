@@ -33,7 +33,9 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ breadCrumbArr }) => {
                 passHref
                 className='flex items-center gap-1 transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'
               >
-                <p className='font-exo_2 text-primary-green'>{item.title}</p>
+                <p className='font-exo_2 text-md text-primary-green'>
+                  {item.title}
+                </p>
                 <MdOutlineArrowForwardIos size={15} color='#17696A' />
               </Link>
             ) : (

@@ -9,6 +9,8 @@ import { FaRegHeart } from 'react-icons/fa'
 
 import getHeaders from '@/app/(utils)/getHeaders'
 
+import EmptySection from '../EmptySection'
+import Loader from '../Loader'
 import Toolbar from './Toolbar'
 
 export interface ProductItem {
@@ -97,6 +99,7 @@ const ProductsList: React.FC<ProductsListProps> = ({
   const listRef = useRef<HTMLDivElement>(null)
   const [products, setProducts] = useState({ ...productsData })
   const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -110,6 +113,7 @@ const ProductsList: React.FC<ProductsListProps> = ({
         return
       }
       try {
+        setIsLoading(true)
         const url = `${productsUrl}&pagination[page]=${currentPage}`
         const res = await axios.get(
           `https://shop-strapi.onrender.com/api${url}`,
@@ -118,17 +122,22 @@ const ProductsList: React.FC<ProductsListProps> = ({
           },
         )
         setProducts(res.data)
+        setIsLoading(false)
       } catch (error) {
+        setIsLoading(false)
         throw new Error('Fetch error')
       }
     }
     fetchData()
   }, [currentPage, productsUrl])
-  return (
+  return productsData.data.length === 0 ? (
+    <EmptySection />
+  ) : (
     <div
       ref={listRef}
       className={`${productsData.meta.pagination.total < 12 && 'mt-8'}`}
     >
+      {isLoading && <Loader />}
       {productsData.meta.pagination.total > 12 && (
         <Toolbar
           productsData={productsData}

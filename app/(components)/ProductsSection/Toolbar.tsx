@@ -1,7 +1,7 @@
 'use client'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Autocomplete, AutocompleteItem, Pagination } from '@nextui-org/react'
+import { Pagination, Select, SelectItem } from '@nextui-org/react'
 import React, { useState } from 'react'
 import { ImEqualizer } from 'react-icons/im'
 
@@ -48,7 +48,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
   currentPage,
   handlePageChange,
 }) => {
-  const [sortValue, setSortValue] = useState<React.Key>('default')
+  const [sortValue, setSortValue] = useState<string>('default')
+
+  const handleSelectionChangeSortValue = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSortValue(e.target.value)
+  }
 
   return (
     <div className='container flex flex-wrap items-center justify-center  gap-6 py-7 lg:justify-between'>
@@ -60,19 +66,22 @@ const Toolbar: React.FC<ToolbarProps> = ({
         <span className='ml-3'> Фільтер</span>
       </button>
       <div className='flex w-[200px] flex-col gap-2'>
-        <Autocomplete
+        <Select
           label='Сортувати'
           variant='bordered'
           className='max-w-xs'
-          selectedKey={sortValue}
-          onSelectionChange={setSortValue}
+          selectedKeys={[sortValue]}
+          onChange={handleSelectionChangeSortValue}
         >
           {sortValues.map(item => (
-            <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+            <SelectItem key={item.value} value={item.value}>
+              {item.label}
+            </SelectItem>
           ))}
-        </Autocomplete>
+        </Select>
       </div>
       <Pagination
+        showControls
         showShadow
         classNames={{
           wrapper: 'gap-2',

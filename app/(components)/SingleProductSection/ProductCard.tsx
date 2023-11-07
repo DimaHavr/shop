@@ -1,6 +1,6 @@
 'use client'
 
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+import { Select, SelectItem } from '@nextui-org/react'
 import { Rating } from '@smastrom/react-rating'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -16,8 +16,8 @@ const ProductCard: React.FC<ProductItemProps> = ({
   productItem,
   setActiveTab,
 }) => {
-  const [color, setColor] = useState<React.Key>('')
-  const [size, setSize] = useState<React.Key>('')
+  const [color, setColor] = useState<string>('')
+  const [size, setSize] = useState<string>('')
   let discountPercentage: number = NaN
   if (productItem.attributes.discount) {
     discountPercentage = productItem.attributes.discount * 0.01
@@ -74,6 +74,18 @@ const ProductCard: React.FC<ProductItemProps> = ({
     setSize('')
   }
 
+  const handleSelectionChangeColor = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setColor(e.target.value)
+  }
+
+  const handleSelectionChangeSize = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSize(e.target.value)
+  }
+
   return (
     <div className='relative'>
       <div className=' flex w-[360px] flex-col items-center justify-center gap-2 rounded-2xl shadow-box max-[420px]:w-[320px] max-[350px]:w-[300px] '>
@@ -100,34 +112,40 @@ const ProductCard: React.FC<ProductItemProps> = ({
           </p>
           <div className='flex items-center justify-between gap-4'>
             <div className='flex w-[150px] max-w-xs flex-col gap-2 max-md:w-[130px]'>
-              <Autocomplete
-                label='Виберіть розмір'
-                variant='underlined'
-                className='max-w-xs'
-                selectedKey={size}
-                onSelectionChange={setSize}
-              >
-                {productItem.attributes.sizes.data.map(item => (
-                  <AutocompleteItem key={item.attributes.size}>
-                    {item.attributes.size}
-                  </AutocompleteItem>
-                ))}
-              </Autocomplete>
-            </div>
-            <div className='flex w-[150px] max-w-xs flex-col gap-2 max-md:w-[130px]'>
-              <Autocomplete
+              <Select
                 label='Виберіть колір'
                 variant='underlined'
                 className='max-w-xs'
-                selectedKey={color}
-                onSelectionChange={setColor}
+                selectedKeys={[color]}
+                onChange={handleSelectionChangeColor}
               >
                 {productItem.attributes.colors.data.map(item => (
-                  <AutocompleteItem key={item.attributes.name}>
+                  <SelectItem
+                    key={item.attributes.name}
+                    value={item.attributes.name}
+                  >
                     {item.attributes.name}
-                  </AutocompleteItem>
+                  </SelectItem>
                 ))}
-              </Autocomplete>
+              </Select>
+            </div>
+            <div className='flex w-[150px] max-w-xs flex-col gap-2 max-md:w-[130px]'>
+              <Select
+                label='Виберіть розмір'
+                variant='underlined'
+                className='max-w-xs'
+                selectedKeys={[size]}
+                onChange={handleSelectionChangeSize}
+              >
+                {productItem.attributes.sizes.data.map(item => (
+                  <SelectItem
+                    key={item.attributes.size}
+                    value={item.attributes.size}
+                  >
+                    {item.attributes.size}
+                  </SelectItem>
+                ))}
+              </Select>
             </div>
           </div>
           <button
@@ -150,16 +168,18 @@ const ProductCard: React.FC<ProductItemProps> = ({
             </button>
           </div>
 
-          {productItem.attributes.discount && (
-            <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
-              {`-${productItem.attributes.discount}%`}
-            </span>
-          )}
-          {productItem.attributes.isNewProduct && (
-            <span className=' absolute left-[-12px] top-0 z-[1] flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
-              new
-            </span>
-          )}
+          <div className='absolute left-[-12px] top-0 z-[1] flex flex-col gap-1'>
+            {productItem.attributes.isNewProduct === true && (
+              <span className='  flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
+                new
+              </span>
+            )}
+            {productItem.attributes.discount && (
+              <span className='flex h-[35px] items-center justify-center rounded-[16px] bg-[#c82128] px-[15px] font-exo_2 text-md text-white-dis shadow-button'>
+                {`-${productItem.attributes.discount}%`}
+              </span>
+            )}
+          </div>
         </div>
       </div>
       <button
@@ -173,7 +193,7 @@ const ProductCard: React.FC<ProductItemProps> = ({
                   /> */}
         <FaRegHeart
           color='#17696A'
-          className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+          className='transition-all duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
           size={30}
         />
       </button>

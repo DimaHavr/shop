@@ -90,7 +90,7 @@ export const Header: React.FC = () => {
           </li>
           <li>
             <Link
-              href='/choloviky'
+              href='/blog'
               className='font-exo_2 text-lg font-semibold text-white-dis transition-opacity hover:opacity-80  focus:opacity-80'
             >
               Блог

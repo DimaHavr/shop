@@ -11,7 +11,7 @@ const Home = async () => {
   // const trendingWomenProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Жіноче&[filters][type][$eq]=trending&pagination[limit]=5`
   // const trendingMensProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Чоловіче&[filters][type][$eq]=trending&pagination[limit]=5`
   // const trendingChildrenProductsUrl = `/api/products?populate=*&[filters][categories][title][$startsWithi]=Дитяче&[filters][type][$eq]=trending&pagination[limit]=5`
-  const popularCategoriesUrl = `/subcategories?populate=*&pagination[limit]=9`
+  const popularCategoriesUrl = `/subcategories?populate=*&pagination[limit]=7`
   const newProductsUrl = `/products?populate=*&pagination[limit]=7`
 
   const newProductsData = await fetchData(newProductsUrl)

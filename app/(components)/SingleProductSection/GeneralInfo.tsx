@@ -5,12 +5,7 @@
 
 import 'photoswipe/style.css'
 
-import {
-  Accordion,
-  AccordionItem,
-  Autocomplete,
-  AutocompleteItem,
-} from '@nextui-org/react'
+import { Accordion, AccordionItem, Select, SelectItem } from '@nextui-org/react'
 import { Rating } from '@smastrom/react-rating'
 import Image from 'next/image'
 import PhotoSwipe from 'photoswipe'
@@ -55,8 +50,8 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
     `${productItem.attributes.img.data[0]?.attributes.url}`,
   )
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
-  const [color, setColor] = React.useState<React.Key>('')
-  const [size, setSize] = React.useState<React.Key>('')
+  const [color, setColor] = useState<string>('')
+  const [size, setSize] = useState<string>('')
 
   const [quantity, setQuantity] = useState(1)
   const dispatch = useAppDispatch()
@@ -131,6 +126,18 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
     pswp.init()
   }
 
+  const handleSelectionChangeColor = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setColor(e.target.value)
+  }
+
+  const handleSelectionChangeSize = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSize(e.target.value)
+  }
+
   const handleImageClick = (image: string) => {
     setSelectedImage(image)
   }
@@ -149,10 +156,10 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
   const averageRating = totalRating / reviewQty
   return (
     <div className='mt-8 flex justify-between gap-8 max-lg:flex-col max-lg:justify-center'>
-      <div className='flex flex-col gap-4'>
+      <div className='relative flex flex-col gap-4'>
         {selectedImage && (
           <Image
-            className='h-auto min-w-[600px] cursor-pointer object-contain max-xl:max-w-[450px] max-lg:min-w-full max-lg:max-w-full'
+            className='h-auto min-w-[450px] cursor-pointer object-contain max-xl:max-w-[450px] max-lg:min-w-full max-lg:max-w-full'
             src={selectedImage}
             width={500}
             height={600}
@@ -161,7 +168,7 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
           />
         )}
 
-        <ul className='flex w-[600px] gap-4 overflow-auto max-xl:max-w-[600px] max-lg:w-full max-lg:max-w-full max-lg:justify-center'>
+        <ul className='absolute bottom-0 left-0 flex w-full gap-4 overflow-auto bg-modal-overlay max-xl:max-w-[600px] max-lg:w-full max-lg:max-w-full max-lg:justify-center'>
           {productItem.attributes.img.data.map((item, index) => (
             <li
               key={item.attributes.url}
@@ -171,7 +178,7 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
               }}
             >
               <Image
-                className='h-auto min-w-[120px] cursor-pointer'
+                className='h-auto min-w-[100px] cursor-pointer'
                 src={item.attributes.url}
                 width={230}
                 height={340}
@@ -204,34 +211,40 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
           </button>
         </div>
         <div className='flex w-full max-w-xs flex-col gap-2'>
-          <Autocomplete
+          <Select
             label='Виберіть колір'
             variant='underlined'
             className='max-w-xs'
-            selectedKey={color}
-            onSelectionChange={setColor}
+            selectedKeys={[color]}
+            onChange={handleSelectionChangeColor}
           >
             {productItem.attributes.colors.data.map(item => (
-              <AutocompleteItem key={item.attributes.name}>
+              <SelectItem
+                key={item.attributes.name}
+                value={item.attributes.name}
+              >
                 {item.attributes.name}
-              </AutocompleteItem>
+              </SelectItem>
             ))}
-          </Autocomplete>
+          </Select>
         </div>
         <div className='flex w-full max-w-xs flex-col gap-2'>
-          <Autocomplete
+          <Select
             label='Виберіть розмір'
             variant='underlined'
             className='max-w-xs'
-            selectedKey={size}
-            onSelectionChange={setSize}
+            selectedKeys={[size]}
+            onChange={handleSelectionChangeSize}
           >
             {productItem.attributes.sizes.data.map(item => (
-              <AutocompleteItem key={item.attributes.size}>
+              <SelectItem
+                key={item.attributes.size}
+                value={item.attributes.size}
+              >
                 {item.attributes.size}
-              </AutocompleteItem>
+              </SelectItem>
             ))}
-          </Autocomplete>
+          </Select>
         </div>
         <div className='flex w-[130px]  justify-center gap-2 rounded border-[1px] border-b-primary-green py-[10px] text-center text-lg font-bold text-primary-green shadow-box'>
           <button
