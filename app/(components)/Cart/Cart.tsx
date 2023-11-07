@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { useCallback, useRef } from 'react'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import { MdOutlineClose } from 'react-icons/md'
@@ -104,12 +105,14 @@ const Cart: React.FC = () => {
                   {totalPrice}Uah
                 </span>
               </p>
-              <button
-                type='button'
+              <Link
+                href='/checkout'
+                onClick={() => dispatch(setShowCart(false))}
+                passHref
                 className='rounded-2xl bg-white-dis p-4 text-center font-exo_2 text-lg font-bold text-primary-green shadow-button transition-all duration-300 hover:scale-[1.03] hover:opacity-80  focus:scale-[1.03] focus:opacity-80 max-md:w-full'
               >
                 Оформити замовлення
-              </button>
+              </Link>
             </div>
           )}
         </div>

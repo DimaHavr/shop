@@ -19,7 +19,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ breadCrumbArr }) => {
           <Link
             href='/'
             passHref
-            className='flex items-center gap-3 py-2 transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'
+            className='flex items-center gap-3 py-2 transition duration-300 hover:opacity-80 focus:opacity-80'
           >
             <TiHome size={25} color='#17696A' />
             <MdOutlineArrowForwardIos size={15} color='#17696A' />
