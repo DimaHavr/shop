@@ -19,7 +19,7 @@ const PersonalData = () => {
     }))
   }
   return (
-    <div className='flex flex-col justify-start gap-4'>
+    <div className='flex flex-col justify-start gap-3'>
       <h3 className=' font-exo_2 text-xl font-bold'>2. Персональні дані</h3>
       <div className='flex flex-col'>
         <form className='flex w-full flex-wrap gap-3'>
@@ -64,8 +64,8 @@ const PersonalData = () => {
             variant='underlined'
             label='Телефон'
             name='phone'
+            title='+380'
             value={formValue.phone || ''}
-            defaultValue='+380'
             onChange={handleInputChange}
             classNames={{
               label: 'font-exo_2 text-lg',
@@ -76,6 +76,7 @@ const PersonalData = () => {
             variant='underlined'
             label='Email'
             name='email'
+            title=''
             value={formValue.email || ''}
             onChange={handleInputChange}
             classNames={{

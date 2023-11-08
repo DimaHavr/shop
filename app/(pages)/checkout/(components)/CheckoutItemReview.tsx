@@ -38,9 +38,9 @@ const CheckoutItemReview: React.FC<CheckoutItemProps> = ({
 }) => {
   const dispatch = useAppDispatch()
   return (
-    <div className='flex flex-col justify-start gap-4'>
+    <div className='flex flex-col justify-start gap-6'>
       <h3 className=' font-exo_2 text-xl font-bold'>1. Огляд товару</h3>
-      <div className='flex flex-col rounded-2xl bg-light-grey py-6'>
+      <div className='flex flex-col rounded-2xl bg-light-grey py-6 shadow-xl'>
         <ul className='flex max-h-[600px]  flex-col gap-4 overflow-y-auto '>
           {cartItems.map(item => {
             const slug = `/${item.product.attributes.page.data.attributes.slug}/${item.product.attributes.category.data.attributes.slug}/${item.product.attributes.subcategory.data.attributes.slug}/${item.product.id}`

@@ -125,7 +125,7 @@ const DeliverySection = () => {
     item => item.SiteKey === selectedKeyWarehouse,
   )
   return (
-    <div className='flex flex-col justify-start gap-4'>
+    <div className='flex flex-col justify-start gap-3'>
       <h3 className='font-exo_2 text-xl font-bold'>3. Дані доставки</h3>
       <div className='flex flex-col'>
         <div className='flex flex-col gap-4'>
