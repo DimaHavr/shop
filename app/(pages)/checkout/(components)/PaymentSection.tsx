@@ -16,7 +16,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
   return (
     <div className='flex flex-col justify-start gap-4'>
       <h3 className=' font-exo_2 text-xl font-bold'>4. Метод оплати</h3>
-      <div className='flex h-[70px] justify-center gap-6'>
+      <div className='flex h-[70px] justify-center gap-6 max-md:my-12 max-md:flex-col'>
         <button
           onClick={() => {
             toast.success('Вибрано оплату при отриманні...', {

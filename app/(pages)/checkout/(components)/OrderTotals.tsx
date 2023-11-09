@@ -9,10 +9,9 @@ export interface OrderTotalsProps {
 const OrderTotals: React.FC<OrderTotalsProps> = ({ paymentMethod }) => {
   const totalPrice = useAppSelector(selectTotalPrice)
   const freeDelivery = totalPrice > 3000
-
   return (
-    <div className='sticky left-0 top-0 flex flex-col gap-8 pt-[74px]'>
-      <div className='flex w-[390px] flex-col gap-3 bg-light-grey py-4 shadow-xl'>
+    <div className='sticky left-0 top-0 flex flex-col gap-8 pt-[74px] max-xl:w-full'>
+      <div className='flex w-[390px] flex-col gap-3 bg-light-grey py-4 shadow-xl max-xl:w-full'>
         <h3 className=' px-4 font-exo_2 text-xl font-bold'>
           Підсумки замовлення
         </h3>

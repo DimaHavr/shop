@@ -46,7 +46,7 @@ export const Footer = () => {
           </Link>
         </div>
         <div className='z-10 flex max-md:w-full max-md:justify-between max-md:gap-0 md:gap-[133px]'>
-          <ul className='flex flex-col items-start gap-[10px]'>
+          <ul className='flex flex-col items-start gap-[10px] max-md:justify-evenly'>
             <li>
               <Link
                 className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  transition-opacity hover:opacity-80  focus:opacity-80'
@@ -88,7 +88,7 @@ export const Footer = () => {
               </Link>
             </li>
           </ul>
-          <ul className='flex flex-col gap-[29px] md:hidden'>
+          <ul className='flex flex-col gap-[29px] max-md:gap-4 md:hidden'>
             <li>
               <Link
                 className='flex h-12 w-12 items-center justify-center rounded-[50%] bg-white-dis uppercase '
@@ -127,8 +127,8 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className='z-10 flex gap-24 max-md:w-full max-md:justify-between max-md:gap-0 lg:flex-row lg:gap-[130px]'>
-          <ul className='flex flex-col gap-2'>
+        <div className='z-10 flex gap-24 max-md:hidden max-md:w-full  max-md:justify-center max-md:gap-0 lg:flex-row lg:gap-[130px]'>
+          <ul className='flex flex-col gap-2 max-md:hidden'>
             <li>
               <Link
                 href='/mens'
@@ -162,7 +162,7 @@ export const Footer = () => {
               </Link>
             </li>
           </ul>
-          <div className='flex flex-col items-end gap-4  md:flex-col md:items-start md:gap-[20px] lg:flex lg:items-end lg:gap-[15px]'>
+          <div className='flex flex-col items-end gap-4   md:flex-col md:items-start md:gap-[20px] lg:flex lg:items-end lg:gap-[15px]'>
             <p className='text-center font-exo_2 text-base font-semibold uppercase tracking-wide text-white-dis  '>
               Звʼязатися з нами
             </p>

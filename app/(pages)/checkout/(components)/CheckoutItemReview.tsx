@@ -37,6 +37,7 @@ const CheckoutItemReview: React.FC<CheckoutItemProps> = ({
   totalPrice,
 }) => {
   const dispatch = useAppDispatch()
+
   return (
     <div className='flex flex-col justify-start gap-6'>
       <h3 className=' font-exo_2 text-xl font-bold'>1. Огляд товару</h3>
@@ -44,6 +45,7 @@ const CheckoutItemReview: React.FC<CheckoutItemProps> = ({
         <ul className='flex max-h-[600px]  flex-col gap-4 overflow-y-auto '>
           {cartItems.map(item => {
             const slug = `/${item.product.attributes.page.data.attributes.slug}/${item.product.attributes.category.data.attributes.slug}/${item.product.attributes.subcategory.data.attributes.slug}/${item.product.id}`
+
             return (
               <li key={item.product.id} className='relative flex flex-col'>
                 <div className='flex gap-2 px-8'>
@@ -61,7 +63,7 @@ const CheckoutItemReview: React.FC<CheckoutItemProps> = ({
                   <div className='flex flex-col gap-2'>
                     <Link
                       href={slug}
-                      className=' line-clamp-1 pr-3 font-exo_2 text-md font-semibold '
+                      className=' line-clamp-1 pr-3  font-exo_2 text-md font-semibold max-md:line-clamp-2 '
                     >
                       {item.product.attributes.title}
                     </Link>

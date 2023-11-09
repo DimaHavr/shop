@@ -3,11 +3,17 @@
 import { Input, Textarea } from '@nextui-org/react'
 import { useState } from 'react'
 
+import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
+import { setOrder } from '@/app/(redux)/order/orderSlice'
+import { selectOrder } from '@/app/(redux)/order/selectors'
+
 interface FormValues {
   [key: string]: string
 }
 const PersonalData = () => {
   const [formValue, setFormValue] = useState<FormValues>({})
+  const order = useAppSelector(selectOrder)
+  const dispatch = useAppDispatch()
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -17,6 +23,9 @@ const PersonalData = () => {
       ...prevFormValue,
       [name]: value,
     }))
+    dispatch(
+      setOrder({ ...order, personalData: { ...formValue, [name]: value } }),
+    )
   }
   return (
     <div className='flex flex-col justify-start gap-3'>
@@ -32,7 +41,7 @@ const PersonalData = () => {
             onChange={handleInputChange}
             classNames={{
               label: 'font-exo_2 text-lg',
-              base: 'w-[228px]',
+              base: 'w-[228px] max-md:w-full',
             }}
           />
           <Input
@@ -44,7 +53,7 @@ const PersonalData = () => {
             onChange={handleInputChange}
             classNames={{
               label: 'font-exo_2 text-lg',
-              base: 'w-[228px]',
+              base: 'w-[228px] max-md:w-full',
             }}
           />
           <Input
@@ -56,7 +65,7 @@ const PersonalData = () => {
             onChange={handleInputChange}
             classNames={{
               label: 'font-exo_2 text-lg',
-              base: 'w-[228px]',
+              base: 'w-[228px] max-md:w-full',
             }}
           />
           <Input
@@ -69,7 +78,7 @@ const PersonalData = () => {
             onChange={handleInputChange}
             classNames={{
               label: 'font-exo_2 text-lg',
-              base: 'w-[228px]',
+              base: 'w-[228px] max-md:w-full',
             }}
           />
           <Input
@@ -81,7 +90,7 @@ const PersonalData = () => {
             onChange={handleInputChange}
             classNames={{
               label: 'font-exo_2 text-lg',
-              base: 'w-[228px]',
+              base: 'w-[228px] max-md:w-full',
             }}
           />
           <Textarea

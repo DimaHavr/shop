@@ -3,7 +3,13 @@
 import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
 import axios from 'axios'
 import { debounce } from 'lodash'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+
+import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
+import { setOrder } from '@/app/(redux)/order/orderSlice'
+import { selectOrder } from '@/app/(redux)/order/selectors'
 
 interface City {
   Ref: string
@@ -16,6 +22,8 @@ interface Warehouse {
 }
 
 const DeliverySection = () => {
+  const order = useAppSelector(selectOrder)
+  const dispatch = useAppDispatch()
   const apiKey = 'c75de6f5d503c098726768ca49c79618'
   const [filterCityValue, setFilterCityValue] = useState('')
   const [filterWarehouseValue, setFilterWarehouseValue] = useState('')
@@ -24,11 +32,7 @@ const DeliverySection = () => {
   const [loading, setLoading] = useState(false)
   const [selectedKeyCityRef, setSelectedKeyCityRef] =
     useState<React.Key | null>(null)
-  const [selectedKeyWarehouse, setSelectedKeyWarehouse] =
-    useState<React.Key | null>(null)
   const [isUserSelecting, setIsUserSelecting] = useState(false)
-
-  // Знаходимо і вибираємо місто(ref)
 
   const getFilteredCities = async () => {
     setLoading(true)
@@ -108,7 +112,20 @@ const DeliverySection = () => {
   }
   const onSelectionChangeWarehouse = (key: React.Key) => {
     setIsUserSelecting(true)
-    setSelectedKeyWarehouse(key)
+    const selectedWarehouseData = warehouses.find(item => item.SiteKey === key)
+    if (selectedWarehouseData) {
+      dispatch(
+        setOrder({ ...order, deliveryData: { ...selectedWarehouseData } }),
+      )
+      setIsUserSelecting(true)
+      toast.success(`Вибрано ${selectedWarehouseData.Description}`, {
+        style: {
+          borderRadius: '10px',
+          background: '#fff',
+          color: '#333',
+        },
+      })
+    }
   }
 
   useEffect(() => {
@@ -121,21 +138,23 @@ const DeliverySection = () => {
     setIsUserSelecting(false)
   }, [selectedKeyCityRef])
 
-  const warehouseData = warehouses.find(
-    item => item.SiteKey === selectedKeyWarehouse,
-  )
   return (
     <div className='flex flex-col justify-start gap-3'>
       <h3 className='font-exo_2 text-xl font-bold'>3. Дані доставки</h3>
       <div className='flex flex-col'>
-        <div className='flex flex-col gap-4'>
-          <p className='font-exo_2 text-xl font-semibold'>Нова Пошта</p>
+        <div className='flex flex-col items-center justify-center gap-4'>
+          <Image
+            src='/icons/Nova_Poshta_2014_logo.svg'
+            width={150}
+            height={100}
+            alt='selected-image'
+          />
           <Autocomplete
             defaultItems={filteredCities}
             variant='underlined'
-            label='Виберіть населений пункт'
+            label='Знайти населений пункт'
             classNames={{
-              base: 'w-full font-exo_2 text-lg',
+              base: 'w-full font-exo_2',
             }}
             onInputChange={handleFilterCityInputChange}
             onSelectionChange={onSelectionChangeCityRef}
@@ -149,9 +168,10 @@ const DeliverySection = () => {
           <Autocomplete
             defaultItems={warehouses}
             variant='underlined'
-            label='Виберіть пункт видачі'
+            label='Вибрати пункт видачі'
             classNames={{
               base: 'w-full font-exo_2 text-lg',
+              listboxWrapper: 'font-exo_2 text-lg',
             }}
             onInputChange={handleFilterWarehouseInputChange}
             onSelectionChange={onSelectionChangeWarehouse}
@@ -165,9 +185,6 @@ const DeliverySection = () => {
               </AutocompleteItem>
             )}
           </Autocomplete>
-          <p className='font-exo_2 text-lg font-bold'>
-            {warehouseData?.Description}
-          </p>
         </div>
       </div>
     </div>

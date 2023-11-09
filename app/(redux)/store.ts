@@ -10,12 +10,14 @@ import {
 } from 'redux-persist'
 
 import { persistedCartSlice } from './cart/cartSlice'
+import { persistedOrderSlice } from './order/orderSlice'
 
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
 
 export const store = configureStore({
   reducer: {
     cart: persistedCartSlice,
+    order: persistedOrderSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
