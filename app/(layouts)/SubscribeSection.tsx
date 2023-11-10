@@ -45,7 +45,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, checked, onChange }) => {
 const SubscribeSection: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const [email, setEmail] = useState<string>('')
-  const [confirm, setConfirm] = useState<boolean>(false) // Додано стан для confirm
+  const [confirm, setConfirm] = useState<boolean>(false)
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target

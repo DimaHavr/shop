@@ -1,8 +1,6 @@
 'use client'
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 import { selectCartItems, selectTotalPrice } from '@/app/(redux)/cart/selectors'
 import { useAppSelector } from '@/app/(redux)/hooks'
@@ -15,7 +13,6 @@ import PersonalData from './PersonalData'
 
 const CheckoutSection = () => {
   const router = useRouter()
-  const [paymentMethod, setPaymentMethod] = useState<string>('')
   const cartItems = useAppSelector(selectCartItems)
   const totalPrice = useAppSelector(selectTotalPrice)
 
@@ -28,24 +25,22 @@ const CheckoutSection = () => {
           <h2 className='font-exo_2 text-2xl font-bold text-black-dis max-md:text-lg'>
             Оформлення покупок
           </h2>
-          <Link
+          <button
+            type='button'
+            onClick={() => router.back()}
             className='text-end font-exo_2 text-md font-semibold text-primary-green'
-            href='/'
           >
             Повернутися в магазин
-          </Link>
+          </button>
         </div>
         <div className='  flex w-full items-start justify-between max-xl:w-full max-xl:flex-col max-xl:justify-center'>
           <div className='flex w-[720px] flex-col gap-6 max-xl:w-full max-md:gap-3'>
             <CheckoutItemReview cartItems={cartItems} totalPrice={totalPrice} />
             <PersonalData />
             <DeliverySection />
-            <PaymentSection
-              paymentMethod={paymentMethod}
-              setPaymentMethod={setPaymentMethod}
-            />
+            <PaymentSection />
           </div>
-          <OrderTotals paymentMethod={paymentMethod} />
+          <OrderTotals cartItems={cartItems} />
         </div>
       </div>
     </section>

@@ -4,15 +4,13 @@ import { toast } from 'react-hot-toast'
 import { FaCreditCard } from 'react-icons/fa'
 import { GiTakeMyMoney } from 'react-icons/gi'
 
-export interface PaymentSectionProps {
-  paymentMethod: string
-  setPaymentMethod: React.Dispatch<React.SetStateAction<string>>
-}
+import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
+import { setOrder } from '@/app/(redux)/order/orderSlice'
+import { selectOrder } from '@/app/(redux)/order/selectors'
 
-const PaymentSection: React.FC<PaymentSectionProps> = ({
-  setPaymentMethod,
-  paymentMethod,
-}) => {
+const PaymentSection = () => {
+  const dispatch = useAppDispatch()
+  const orderData = useAppSelector(selectOrder)
   return (
     <div className='flex flex-col justify-start gap-4'>
       <h3 className=' font-exo_2 text-xl font-bold'>4. Метод оплати</h3>
@@ -26,11 +24,16 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
                 color: '#333',
               },
             })
-            setPaymentMethod('cash')
+            dispatch(
+              setOrder({
+                ...orderData,
+                paymentData: 'cash',
+              }),
+            )
           }}
           type='button'
           className={`${
-            paymentMethod === 'cash' &&
+            orderData.paymentData === 'cash' &&
             ' scale-[1.05] border-4 border-black-dis'
           } relative flex w-[320px] items-center justify-center rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300 hover:scale-[1.03]  hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-md:w-full`}
         >
@@ -49,11 +52,16 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
                 color: '#333',
               },
             })
-            setPaymentMethod('online')
+            dispatch(
+              setOrder({
+                ...orderData,
+                paymentData: 'online',
+              }),
+            )
           }}
           type='button'
           className={`${
-            paymentMethod === 'online' &&
+            orderData.paymentData === 'online' &&
             ' scale-[1.05] border-4 border-black-dis'
           } relative w-[320px] rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300 hover:scale-[1.03]  hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-md:w-full`}
         >

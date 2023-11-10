@@ -10,7 +10,7 @@ const emptyOrder = {
   paymentData: '',
   personalData: {},
   deliveryData: {},
-  productsList: {},
+  productsList: [],
 }
 
 const orderSlice = createSlice({
@@ -22,10 +22,13 @@ const orderSlice = createSlice({
     setOrder: (state, action) => {
       state.order = action.payload
     },
+    clearOrder: state => {
+      state.order = emptyOrder
+    },
   },
 })
 
-export const { setOrder } = orderSlice.actions
+export const { setOrder, clearOrder } = orderSlice.actions
 
 const persistConfig = {
   key: 'order',

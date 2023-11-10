@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
+import AddAnimation from '@/app/(components)/AddAnimation'
 import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
 import { setOrder } from '@/app/(redux)/order/orderSlice'
 import { selectOrder } from '@/app/(redux)/order/selectors'
@@ -185,6 +186,21 @@ const DeliverySection = () => {
               </AutocompleteItem>
             )}
           </Autocomplete>
+          <Image
+            src='/icons/Ukrposhta-ua.svg'
+            width={180}
+            height={100}
+            alt='selected-image'
+          />
+          <div className='flex items-center gap-2'>
+            <p className='font-exo_2 text-lg font-bold'>В розробці...</p>
+            <AddAnimation path='/json/api-animation.json' id='lottie-container'>
+              <div
+                id='lottie-container'
+                style={{ width: '60px', height: '60px' }}
+              />
+            </AddAnimation>
+          </div>
         </div>
       </div>
     </div>

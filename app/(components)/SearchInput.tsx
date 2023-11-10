@@ -26,11 +26,10 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
     >
       <Form>
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{
-            y: 0,
             opacity: 1,
-            transition: { opacity: { delay: 0.1 }, duration: 0.3 },
+            transition: { duration: 0.3 },
           }}
           exit={{ opacity: 0, transition: { duration: 0.3 } }}
           className='flex rounded-2xl border-[1px] bg-white-dis p-1 text-mid-grey'
