@@ -4,9 +4,9 @@ import { LiaViber } from 'react-icons/lia'
 
 export const Footer = () => {
   return (
-    <footer className='border-t-[1px] bg-footer-gradient-linear-green'>
+    <footer className=' bg-footer-gradient-linear-green'>
       <div className='container relative flex flex-col items-start gap-[52px] py-14 md:flex-row md:justify-between md:px-0 xl:gap-[130px]'>
-        <div className='z-1 absolute left-[261px] top-0 h-full md:flex'>
+        <div className='z-1 absolute left-[261px] top-0 h-full w-auto md:flex'>
           <Image
             src='/background-flicker-footer-pc.svg'
             width={1008}

@@ -11,11 +11,15 @@ interface IndexPageProps {
 }
 
 export default async function IndexPage({ params }: IndexPageProps) {
-  const womenPageProductsUrl = `/products?populate=*&[filters][subcategory][slug][$eq]=${params.subcategory}&pagination[pageSize]=12`
-  const womenPageCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
+  const subcategoryFilterProductsUrl = `/products?populate=colors,sizes&[filters][subcategory][slug][$eq]=${params.subcategory}`
+  const subcategoryProductsUrl = `/products?populate=*&[filters][subcategory][slug][$eq]=${params.subcategory}&pagination[pageSize]=12`
+  const subcategoryCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
   const currentSubcategoryUrl = `/subcategories?populate=*&[filters][slug][$eq]=${params.subcategory}`
-  const womenPageCategoriesData = await fetchData(womenPageCategoriesUrl)
-  const womenPageProductsData = await fetchData(womenPageProductsUrl)
+  const subcategoryFilterProductsData = await fetchData(
+    subcategoryFilterProductsUrl,
+  )
+  const subcategoryCategoriesData = await fetchData(subcategoryCategoriesUrl)
+  const subcategoryProductsData = await fetchData(subcategoryProductsUrl)
   const currentSubcategoryData = await fetchData(currentSubcategoryUrl)
   const attributesData = currentSubcategoryData.data[0].attributes
   const breadCrumbArr = [
@@ -35,12 +39,27 @@ export default async function IndexPage({ params }: IndexPageProps) {
   return (
     <main className='mt-[89px] flex-auto'>
       <Breadcrumb breadCrumbArr={breadCrumbArr} />
-      <CategoriesLayout categoriesData={womenPageCategoriesData} />
+      <CategoriesLayout categoriesData={subcategoryCategoriesData} />
       <ProductsSection
-        productsData={womenPageProductsData}
-        productsUrl={womenPageProductsUrl}
+        filterStartData={subcategoryFilterProductsData}
+        productsData={subcategoryProductsData}
+        productsUrl={subcategoryProductsUrl}
       />
       <SubscribeSection />
     </main>
+  )
+}
+
+export async function generateStaticParams() {
+  const url = `/subcategories`
+  const subcategory = await fetchData(url)
+  return subcategory.data.map(
+    (item: {
+      attributes: {
+        slug: string
+      }
+    }) => ({
+      subcategory: item.attributes.slug,
+    }),
   )
 }

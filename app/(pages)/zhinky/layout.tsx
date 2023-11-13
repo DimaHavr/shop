@@ -1,7 +1,7 @@
 import fetchData from '@/app/(server)/api/service/strapi/fetchData'
 
 export async function generateStaticParams() {
-  const url = `/pages?populate=*`
+  const url = `/pages?populate=category`
   const category = await fetchData(url)
   return category.data.map(
     (item: {

@@ -11,12 +11,14 @@ interface IndexPageProps {
 }
 
 export default async function IndexPage({ params }: IndexPageProps) {
-  const womenPageProductsUrl = `/products?populate=*&[filters][category][slug][$eq]=${params.category}&pagination[pageSize]=12`
+  const categoryProductsUrl = `/products?populate=*&[filters][category][slug][$eq]=${params.category}&pagination[pageSize]=12`
+  const categoryFilterProductsUrl = `/products?populate=colors,sizes&[filters][category][slug][$eq]=${params.category}`
   const currentCategoryUrl = `/categories?populate=*&[filters][slug][$eq]=${params.category}`
-  const womenPageCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
-  const womenPageCategoriesData = await fetchData(womenPageCategoriesUrl)
+  const categoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
+  const categoriesData = await fetchData(categoriesUrl)
+  const categoryFilterProductsData = await fetchData(categoryFilterProductsUrl)
+  const categoryProductsData = await fetchData(categoryProductsUrl)
   const currentCategoryData = await fetchData(currentCategoryUrl)
-  const womenPageProductsData = await fetchData(womenPageProductsUrl)
   const attributesData = currentCategoryData.data[0].attributes
   const breadCrumbArr = [
     {
@@ -31,17 +33,18 @@ export default async function IndexPage({ params }: IndexPageProps) {
   return (
     <main className='mt-[89px] flex-auto'>
       <Breadcrumb breadCrumbArr={breadCrumbArr} />
-      <CategoriesLayout categoriesData={womenPageCategoriesData} />
+      <CategoriesLayout categoriesData={categoriesData} />
       <ProductsSection
-        productsData={womenPageProductsData}
-        productsUrl={womenPageProductsUrl}
+        filterStartData={categoryFilterProductsData}
+        productsData={categoryProductsData}
+        productsUrl={categoryProductsUrl}
       />
       <SubscribeSection />
     </main>
   )
 }
 export async function generateStaticParams() {
-  const url = `/categories?populate=*`
+  const url = `/categories`
   const category = await fetchData(url)
   return category.data.map(
     (item: {
