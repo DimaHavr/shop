@@ -124,7 +124,7 @@ const ProductsList: React.FC<ProductsListProps> = ({
   return productsData.data.length === 0 ? (
     <EmptySection />
   ) : (
-    <div className={`${productsData.meta.pagination.total < 12 && 'mt-8'}`}>
+    <>
       {isLoading && <Loader />}
       <Toolbar
         setCurrentPage={setCurrentPage}
@@ -243,7 +243,7 @@ const ProductsList: React.FC<ProductsListProps> = ({
         totalPages={totalPages}
         setTotalPages={setTotalPages}
       />
-    </div>
+    </>
   )
 }
 
