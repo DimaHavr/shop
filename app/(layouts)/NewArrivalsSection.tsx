@@ -67,12 +67,10 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
               slidesPerView: 3,
             },
             1024: {
-              slidesPerView: 3,
-              spaceBetween: 10,
+              slidesPerView: 4,
             },
             1560: {
               slidesPerView: 7,
-              spaceBetween: 20,
             },
           }}
           modules={[Navigation, EffectCoverflow, Pagination]}
@@ -99,13 +97,13 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
             const averageRating = totalRating / reviewQty
             return (
               <SwiperSlide key={item.id}>
-                <div className='relative mb-12 mt-4 flex w-full items-center justify-center transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
+                <div className='relative mb-12 mt-4 flex justify-center transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
                   <Link
-                    className='flex w-[300px] flex-col items-center justify-center rounded-2xl shadow-box '
+                    className=' w-[300px] justify-center rounded-2xl shadow-box '
                     href={slug}
                   >
                     <Image
-                      className='h-[300px] min-w-[200px] object-cover'
+                      className='h-[300px] min-w-[300px] object-cover max-[370px]:min-w-[280px]'
                       src={imageUrl}
                       width={item.attributes.img.data[0]?.attributes.width}
                       height={item.attributes.img.data[0]?.attributes.height}
@@ -124,7 +122,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
                         {item.attributes.title}
                       </h3>
 
-                      <div className='absolute right-2 top-2 max-md:right-9'>
+                      <div className='absolute right-[12px] top-2 max-xl:right-[-46px] max-md:right-[34px] max-sm:right-[6px]'>
                         <Rating
                           style={{ maxWidth: 90 }}
                           value={averageRating}
@@ -132,7 +130,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
                         />
                       </div>
 
-                      <div className='absolute left-[-12px] top-0 z-[1] flex flex-col gap-1 max-md:left-[10px]'>
+                      <div className='absolute left-[-4px] top-0 z-[1] flex flex-col gap-1 max-md:left-[10px]'>
                         {item.attributes.isNewProduct === true && (
                           <span className='  flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
                             new
@@ -146,7 +144,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
                       </div>
                     </div>
                   </Link>
-                  <div className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box max-md:right-[36px]'>
+                  <div className='absolute right-[16px] top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box max-md:right-[36px]'>
                     {isFavorite ? (
                       <AnimatePresence>
                         <motion.button
