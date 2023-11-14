@@ -5,13 +5,20 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
 import { Rating } from '@smastrom/react-rating'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaRegHeart } from 'react-icons/fa'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import type { ProductItem } from '../(components)/ProductsSection/ProductsList'
+import {
+  addToFavoritesList,
+  removeFavoritesList,
+} from '../(redux)/favorites/favoritesSlice'
+import { selectFavoritesProducts } from '../(redux)/favorites/selectors'
+import { useAppDispatch, useAppSelector } from '../(redux)/hooks'
 
 interface NewArrivalsSectionProps {
   newProductsData: {
@@ -21,6 +28,15 @@ interface NewArrivalsSectionProps {
 const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
   newProductsData,
 }) => {
+  const dispatch = useAppDispatch()
+  const favoritesProducts = useAppSelector(selectFavoritesProducts)
+  const handleAddToFavorites = (product: ProductItem) => {
+    dispatch(addToFavoritesList(product))
+  }
+
+  const handleRemoveFromFavorites = (productId: number) => {
+    dispatch(removeFavoritesList({ id: productId }))
+  }
   return (
     <section className='py-14'>
       <div className='container flex flex-col items-center justify-center gap-4 text-center'>
@@ -51,7 +67,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
               slidesPerView: 3,
             },
             1024: {
-              slidesPerView: 4,
+              slidesPerView: 3,
               spaceBetween: 10,
             },
             1560: {
@@ -63,6 +79,9 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
           className='new-arrivals-slider'
         >
           {newProductsData.data.map(item => {
+            const isFavorite = favoritesProducts.some(
+              favorite => favorite.id === item.id,
+            )
             let discountPercentage: number = NaN
             if (item.attributes.discount) {
               discountPercentage = item.attributes.discount * 0.01
@@ -80,7 +99,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
             const averageRating = totalRating / reviewQty
             return (
               <SwiperSlide key={item.id}>
-                <div className='relative mb-12 mt-4 transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
+                <div className='relative mb-12 mt-4 flex w-full items-center justify-center transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
                   <Link
                     className='flex w-[300px] flex-col items-center justify-center rounded-2xl shadow-box '
                     href={slug}
@@ -105,7 +124,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
                         {item.attributes.title}
                       </h3>
 
-                      <div className='absolute right-2 top-2'>
+                      <div className='absolute right-2 top-2 max-md:right-9'>
                         <Rating
                           style={{ maxWidth: 90 }}
                           value={averageRating}
@@ -113,7 +132,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
                         />
                       </div>
 
-                      <div className='absolute left-[-12px] top-0 z-[1] flex flex-col gap-1'>
+                      <div className='absolute left-[-12px] top-0 z-[1] flex flex-col gap-1 max-md:left-[10px]'>
                         {item.attributes.isNewProduct === true && (
                           <span className='  flex h-[35px] items-center justify-center rounded-[16px] bg-light-blue px-[15px] font-exo_2 text-md uppercase text-white-dis shadow-button'>
                             new
@@ -127,21 +146,47 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
                       </div>
                     </div>
                   </Link>
-                  <button
-                    className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box'
-                    type='button'
-                  >
-                    {/* <FaHeart
-                    color='#17696A'
-                    className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
-                    size={30}
-                  /> */}
-                    <FaRegHeart
-                      color='#17696A'
-                      className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
-                      size={30}
-                    />
-                  </button>
+                  <div className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box max-md:right-[36px]'>
+                    {isFavorite ? (
+                      <AnimatePresence>
+                        <motion.button
+                          initial={{ scale: 0.8 }}
+                          animate={{
+                            scale: 1.1,
+                            transition: { duration: 0.3 },
+                          }}
+                          exit={{ scale: 0.8, transition: { duration: 0.3 } }}
+                          type='button'
+                          onClick={() => handleRemoveFromFavorites(item.id)}
+                        >
+                          <FaHeart
+                            color='#17696A'
+                            className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                            size={30}
+                          />
+                        </motion.button>
+                      </AnimatePresence>
+                    ) : (
+                      <AnimatePresence>
+                        <motion.button
+                          initial={{ scale: 0.8 }}
+                          animate={{
+                            scale: 1,
+                            transition: { duration: 0.3 },
+                          }}
+                          exit={{ scale: 0.8, transition: { duration: 0.3 } }}
+                          type='button'
+                          onClick={() => handleAddToFavorites(item)}
+                        >
+                          <FaRegHeart
+                            color='#17696A'
+                            className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                            size={30}
+                          />
+                        </motion.button>
+                      </AnimatePresence>
+                    )}
+                  </div>
                 </div>
               </SwiperSlide>
             )

@@ -10,12 +10,14 @@ import {
 } from 'redux-persist'
 
 import { persistedCartSlice } from './cart/cartSlice'
+import { persistedFavoritesSlice } from './favorites/favoritesSlice'
 import { persistedOrderSlice } from './order/orderSlice'
 
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
 
 export const store = configureStore({
   reducer: {
+    favorites: persistedFavoritesSlice,
     cart: persistedCartSlice,
     order: persistedOrderSlice,
   },

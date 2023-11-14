@@ -1,6 +1,7 @@
-import EmptySection from '@/app/(components)/EmptySection'
 import Breadcrumb from '@/app/(components)/ProductsSection/Breadcrumb'
 import SubscribeSection from '@/app/(layouts)/SubscribeSection'
+
+import FavoriteProductsList from './(components)/FavoriteProductsList'
 
 export default async function IndexPage() {
   const breadCrumbArr = [
@@ -12,7 +13,7 @@ export default async function IndexPage() {
   return (
     <main className='mt-[89px] flex-auto'>
       <Breadcrumb breadCrumbArr={breadCrumbArr} />
-      <EmptySection />
+      <FavoriteProductsList />
       <SubscribeSection />
     </main>
   )

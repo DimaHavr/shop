@@ -4,10 +4,11 @@ import { Rating } from '@smastrom/react-rating'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
-import useLocalStorage from '@/app/(hooks)/useLocalStorage '
+import EmptySection from '@/app/(components)/EmptySection'
+import type { ProductItem } from '@/app/(components)/ProductsSection/ProductsList'
 import {
   addToFavoritesList,
   removeFavoritesList,
@@ -15,120 +16,9 @@ import {
 import { selectFavoritesProducts } from '@/app/(redux)/favorites/selectors'
 import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
 
-import EmptySection from '../EmptySection'
-import Loader from '../Loader'
-import Toolbar from './Toolbar'
-
-export interface ProductItem {
-  id: number
-  attributes: {
-    discount?: number
-    price: number
-    description: string
-    img: {
-      data: {
-        attributes: {
-          url: string
-          width: number
-          height: number
-        }
-      }[]
-    }
-    title: string
-    sizes: {
-      data: {
-        id: number
-        attributes: {
-          size: string
-        }
-      }[]
-    }
-    colors: {
-      data: {
-        id: number
-        attributes: {
-          name: string
-        }
-      }[]
-    }
-    reviews: {
-      data: {
-        id: number
-        attributes: {
-          comment: string
-          rating: number
-          name: string
-          createdAt: string
-        }
-      }[]
-    }
-    page: {
-      data: {
-        attributes: {
-          slug: string
-        }
-      }
-    }
-    category: {
-      data: {
-        attributes: {
-          slug: string
-        }
-      }
-    }
-    subcategory: {
-      data: {
-        attributes: {
-          slug: string
-        }
-      }
-    }
-    isNewProduct: boolean
-  }
-}
-
-interface ProductsListProps {
-  productsUrl: string
-  filterStartData: {
-    data: ProductItem[]
-    meta: {
-      pagination: {
-        total: number
-      }
-    }
-  }
-  productsData: {
-    data: ProductItem[]
-    meta: {
-      pagination: {
-        total: number
-      }
-    }
-  }
-}
-const ProductsList: React.FC<ProductsListProps> = ({
-  productsData,
-  productsUrl,
-  filterStartData,
-}) => {
+const FavoriteProductsList = () => {
   const dispatch = useAppDispatch()
   const favoritesProducts = useAppSelector(selectFavoritesProducts)
-  const [products, setProducts] = useState({ ...productsData })
-  const [isLoading, setIsLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(
-    Math.ceil(productsData.meta.pagination.total / 12),
-  )
-  const [sortValue, setSortValue] = useLocalStorage<string | ''>(
-    'sortValue',
-    'default',
-  )
-  const handleSelectionChangeSortValue = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const newValue = e.target.value
-    setSortValue(newValue)
-  }
   const handleAddToFavorites = (product: ProductItem) => {
     dispatch(addToFavoritesList(product))
   }
@@ -136,28 +26,13 @@ const ProductsList: React.FC<ProductsListProps> = ({
   const handleRemoveFromFavorites = (productId: number) => {
     dispatch(removeFavoritesList({ id: productId }))
   }
-  return productsData.data.length === 0 ? (
+  return favoritesProducts.length === 0 ? (
     <EmptySection />
   ) : (
-    <>
-      {isLoading && <Loader />}
-      <Toolbar
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        setIsLoading={setIsLoading}
-        productsUrl={productsUrl}
-        setProducts={setProducts}
-        filterStartData={filterStartData}
-        handleSelectionChangeSortValue={handleSelectionChangeSortValue}
-        sortValue={sortValue}
-        totalPages={totalPages}
-        setTotalPages={setTotalPages}
-      />
-      {products.data.length === 0 ? (
-        <EmptySection />
-      ) : (
-        <ul className='container flex flex-wrap items-center justify-center gap-6'>
-          {products.data.map(item => {
+    <section className='py-14'>
+      <div className='container'>
+        <ul className=' flex flex-wrap items-center justify-center gap-6'>
+          {favoritesProducts.map(item => {
             const isFavorite = favoritesProducts.some(
               favorite => favorite.id === item.id,
             )
@@ -172,7 +47,8 @@ const ProductsList: React.FC<ProductsListProps> = ({
               item.attributes.img?.data[0]?.attributes?.url || 'fallback-url'
             const reviewQty = item.attributes.reviews.data.length
             const totalRating = item.attributes.reviews.data.reduce(
-              (acc, rating) => acc + rating.attributes.rating,
+              (acc: any, rating: { attributes: { rating: any } }) =>
+                acc + rating.attributes.rating,
               0,
             )
             const averageRating = totalRating / reviewQty
@@ -274,21 +150,9 @@ const ProductsList: React.FC<ProductsListProps> = ({
             )
           })}
         </ul>
-      )}
-      <Toolbar
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        setIsLoading={setIsLoading}
-        productsUrl={productsUrl}
-        setProducts={setProducts}
-        filterStartData={filterStartData}
-        handleSelectionChangeSortValue={handleSelectionChangeSortValue}
-        sortValue={sortValue}
-        totalPages={totalPages}
-        setTotalPages={setTotalPages}
-      />
-    </>
+      </div>
+    </section>
   )
 }
 
-export default ProductsList
+export default FavoriteProductsList

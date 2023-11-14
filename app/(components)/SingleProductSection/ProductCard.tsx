@@ -2,14 +2,21 @@
 
 import { Select, SelectItem } from '@nextui-org/react'
 import { Rating } from '@smastrom/react-rating'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { FaRegHeart } from 'react-icons/fa'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import { onAdd } from '@/app/(redux)/cart/cartSlice'
-import { useAppDispatch } from '@/app/(redux)/hooks'
+import {
+  addToFavoritesList,
+  removeFavoritesList,
+} from '@/app/(redux)/favorites/favoritesSlice'
+import { selectFavoritesProducts } from '@/app/(redux)/favorites/selectors'
+import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
 
+import type { ProductItem } from '../ProductsSection/ProductsList'
 import { type ProductItemProps } from './GeneralInfo'
 
 const ProductCard: React.FC<ProductItemProps> = ({
@@ -18,6 +25,11 @@ const ProductCard: React.FC<ProductItemProps> = ({
 }) => {
   const [color, setColor] = useState<string>('')
   const [size, setSize] = useState<string>('')
+  const dispatch = useAppDispatch()
+  const favoritesProducts = useAppSelector(selectFavoritesProducts)
+  const isFavorite = favoritesProducts.some(
+    favorite => favorite.id === productItem.id,
+  )
   let discountPercentage: number = NaN
   if (productItem.attributes.discount) {
     discountPercentage = productItem.attributes.discount * 0.01
@@ -31,7 +43,15 @@ const ProductCard: React.FC<ProductItemProps> = ({
     0,
   )
   const averageRating = totalRating / reviewQty
-  const dispatch = useAppDispatch()
+
+  const handleAddToFavorites = (product: ProductItem) => {
+    dispatch(addToFavoritesList(product))
+  }
+
+  const handleRemoveFromFavorites = (productId: number) => {
+    dispatch(removeFavoritesList({ id: productId }))
+  }
+
   const handleAddToCart = () => {
     if (!color) {
       toast.error('Оберіть колір...', {
@@ -182,21 +202,47 @@ const ProductCard: React.FC<ProductItemProps> = ({
           </div>
         </div>
       </div>
-      <button
-        className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box'
-        type='button'
-      >
-        {/* <FaHeart
-                    color='#17696A'
-                    className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
-                    size={30}
-                  /> */}
-        <FaRegHeart
-          color='#17696A'
-          className='transition-all duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
-          size={30}
-        />
-      </button>
+      <div className='absolute right-4 top-[250px] z-[1] flex items-center justify-center rounded-[50%] bg-white-dis p-3 shadow-box'>
+        {isFavorite ? (
+          <AnimatePresence>
+            <motion.button
+              initial={{ scale: 0.8 }}
+              animate={{
+                scale: 1.1,
+                transition: { duration: 0.3 },
+              }}
+              exit={{ scale: 0.8, transition: { duration: 0.3 } }}
+              type='button'
+              onClick={() => handleRemoveFromFavorites(productItem.id)}
+            >
+              <FaHeart
+                color='#17696A'
+                className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                size={30}
+              />
+            </motion.button>
+          </AnimatePresence>
+        ) : (
+          <AnimatePresence>
+            <motion.button
+              initial={{ scale: 0.8 }}
+              animate={{
+                scale: 1,
+                transition: { duration: 0.3 },
+              }}
+              exit={{ scale: 0.8, transition: { duration: 0.3 } }}
+              type='button'
+              onClick={() => handleAddToFavorites(productItem)}
+            >
+              <FaRegHeart
+                color='#17696A'
+                className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                size={30}
+              />
+            </motion.button>
+          </AnimatePresence>
+        )}
+      </div>
     </div>
   )
 }

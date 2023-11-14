@@ -7,14 +7,21 @@ import 'photoswipe/style.css'
 
 import { Accordion, AccordionItem, Select, SelectItem } from '@nextui-org/react'
 import { Rating } from '@smastrom/react-rating'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import PhotoSwipe from 'photoswipe'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { HiMinus, HiPlus } from 'react-icons/hi'
 
 import { onAdd } from '@/app/(redux)/cart/cartSlice'
-import { useAppDispatch } from '@/app/(redux)/hooks'
+import {
+  addToFavoritesList,
+  removeFavoritesList,
+} from '@/app/(redux)/favorites/favoritesSlice'
+import { selectFavoritesProducts } from '@/app/(redux)/favorites/selectors'
+import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
 
 import type { ProductItem } from '../ProductsSection/ProductsList'
 
@@ -55,6 +62,17 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
 
   const [quantity, setQuantity] = useState(1)
   const dispatch = useAppDispatch()
+  const favoritesProducts = useAppSelector(selectFavoritesProducts)
+  const isFavorite = favoritesProducts.some(
+    favorite => favorite.id === productItem.id,
+  )
+  const handleAddToFavorites = (product: ProductItem) => {
+    dispatch(addToFavoritesList(product))
+  }
+
+  const handleRemoveFromFavorites = (productId: number) => {
+    dispatch(removeFavoritesList({ id: productId }))
+  }
   const handleAddToCart = () => {
     if (!color) {
       toast.error('Оберіть колір...', {
@@ -269,12 +287,65 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
           >
             Купити
           </button>
-          <button
-            type='button'
-            className='w-[300px] rounded-2xl bg-primary-green px-10 py-4 text-center font-exo_2 text-lg font-bold text-white-dis shadow-button transition-all duration-300 hover:scale-[1.03]  hover:opacity-80 focus:scale-[1.03] focus:opacity-80 max-md:w-full'
-          >
-            Улюблене
-          </button>
+          <div className=' flex items-center justify-center'>
+            {isFavorite ? (
+              <AnimatePresence>
+                <motion.button
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{
+                    scale: 1.1,
+                    opacity: 1,
+                    transition: { duration: 0.3 },
+                  }}
+                  exit={{
+                    scale: 0.8,
+                    opacity: 0,
+                    transition: { duration: 0.3 },
+                  }}
+                  type='button'
+                  onClick={() => handleRemoveFromFavorites(productItem.id)}
+                  className='flex items-center justify-center gap-2'
+                >
+                  <p className='font-exo_2 text-lg font-bold'>
+                    Усунути з улюбленого
+                  </p>
+                  <FaHeart
+                    color='#17696A'
+                    className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                    size={30}
+                  />
+                </motion.button>
+              </AnimatePresence>
+            ) : (
+              <AnimatePresence>
+                <motion.button
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{
+                    scale: 1.1,
+                    opacity: 1,
+                    transition: { duration: 0.3 },
+                  }}
+                  exit={{
+                    scale: 0.8,
+                    opacity: 0,
+                    transition: { duration: 0.3 },
+                  }}
+                  type='button'
+                  onClick={() => handleAddToFavorites(productItem)}
+                  className='flex items-center justify-center gap-2'
+                >
+                  <p className='font-exo_2 text-lg font-bold'>
+                    Додати в улюблене
+                  </p>
+                  <FaRegHeart
+                    color='#17696A'
+                    className='transition-all  duration-300 hover:scale-[1.03] hover:opacity-80 focus:scale-[1.03] focus:opacity-80'
+                    size={30}
+                  />
+                </motion.button>
+              </AnimatePresence>
+            )}
+          </div>
         </div>
         <Accordion
           motionProps={{
