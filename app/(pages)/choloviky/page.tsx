@@ -1,18 +1,32 @@
-import EmptySection from '@/app/(components)/EmptySection'
+import CategoriesLayout from '@/app/(components)/CategoriesLayout'
 import Breadcrumb from '@/app/(components)/ProductsSection/Breadcrumb'
+import ProductsSection from '@/app/(components)/ProductsSection/ProductsSection'
 import SubscribeSection from '@/app/(layouts)/SubscribeSection'
+import fetchData from '@/app/(server)/api/service/strapi/fetchData'
 
 export default async function IndexPage() {
+  const pageProductsUrl = `/products?populate=*&[filters][page][slug][$eq]=choloviky&pagination[pageSize]=12`
+  const pageFilterUrl = `/products?populate=colors,sizes&[filters][page][slug][$eq]=choloviky`
+  const pageCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=choloviky`
+  const pageCategoriesData = await fetchData(pageCategoriesUrl)
+  const pageProductsData = await fetchData(pageProductsUrl)
+  const pageProductsFilterData = await fetchData(pageFilterUrl)
+  const attributesData = pageCategoriesData.data[0].attributes
   const breadCrumbArr = [
     {
-      slug: `/choloviky`,
-      title: 'Чоловіки',
+      slug: `/${attributesData.page.data.attributes.slug}`,
+      title: attributesData.page.data.attributes.name,
     },
   ]
   return (
-    <main className='mt-[89px] flex-auto'>
+    <main className='mt-[89px] flex-auto '>
       <Breadcrumb breadCrumbArr={breadCrumbArr} />
-      <EmptySection />
+      <CategoriesLayout categoriesData={pageCategoriesData} />
+      <ProductsSection
+        filterStartData={pageProductsFilterData}
+        productsData={pageProductsData}
+        productsUrl={pageProductsUrl}
+      />
       <SubscribeSection />
     </main>
   )

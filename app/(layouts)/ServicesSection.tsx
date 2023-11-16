@@ -5,7 +5,7 @@ import { MdSupportAgent } from 'react-icons/md'
 
 const ServicesSection = () => {
   return (
-    <section className='py-[100px]'>
+    <section className='py-14'>
       <div className='container flex justify-center'>
         <ul className='flex flex-wrap items-center justify-center gap-16'>
           <li className='flex flex-col items-center justify-center gap-4'>

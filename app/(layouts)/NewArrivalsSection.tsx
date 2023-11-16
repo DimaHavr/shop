@@ -99,11 +99,11 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
               <SwiperSlide key={item.id}>
                 <div className='relative mb-12 mt-4 flex justify-center transition-transform duration-300 hover:scale-[1.03] focus:scale-[1.03]'>
                   <Link
-                    className=' w-[300px] justify-center rounded-2xl shadow-box '
+                    className='justify-center rounded-2xl shadow-box '
                     href={slug}
                   >
                     <Image
-                      className='h-[300px] min-w-[300px] object-cover max-[370px]:min-w-[280px]'
+                      className='h-[300px] min-w-[300px] object-cover max-[300px]:min-w-[280px]'
                       src={imageUrl}
                       width={item.attributes.img.data[0]?.attributes.width}
                       height={item.attributes.img.data[0]?.attributes.height}

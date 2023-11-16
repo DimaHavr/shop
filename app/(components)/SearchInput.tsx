@@ -2,6 +2,7 @@
 
 import { Field, Form, Formik } from 'formik'
 import { motion } from 'framer-motion'
+import { toast } from 'react-hot-toast'
 import { FaSearch } from 'react-icons/fa'
 import * as Yup from 'yup'
 
@@ -42,6 +43,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
           />
           <button type='submit' className='pr-2'>
             <FaSearch
+              onClick={() => toast.error('Сторінка пошуку в розробці...')}
               color='#17696A'
               className=' transition-opacity  hover:opacity-80 focus:opacity-80 '
               size={20}

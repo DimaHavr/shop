@@ -30,7 +30,7 @@ const imagesData = [
 
 const CategoriesSection = () => {
   return (
-    <section className=' flex  max-md:py-14 md:h-[300px]'>
+    <section className=' flex  max-md:pt-14 md:h-[300px]'>
       <div className='container relative flex justify-center'>
         <ul className='flex items-center justify-center gap-10 max-lg:gap-5 max-md:flex-wrap md:absolute md:top-[-80px] md:z-10'>
           {imagesData.map(item => {

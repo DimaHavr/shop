@@ -174,10 +174,12 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
   const averageRating = totalRating / reviewQty
   return (
     <div className='mt-8 flex justify-between gap-8 max-lg:flex-col max-lg:justify-center'>
-      <div className='relative flex flex-col gap-4'>
+      <div className='relative flex max-w-[600px] flex-col items-center justify-start max-xl:max-w-full'>
         {selectedImage && (
           <Image
-            className='h-auto min-w-[450px] cursor-pointer object-contain max-xl:max-w-[450px] max-lg:min-w-full max-lg:max-w-full'
+            className={`${
+              productItem.attributes.img.data.length > 1 && 'rounded-b-2xl'
+            } h-auto min-w-[600px]   cursor-pointer object-contain shadow-xl max-xl:max-w-full max-lg:min-w-full max-lg:max-w-full`}
             src={selectedImage}
             width={500}
             height={600}
@@ -186,25 +188,27 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
           />
         )}
 
-        <ul className='absolute bottom-0 left-0 flex w-full gap-4 overflow-auto bg-modal-overlay max-xl:max-w-[600px] max-lg:w-full max-lg:max-w-full max-lg:justify-center'>
-          {productItem.attributes.img.data.map((item, index) => (
-            <li
-              key={item.attributes.url}
-              onClick={() => {
-                handleImageClick(item.attributes.url)
-                setCurrentSlideIndex(index)
-              }}
-            >
-              <Image
-                className='h-auto min-w-[100px] cursor-pointer'
-                src={item.attributes.url}
-                width={230}
-                height={340}
-                alt='thumbnail'
-              />
-            </li>
-          ))}
-        </ul>
+        {productItem.attributes.img.data.length > 1 && (
+          <ul className='absolute bottom-0 left-0 flex w-full justify-center gap-4 overflow-auto rounded-b-2xl bg-modal-overlay  shadow-xl  max-lg:justify-center'>
+            {productItem.attributes.img.data.map((item, index) => (
+              <li
+                key={item.attributes.url}
+                onClick={() => {
+                  handleImageClick(item.attributes.url)
+                  setCurrentSlideIndex(index)
+                }}
+              >
+                <Image
+                  className='h-auto min-w-[100px] cursor-pointer'
+                  src={item.attributes.url}
+                  width={230}
+                  height={340}
+                  alt='thumbnail'
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className=' flex w-[600px] flex-col gap-[30px] max-xl:max-w-[380px] max-lg:w-full max-lg:max-w-full max-md:items-center max-md:gap-4'>
         <h2 className='font-exo_2 text-2xl font-semibold max-md:text-md'>
@@ -221,7 +225,7 @@ const GeneralInfo: React.FC<ProductItemProps> = ({
           </p>
           <button
             type='button'
-            className='flex items-center justify-center'
+            className='flex items-center justify-center self-end'
             onClick={() => setActiveTab('ProductReviews')}
           >
             <Rating style={{ maxWidth: 130 }} value={averageRating} readOnly />
