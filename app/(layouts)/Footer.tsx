@@ -14,14 +14,6 @@ export const Footer = () => {
             alt='flicker'
           />
         </div>
-        <div className='z-1 absolute right-0 top-0 hidden h-full w-full max-md:flex'>
-          <Image
-            src='/background-flicker-footer-mobile.svg'
-            width={321}
-            height={637}
-            alt='flicker'
-          />
-        </div>
         <div className='flex gap-3 transition-opacity hover:opacity-80 focus:opacity-80 '>
           <Link
             href='/'

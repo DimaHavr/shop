@@ -11,7 +11,7 @@ interface IndexPageProps {
 }
 
 export default async function IndexPage({ params }: IndexPageProps) {
-  const subcategoryFilterProductsUrl = `/products?populate=colors,sizes&[filters][subcategory][slug][$eq]=${params.subcategory}`
+  const subcategoryFilterProductsUrl = `/products?populate=colors,sizes,category,subcategory,page&[filters][subcategory][slug][$eq]=${params.subcategory}`
   const subcategoryProductsUrl = `/products?populate=*&[filters][subcategory][slug][$eq]=${params.subcategory}&pagination[pageSize]=12`
   const subcategoryCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
   const currentSubcategoryUrl = `/subcategories?populate=*&[filters][slug][$eq]=${params.subcategory}`

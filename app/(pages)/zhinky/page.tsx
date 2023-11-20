@@ -6,7 +6,7 @@ import fetchData from '@/app/(server)/api/service/strapi/fetchData'
 
 export default async function IndexPage() {
   const pageProductsUrl = `/products?populate=*&[filters][page][slug][$eq]=zhinky&pagination[pageSize]=12`
-  const pageFilterUrl = `/products?populate=colors,sizes&[filters][page][slug][$eq]=zhinky`
+  const pageFilterUrl = `/products?populate=colors,sizes,category,subcategory,page&[filters][page][slug][$eq]=zhinky`
   const pageCategoriesUrl = `/categories?populate=*&[filters][page][slug][$eq]=zhinky`
   const pageCategoriesData = await fetchData(pageCategoriesUrl)
   const pageProductsData = await fetchData(pageProductsUrl)

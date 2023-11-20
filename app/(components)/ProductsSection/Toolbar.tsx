@@ -6,7 +6,7 @@ import { Pagination, Select, SelectItem } from '@nextui-org/react'
 import axios from 'axios'
 import { AnimatePresence } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState , useMemo} from 'react'
 import { ImEqualizer } from 'react-icons/im'
 
 import useLocalStorage from '@/app/(hooks)/useLocalStorage '
@@ -19,6 +19,7 @@ interface ISortValue {
   label: string
   value: string
 }
+
 export const sortValues: ISortValue[] = [
   {
     label: 'За замовчуванням',
@@ -69,6 +70,7 @@ interface ToolbarProps {
   ) => void
   sortValue: string
 }
+
 export interface IFilterData {
   priceValues?: [number, number]
   colorValues?: string[]
@@ -133,46 +135,51 @@ const Toolbar: React.FC<ToolbarProps> = ({
     minPrice !== null
       ? `&filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}`
       : ''
+  const paginationUrl = currentPage && `&pagination[page]=${currentPage}`
 
-  useEffect(() => {
-    async function fetchData() {
-      if (!productsUrl) {
-        return
-      }
-      try {
+ const memoizedDependencies = useMemo(
+   () => ({
+     sortValue,
+     filterData,
+     currentPage,
+   }),
+   [sortValue, filterData, currentPage],
+ )
+
+ useEffect(() => {
+   async function fetchData() {
+     try {
+       const url = `${productsUrl}${paginationUrl}${sortLatestUrl}${sortLowestPriceUrl}${sortHighestPriceUrl}${filterMinMaxPrice}${colorsFilterUrl}${sizesFilterUrl}`
+
         setIsLoading(true)
-        const url = `${productsUrl}&pagination[page]=${currentPage}${sortLatestUrl}${sortLowestPriceUrl}${sortHighestPriceUrl}${filterMinMaxPrice}${colorsFilterUrl}${sizesFilterUrl}`
-        const res = await axios.get(
-          `https://shop-strapi.onrender.com/api${url}`,
-          {
-            headers: getHeaders(),
-          },
-        )
-        router.push(
-          `${pathname}?page=${currentPage}${
-            sortValue !== 'default' ? `&sort=${sortValue}` : ''
-          }${minPrice !== null ? `&price=${minPrice},${maxPrice}` : ''}${
-            filterData.colorValues?.length
-              ? `&color=${filterData.colorValues}`
-              : ''
-          }${
-            filterData.sizeValues?.length
-              ? `&size=${filterData.sizeValues}`
-              : ''
-          }
+       const res = await axios.get(
+         `https://shop-strapi.onrender.com/api${url}`,
+         {
+           headers: getHeaders(),
+         },
+       )
+       router.push(
+         `${pathname}?page=${currentPage}${
+           sortValue !== 'default' ? `&sort=${sortValue}` : ''
+         }${minPrice !== null ? `&price=${minPrice},${maxPrice}` : ''}${
+           filterData.colorValues?.length
+             ? `&color=${filterData.colorValues}`
+             : ''
+         }${
+           filterData.sizeValues?.length ? `&size=${filterData.sizeValues}` : ''
+         }
           `,
-        )
-        setProducts(res.data)
-        setTotalPages(Math.ceil(res.data.meta.pagination.total / 12))
-        setIsLoading(false)
-      } catch (error) {
-        setIsLoading(false)
-        throw new Error('Fetch error')
-      }
-    }
-    fetchData()
-  }, [sortValue, currentPage, filterData])
-
+       )
+       setProducts(res.data)
+       setTotalPages(Math.ceil(res.data.meta.pagination.total / 12))
+       setIsLoading(false)
+     } catch (error) {
+       setIsLoading(false)
+       throw new Error('Fetch error')
+     }
+   }
+   fetchData()
+ }, [memoizedDependencies])
   return (
     <div
       ref={listRef}
