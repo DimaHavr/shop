@@ -64,7 +64,6 @@ interface ToolbarProps {
       }
     }>
   >
-  setIsLoading: (value: boolean) => void
   handleSelectionChangeSortValue: (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => void
@@ -80,7 +79,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
   filterStartData,
   setProducts,
   productsUrl,
-  setIsLoading,
   handleSelectionChangeSortValue,
   sortValue,
   totalPages,
@@ -151,7 +149,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
      try {
        const url = `${productsUrl}${paginationUrl}${sortLatestUrl}${sortLowestPriceUrl}${sortHighestPriceUrl}${filterMinMaxPrice}${colorsFilterUrl}${sizesFilterUrl}`
 
-        setIsLoading(true)
        const res = await axios.get(
          `https://shop-strapi.onrender.com/api${url}`,
          {
@@ -172,14 +169,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
        )
        setProducts(res.data)
        setTotalPages(Math.ceil(res.data.meta.pagination.total / 12))
-       setIsLoading(false)
      } catch (error) {
-       setIsLoading(false)
        throw new Error('Fetch error')
      }
    }
    fetchData()
  }, [memoizedDependencies])
+  
   return (
     <div
       ref={listRef}

@@ -16,7 +16,6 @@ import { selectFavoritesProducts } from '@/app/(redux)/favorites/selectors'
 import { useAppDispatch, useAppSelector } from '@/app/(redux)/hooks'
 
 import EmptySection from '../EmptySection'
-import Loader from '../Loader'
 import Toolbar from './Toolbar'
 
 export interface ProductItem {
@@ -114,7 +113,6 @@ const ProductsList: React.FC<ProductsListProps> = ({
   const dispatch = useAppDispatch()
   const favoritesProducts = useAppSelector(selectFavoritesProducts)
   const [products, setProducts] = useState({ ...productsData })
-  const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(
     Math.ceil(productsData.meta.pagination.total / 12),
@@ -140,11 +138,9 @@ const ProductsList: React.FC<ProductsListProps> = ({
     <EmptySection />
   ) : (
     <>
-      {isLoading && <Loader />}
       <Toolbar
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
-        setIsLoading={setIsLoading}
         productsUrl={productsUrl}
         setProducts={setProducts}
         filterStartData={filterStartData}
@@ -278,7 +274,6 @@ const ProductsList: React.FC<ProductsListProps> = ({
       <Toolbar
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
-        setIsLoading={setIsLoading}
         productsUrl={productsUrl}
         setProducts={setProducts}
         filterStartData={filterStartData}
