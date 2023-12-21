@@ -55,6 +55,7 @@ const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({
             modifier: 3,
             slideShadows: false,
           }}
+          loop
           pagination={{
             clickable: true,
             dynamicBullets: true,

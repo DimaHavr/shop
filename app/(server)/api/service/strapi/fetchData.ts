@@ -3,18 +3,7 @@
 
 import getHeaders from '@/app/(utils)/getHeaders'
 
-// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-// export const fetchData = async (url: string) => {
-//   try {
-//     const res = await axios.get(`https://shop-strapi.onrender.com/api${url}`, {
-//       headers: getHeaders(),
-//     })
-//     return res.data
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 export default async function fetchData(url: string) {
   try {
     const res = await fetch(`https://shop-strapi.onrender.com/api${url}`, {

@@ -31,11 +31,10 @@
 
 @layer components {
   .container {
-    @apply px-4 my-0 mx-auto; 
-    @apply sm:w-full; 
-    @apply md:max-w-screen-md mx-auto; 
-    @apply lg:max-w-5xl; 
-    @apply xl:max-w-7xl; 
+    @apply my-0 mx-auto; 
+    @apply md:max-md-[320px] px-5; 
+    @apply lg:max-w-[710px] px-7; 
+    @apply xl:max-w-[1242px] px-7; 
   }
   
   .outline-text {

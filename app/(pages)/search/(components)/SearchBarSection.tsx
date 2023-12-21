@@ -2,7 +2,7 @@
 
 import { Field, Form, Formik } from 'formik'
 import { motion } from 'framer-motion'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { FaSearch } from 'react-icons/fa'
 import * as Yup from 'yup'
 
@@ -12,7 +12,7 @@ const SearchSchema = Yup.object().shape({
 
 
 
-const SearchInput = () => {
+const SearchBarSection = () => {
   const router = useRouter()
   return (
     <Formik
@@ -22,7 +22,7 @@ const SearchInput = () => {
       validationSchema={SearchSchema}
       onSubmit={values => {
         router.push(`/search?query=${values.query}`)
-        redirect('/search')
+        router.replace('/search')
       }}
     >
       <Form>
@@ -43,7 +43,7 @@ const SearchInput = () => {
           />
           <button type='submit' className='pr-2'>
             <FaSearch
-              onClick={()=>redirect('/search')}
+
               color='#17696A'
               className=' transition-opacity  hover:opacity-80 focus:opacity-80 '
               size={20}
@@ -60,4 +60,4 @@ const SearchInput = () => {
   )
 }
 
-export default SearchInput
+export default SearchBarSection

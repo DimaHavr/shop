@@ -29,11 +29,7 @@ export const Header: React.FC = () => {
     setShowSearchBar(prev => !prev)
   }, [])
 
-  const handleSearch = (query: string) => {
-    // Handle the search query (e.g., make an API request)
-    // eslint-disable-next-line no-console
-    console.log('Search query:', query)
-  }
+
   const screenSize = useWindowSize()
   return (
     <header className='padding-lock max-md fixed left-0 top-0 z-50 flex w-full items-center  bg-footer-gradient-linear-green '>
@@ -99,7 +95,7 @@ export const Header: React.FC = () => {
         </ul>
         <div className='flex items-center gap-8 max-md:gap-6 max-sm:gap-3'>
           {screenSize.width > 767 ? (
-            <SearchInput onSearch={handleSearch} />
+            <SearchInput />
           ) : (
             <button aria-label='Пошук' type='button' onClick={toggleSearchBar}>
               <FaSearch
@@ -145,7 +141,6 @@ export const Header: React.FC = () => {
       <AnimatePresence>
         {showSearchBar && (
           <SearchBar
-            onSearch={handleSearch}
             toggleSearchBar={toggleSearchBar}
           />
         )}

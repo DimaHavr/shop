@@ -34,7 +34,7 @@ export const theme = {
   },
   colors: {
     'primary-green': '#17696A',
-    'white-dis': '#F8FCFF',
+    'bg-white-dis': '#F8FCFF',
     'dark-blue': '#04268B',
     'light-blue': '#1B37AA',
     'mid-blue': '#3EC9FF',

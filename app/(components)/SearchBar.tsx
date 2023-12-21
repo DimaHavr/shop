@@ -6,12 +6,10 @@ import { useCallback, useRef } from 'react'
 import SearchInput from './SearchInput'
 
 interface SearchInputProps {
-  onSearch: (query: string) => void
   toggleSearchBar: () => void
 }
 
 const SearchBar: React.FC<SearchInputProps> = ({
-  onSearch,
   toggleSearchBar,
 }) => {
   const SearchBarRef = useRef<HTMLDivElement>(null)
@@ -35,7 +33,7 @@ const SearchBar: React.FC<SearchInputProps> = ({
       className=' absolute left-0 top-[-90px] z-10 h-[100vh] w-full overflow-y-auto overflow-x-hidden '
     >
       <div className='absolute  top-[170px] z-10 flex  w-full items-center justify-center'>
-        <SearchInput onSearch={onSearch} />
+        <SearchInput />
       </div>
     </motion.div>
   )
